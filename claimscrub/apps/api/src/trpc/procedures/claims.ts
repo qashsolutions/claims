@@ -1,25 +1,7 @@
 import { z } from 'zod'
 import { router, protectedProcedure } from '../index.js'
 import { TRPCError } from '@trpc/server'
-
-const createClaimSchema = z.object({
-  patientId: z.string(),
-  dateOfService: z.date(),
-  placeOfService: z.string(),
-  priorAuthNumber: z.string().optional(),
-  serviceLines: z.array(
-    z.object({
-      lineNumber: z.number(),
-      cptCode: z.string(),
-      modifiers: z.array(z.string()),
-      icdCodes: z.array(z.string()),
-      drugCode: z.string().optional(),
-      drugUnits: z.number().optional(),
-      units: z.number().default(1),
-      charge: z.number(),
-    })
-  ),
-})
+import { createClaimSchema } from '@claimscrub/shared/schemas'
 
 export const claimsRouter = router({
   // List claims for current practice
@@ -110,13 +92,14 @@ export const claimsRouter = router({
       // Create claim with service lines
       const claim = await ctx.prisma.claim.create({
         data: {
-          patientName: '', // Will be filled from Epic data
-          patientDob: new Date(), // Will be filled from Epic data
-          patientGender: '', // Will be filled from Epic data
-          insuranceId: '', // Will be filled from Epic data
-          payerName: '', // Will be filled from Epic data
-          providerNpi: '', // Will be filled from user's practice
-          providerName: '', // Will be filled from user's practice
+          patientName: input.patientName,
+          patientDob: input.patientDob,
+          patientGender: input.patientGender,
+          insuranceId: input.insuranceId,
+          payerName: input.payerName,
+          payerId: input.payerId,
+          providerNpi: input.providerNpi,
+          providerName: input.providerName,
           dateOfService: input.dateOfService,
           placeOfService: input.placeOfService,
           priorAuthNumber: input.priorAuthNumber,

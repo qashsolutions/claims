@@ -28,7 +28,6 @@ export const validationRouter = router({
       z.object({
         cptCode: z.string(),
         drugCode: z.string().optional(),
-        patientId: z.string(),
         payerId: z.string(),
       })
     )

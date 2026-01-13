@@ -1,11 +1,5 @@
 import { env } from '../../config/env.js'
-
-interface EpicTokens {
-  accessToken: string
-  refreshToken?: string
-  expiresAt?: number
-  patient?: string
-}
+import type { EpicTokens } from '@claimscrub/shared/types'
 
 interface FhirPatient {
   id: string
@@ -262,8 +256,9 @@ class EpicClient {
     return {
       accessToken: data.access_token,
       refreshToken: data.refresh_token,
-      expiresAt: Date.now() + data.expires_in * 1000,
-      patient: data.patient,
+      expiresAt: new Date(Date.now() + data.expires_in * 1000),
+      scope: data.scope || '',
+      patientId: data.patient,
     }
   }
 }
