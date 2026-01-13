@@ -277,7 +277,11 @@ export function DenialRiskBadge({ code, description, className }: DenialRiskBadg
               Close
             </Button>
             {codeInfo && (
-              <Button onClick={() => { /* TODO: Open appeal template */ }}>
+              <Button onClick={() => {
+                // Navigate to appeal generator with pre-filled denial code
+                // In production: navigate('/appeals/new?code=' + code)
+                window.open(`/appeals/template?code=${code}`, '_blank')
+              }}>
                 View Appeal Template
               </Button>
             )}

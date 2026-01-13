@@ -113,7 +113,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {/* Sample claims */}
+            {/* Recent claims - in production: trpc.claims.getRecent.useQuery() */}
             {[
               { id: 'CLM-001', patient: 'Maria Santos', score: 100, status: 'VALIDATED' },
               { id: 'CLM-002', patient: 'John Smith', score: 85, status: 'WARNING' },

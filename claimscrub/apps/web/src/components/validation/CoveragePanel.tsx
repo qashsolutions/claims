@@ -31,8 +31,8 @@ interface CoveragePanelProps {
   className?: string
 }
 
-// Mock coverage data - in production, this would come from the API
-// which queries CMS MCD and payer-specific coverage databases
+// Coverage data types - in production, data comes from the CMS connector
+// via tRPC: trpc.coverage.getCoverage.useQuery({ cptCode })
 interface CoverageInfo {
   cptCode: string
   coverageStatus: 'covered' | 'covered_with_conditions' | 'not_covered' | 'unknown'
