@@ -1,0 +1,299 @@
+// ClaimScrub - Prisma Schema
+// HIPAA-compliant healthcare claims validation
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ============================================
+// USERS & PRACTICES
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String?
+  mfaSecret     String?   @db.Text  // Encrypted
+  mfaEnabled    Boolean   @default(false)
+  role          UserRole  @default(BILLING_STAFF)
+
+  practiceId    String
+  practice      Practice  @relation(fields: [practiceId], references: [id])
+
+  epicUserId    String?
+  epicTokens    Json?     @db.JsonB  // Encrypted OAuth tokens
+
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  claims        Claim[]
+  auditLogs     AuditLog[]
+
+  @@index([email])
+  @@index([practiceId])
+}
+
+model Practice {
+  id            String    @id @default(cuid())
+  name          String
+  npi           String    @unique
+  taxId         String?   // Encrypted
+  specialty     Specialty
+  address       Json?
+
+  epicOrgId     String?
+  epicConnected Boolean   @default(false)
+
+  subscriptionId String?  @unique
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  users         User[]
+  claims        Claim[]
+
+  @@index([npi])
+}
+
+// ============================================
+// CLAIMS
+// ============================================
+
+model Claim {
+  id            String      @id @default(cuid())
+  claimNumber   String      @unique @default(cuid())
+
+  // Patient (encrypted fields)
+  patientName   String      @db.Text  // Encrypted
+  patientDob    DateTime
+  patientGender String
+  insuranceId   String      @db.Text  // Encrypted
+  payerName     String
+  payerId       String?
+
+  // Provider
+  providerNpi   String
+  providerName  String
+
+  // Service
+  dateOfService DateTime
+  placeOfService String
+  priorAuthNumber String?
+
+  // Status
+  status        ClaimStatus @default(DRAFT)
+  score         Int?
+  totalCharge   Decimal     @db.Decimal(10, 2)
+
+  // Relations
+  practiceId    String
+  practice      Practice    @relation(fields: [practiceId], references: [id])
+
+  createdById   String
+  createdBy     User        @relation(fields: [createdById], references: [id])
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  submittedAt   DateTime?
+
+  serviceLines  ServiceLine[]
+  validations   Validation[]
+
+  @@index([practiceId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([dateOfService])
+}
+
+model ServiceLine {
+  id            String    @id @default(cuid())
+  lineNumber    Int
+
+  claimId       String
+  claim         Claim     @relation(fields: [claimId], references: [id], onDelete: Cascade)
+
+  cptCode       String
+  cptDescription String?
+  modifiers     String[]
+  icdCodes      String[]
+  drugCode      String?
+  drugUnits     Int?
+  units         Int       @default(1)
+  charge        Decimal   @db.Decimal(10, 2)
+
+  createdAt     DateTime  @default(now())
+
+  @@index([claimId])
+}
+
+model Validation {
+  id            String           @id @default(cuid())
+
+  claimId       String
+  claim         Claim            @relation(fields: [claimId], references: [id], onDelete: Cascade)
+
+  checkType     ValidationCheck
+  status        ValidationStatus
+  denialCode    String?
+  message       String
+  suggestion    String?
+  metadata      Json?
+
+  createdAt     DateTime         @default(now())
+
+  @@index([claimId])
+  @@index([status])
+}
+
+// ============================================
+// BILLING
+// ============================================
+
+model Subscription {
+  id                  String    @id @default(cuid())
+  stripeCustomerId    String    @unique
+  stripeSubscriptionId String?  @unique
+
+  plan                PlanType
+  status              SubStatus
+
+  currentPeriodStart  DateTime?
+  currentPeriodEnd    DateTime?
+
+  claimsThisPeriod    Int       @default(0)
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  practice            Practice?
+  usageRecords        UsageRecord[]
+
+  @@index([stripeCustomerId])
+}
+
+model UsageRecord {
+  id              String    @id @default(cuid())
+
+  subscriptionId  String
+  subscription    Subscription @relation(fields: [subscriptionId], references: [id])
+
+  claimId         String
+  sizeBytes       Int
+
+  createdAt       DateTime  @default(now())
+
+  @@index([subscriptionId])
+  @@index([createdAt])
+}
+
+// ============================================
+// AUDIT & SECURITY
+// ============================================
+
+model AuditLog {
+  id            String    @id @default(cuid())
+
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+
+  action        AuditAction
+  resource      String
+  resourceId    String
+  metadata      Json?
+  ipAddress     String
+  userAgent     String?
+
+  createdAt     DateTime  @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([resourceId])
+}
+
+model RateLimit {
+  id            String    @id
+  count         Int       @default(0)
+  resetAt       DateTime
+
+  @@index([resetAt])
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  PROVIDER
+  BILLING_STAFF
+  ADMIN
+}
+
+enum Specialty {
+  ONCOLOGY
+  MENTAL_HEALTH
+  OBGYN
+  ENDOCRINOLOGY
+}
+
+enum ClaimStatus {
+  DRAFT
+  VALIDATING
+  VALIDATED
+  SUBMITTED
+  ACCEPTED
+  PAID
+  DENIED
+  APPEALING
+}
+
+enum ValidationCheck {
+  CPT_ICD_MATCH
+  NPI_VERIFY
+  MODIFIER_CHECK
+  PRIOR_AUTH
+  DATA_COMPLETENESS
+  TIMELY_FILING
+  NCCI_EDITS
+}
+
+enum ValidationStatus {
+  PASS
+  WARNING
+  FAIL
+}
+
+enum PlanType {
+  FREE_TRIAL
+  PAY_PER_CLAIM
+  UNLIMITED_MONTHLY
+  UNLIMITED_ANNUAL
+}
+
+enum SubStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+}
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  VIEW_CLAIM
+  CREATE_CLAIM
+  UPDATE_CLAIM
+  DELETE_CLAIM
+  SUBMIT_CLAIM
+  VIEW_PATIENT
+  EXPORT_DATA
+  CHANGE_SETTINGS
+}
