@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#f8fafc"/>
+
+  <!-- Top Navigation -->
+  <rect width="1440" height="64" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(24, 16)">
+    <rect width="32" height="32" rx="6" fill="#d97706"/>
+    <path d="M8 16 L14 22 L24 12" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="68" y="42" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#0f172a">ClaimScrub</text>
+
+  <!-- Sidebar -->
+  <rect y="64" width="240" height="836" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="56" y="108" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#64748b">Dashboard</text>
+  <text x="56" y="156" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#64748b">Claims</text>
+  <rect x="12" y="176" width="216" height="44" rx="8" fill="#fef3c7"/>
+  <rect x="12" y="176" width="4" height="44" rx="2" fill="#d97706"/>
+  <text x="56" y="204" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#92400e">Assistant</text>
+
+  <!-- Main Content Area -->
+  <text x="280" y="112" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0f172a">Assistant</text>
+
+  <!-- Chat Container -->
+  <rect x="280" y="140" width="940" height="700" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Suggested Questions -->
+  <rect x="304" y="164" width="280" height="140" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="324" y="192" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#334155">Suggested Questions</text>
+  <text x="324" y="220" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">What diagnosis codes support</text>
+  <text x="324" y="236" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">CPT 96413?</text>
+  <text x="324" y="264" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">Does J9271 require prior</text>
+  <text x="324" y="280" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">authorization?</text>
+
+  <!-- Recent Documents -->
+  <rect x="600" y="164" width="280" height="140" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="620" y="192" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#334155">Recent Documents</text>
+  <text x="620" y="220" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">Maria Santos EOB</text>
+  <text x="800" y="220" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Jan 12</text>
+  <text x="620" y="248" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">James Wilson Claim</text>
+  <text x="800" y="248" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Jan 12</text>
+  <text x="620" y="276" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">Auth Request #4521</text>
+  <text x="800" y="276" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Jan 11</text>
+
+  <!-- Chat Messages -->
+  <!-- User Message -->
+  <g transform="translate(680, 340)">
+    <rect width="500" height="56" rx="12" fill="#fef3c7"/>
+    <text x="20" y="34" font-family="system-ui, sans-serif" font-size="14" fill="#1e293b">Show me all claims with CO-11 risk from this week</text>
+  </g>
+  <text x="1188" y="412" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">2:34 PM</text>
+
+  <!-- Assistant Response -->
+  <g transform="translate(304, 430)">
+    <rect width="600" height="240" rx="12" fill="#f1f5f9"/>
+    <text x="20" y="30" font-family="system-ui, sans-serif" font-size="14" fill="#1e293b">I found 3 claims with CO-11 (Diagnosis Mismatch) risk:</text>
+
+    <!-- Results Table -->
+    <rect x="20" y="50" width="560" height="120" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+    <!-- Table Header -->
+    <rect x="20" y="50" width="560" height="32" rx="6" fill="#f8fafc"/>
+    <text x="40" y="72" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b">PATIENT</text>
+    <text x="180" y="72" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b">CPT</text>
+    <text x="260" y="72" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b">ISSUE</text>
+    <text x="500" y="72" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b">ACTION</text>
+
+    <!-- Row 1 -->
+    <text x="40" y="104" font-family="system-ui, sans-serif" font-size="12" fill="#0f172a">R. Johnson</text>
+    <text x="180" y="104" font-family="JetBrains Mono, monospace" font-size="11" fill="#334155">96413</text>
+    <text x="260" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">J18.9 doesn't support chemo</text>
+    <rect x="490" y="90" width="56" height="24" rx="4" fill="#d97706"/>
+    <text x="518" y="106" font-family="system-ui, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">View</text>
+
+    <!-- Row 2 -->
+    <text x="40" y="134" font-family="system-ui, sans-serif" font-size="12" fill="#0f172a">T. Martinez</text>
+    <text x="180" y="134" font-family="JetBrains Mono, monospace" font-size="11" fill="#334155">59510</text>
+    <text x="260" y="134" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">E11.9 doesn't support C-section</text>
+    <rect x="490" y="120" width="56" height="24" rx="4" fill="#d97706"/>
+    <text x="518" y="136" font-family="system-ui, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">View</text>
+
+    <!-- Row 3 -->
+    <text x="40" y="164" font-family="system-ui, sans-serif" font-size="12" fill="#0f172a">K. Patel</text>
+    <text x="180" y="164" font-family="JetBrains Mono, monospace" font-size="11" fill="#334155">90837</text>
+    <text x="260" y="164" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Z00.00 doesn't support therapy</text>
+    <rect x="490" y="150" width="56" height="24" rx="4" fill="#d97706"/>
+    <text x="518" y="166" font-family="system-ui, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">View</text>
+
+    <text x="20" y="200" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Would you like me to suggest correct diagnosis codes</text>
+    <text x="20" y="220" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">for any of these claims?</text>
+  </g>
+
+  <!-- Input Area -->
+  <rect x="304" y="760" width="892" height="56" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="340" y="794" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">Ask about claims, coverage, codes, or pull up documents...</text>
+
+  <!-- Mic Button -->
+  <circle cx="1120" cy="788" r="20" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="1115" y="778" width="10" height="14" rx="5" fill="#64748b"/>
+  <rect x="1112" y="790" width="16" height="2" fill="#64748b"/>
+
+  <!-- Send Button -->
+  <circle cx="1172" cy="788" r="20" fill="#d97706"/>
+  <path d="M1166 788 L1178 788 M1172 782 L1178 788 L1172 794" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

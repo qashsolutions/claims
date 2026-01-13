@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#f8fafc"/>
+
+  <!-- Top Navigation -->
+  <rect width="1440" height="64" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(24, 16)">
+    <rect width="32" height="32" rx="6" fill="#d97706"/>
+    <path d="M8 16 L14 22 L24 12" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="68" y="42" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#0f172a">ClaimScrub</text>
+
+  <!-- Sidebar -->
+  <rect y="64" width="240" height="836" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Page Title and Actions -->
+  <text x="280" y="112" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0f172a">New Claim</text>
+  <rect x="1060" y="84" width="80" height="40" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1100" y="110" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">Cancel</text>
+  <rect x="1156" y="84" width="64" height="40" rx="8" fill="#d97706"/>
+  <text x="1188" y="110" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Save</text>
+
+  <!-- Step Indicator -->
+  <rect x="280" y="140" width="940" height="64" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Step 1 - Active -->
+  <circle cx="380" cy="172" r="16" fill="#d97706"/>
+  <text x="380" y="178" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">1</text>
+  <text x="380" y="156" font-family="system-ui, sans-serif" font-size="11" fill="#d97706" text-anchor="middle">Patient</text>
+
+  <!-- Connector -->
+  <line x1="400" y1="172" x2="540" y2="172" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- Step 2 -->
+  <circle cx="560" cy="172" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="560" y="178" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" text-anchor="middle">2</text>
+  <text x="560" y="156" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Provider</text>
+
+  <!-- Connector -->
+  <line x1="580" y1="172" x2="720" y2="172" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- Step 3 -->
+  <circle cx="740" cy="172" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="740" y="178" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" text-anchor="middle">3</text>
+  <text x="740" y="156" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Services</text>
+
+  <!-- Connector -->
+  <line x1="760" y1="172" x2="900" y2="172" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- Step 4 -->
+  <circle cx="920" cy="172" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="920" y="178" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" text-anchor="middle">4</text>
+  <text x="920" y="156" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Review</text>
+
+  <!-- Form Card -->
+  <rect x="280" y="220" width="940" height="620" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Patient Information Section -->
+  <text x="320" y="264" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#0f172a">Patient Information</text>
+
+  <!-- First Name -->
+  <text x="320" y="304" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">First Name *</text>
+  <rect x="320" y="314" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="336" y="342" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Maria</text>
+
+  <!-- Last Name -->
+  <text x="620" y="304" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Last Name *</text>
+  <rect x="620" y="314" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="636" y="342" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Santos</text>
+
+  <!-- Date of Birth -->
+  <text x="320" y="388" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Date of Birth *</text>
+  <rect x="320" y="398" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="336" y="426" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">03/15/1985</text>
+
+  <!-- Gender -->
+  <text x="620" y="388" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Gender *</text>
+  <rect x="620" y="398" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="636" y="426" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Female</text>
+  <text x="876" y="426" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">v</text>
+
+  <!-- Divider -->
+  <line x1="320" y1="472" x2="1180" y2="472" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Insurance Information Section -->
+  <text x="320" y="512" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#0f172a">Insurance Information</text>
+
+  <!-- Payer -->
+  <text x="320" y="552" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Payer *</text>
+  <rect x="320" y="562" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="336" y="590" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Medicare</text>
+  <text x="576" y="590" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">v</text>
+
+  <!-- Plan Type -->
+  <text x="620" y="552" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Plan Type</text>
+  <rect x="620" y="562" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="636" y="590" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Part B</text>
+  <text x="876" y="590" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">v</text>
+
+  <!-- Member ID -->
+  <text x="320" y="636" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Member ID *</text>
+  <rect x="320" y="646" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="336" y="674" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">1EG4-TE5-MK72</text>
+
+  <!-- Group Number -->
+  <text x="620" y="636" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Group Number</text>
+  <rect x="620" y="646" width="280" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="636" y="674" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">GRP-4521</text>
+
+  <!-- Prior Auth -->
+  <text x="320" y="720" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155">Prior Authorization #</text>
+  <rect x="320" y="730" width="580" height="44" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="336" y="758" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">AUTH-2026-0112-4521</text>
+
+  <!-- Navigation Buttons -->
+  <rect x="920" y="786" width="120" height="44" rx="8" fill="#d97706"/>
+  <text x="980" y="814" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Continue</text>
+</svg>
