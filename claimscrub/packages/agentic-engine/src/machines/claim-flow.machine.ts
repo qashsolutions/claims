@@ -3,32 +3,246 @@ import type { ClaimFlowContext } from '../context/types'
 import type { ClaimFlowEvent } from '../events/types'
 import { initialContext } from '../context/types'
 
+/**
+ * ClaimFlow State Machine
+ *
+ * This XState machine orchestrates the agentic claim submission workflow.
+ * It manages the complete flow from patient selection through claim submission.
+ *
+ * ARCHITECTURE NOTES:
+ * - Actors defined here are DEFAULT implementations that MUST be overridden
+ *   at runtime via the `.provide()` method in useFlowMachine hook
+ * - The consuming application (web app) provides actual API implementations
+ *   that connect to Epic FHIR, validation services, and claim submission APIs
+ * - This separation allows the state machine to be framework-agnostic while
+ *   maintaining type safety through strongly-typed actor interfaces
+ *
+ * USAGE:
+ * ```typescript
+ * const machine = claimFlowMachine.provide({
+ *   actors: {
+ *     fetchPatient: async ({ input }) => epicClient.getPatient(input.patientId),
+ *     checkAuthorization: async ({ input }) => authService.check(input),
+ *     submitClaim: async ({ input }) => claimsApi.submit(input),
+ *   }
+ * })
+ * ```
+ */
 export const claimFlowMachine = setup({
   types: {
     context: {} as ClaimFlowContext,
     events: {} as ClaimFlowEvent,
   },
   actors: {
+    /**
+     * fetchPatient Actor
+     *
+     * Retrieves patient demographic and clinical data from the EHR system.
+     *
+     * INPUT:
+     * - patientId: string - The unique patient identifier (Epic FHIR ID or MRN)
+     *
+     * OUTPUT:
+     * - Patient object containing:
+     *   - Demographics (name, DOB, gender, contact info)
+     *   - Insurance information (payer, member ID, group number)
+     *   - Active diagnoses for ICD code suggestions
+     *
+     * IMPLEMENTATION REQUIREMENTS:
+     * - Must be provided via .provide() by the consuming application
+     * - Should integrate with Epic FHIR Patient, Coverage, and Condition endpoints
+     * - Must handle FHIR resource transformation to internal Patient type
+     * - Should implement proper error handling for network/auth failures
+     *
+     * EXAMPLE IMPLEMENTATION:
+     * ```typescript
+     * fetchPatient: async ({ input }) => {
+     *   const [patient, conditions, coverage] = await Promise.all([
+     *     epicClient.getPatient(input.patientId, tokens),
+     *     epicClient.getConditions(input.patientId, tokens),
+     *     epicClient.getCoverage(input.patientId, tokens),
+     *   ])
+     *   return transformToPatient(patient, conditions, coverage)
+     * }
+     * ```
+     */
     fetchPatient: fromPromise<
       ClaimFlowContext['patient'],
       { patientId: string }
     >(async ({ input }) => {
-      // Will be provided by the app
-      throw new Error('fetchPatient actor not implemented')
+      // PRODUCTION NOTE: This default implementation throws to ensure the actor
+      // is properly provided by the consuming application. The error message
+      // includes context to aid debugging in case of misconfiguration.
+      const errorMessage = [
+        'fetchPatient actor not configured.',
+        `Attempted to fetch patient with ID: ${input.patientId}`,
+        'This actor must be provided via claimFlowMachine.provide() with an',
+        'implementation that connects to your EHR system (e.g., Epic FHIR API).',
+        'See useFlowMachine hook for implementation reference.',
+      ].join('\n')
+      throw new Error(errorMessage)
     }),
+
+    /**
+     * checkAuthorization Actor
+     *
+     * Determines prior authorization requirements and retrieves existing approvals.
+     * This is critical for preventing CO-15 (Authorization Required) denials.
+     *
+     * INPUT:
+     * - procedure: Selected CPT code, drug code, and modifiers
+     * - patient: Patient data including insurance/payer information
+     *
+     * OUTPUT:
+     * - required: boolean - Whether prior auth is needed for this procedure/payer
+     * - authorization: Authorization object if existing approval found, null otherwise
+     *   - number: Prior auth reference number
+     *   - status: 'active' | 'expired' | 'pending'
+     *   - validFrom/validTo: Date range of authorization validity
+     *   - authorizedUnits/remainingUnits: Unit tracking for high-cost drugs
+     *
+     * IMPLEMENTATION REQUIREMENTS:
+     * - Must query payer-specific authorization rules for the CPT/HCPCS codes
+     * - Should check Epic ClaimResponse endpoint for existing prior auths
+     * - Must validate that existing auth covers the specific service codes
+     * - Should check authorization date validity against service date
+     *
+     * PAYER RULE SOURCES:
+     * - CMS Medicare Coverage Database (MCD) for Medicare patients
+     * - Payer-specific portals or Availity for commercial payers
+     * - State Medicaid rules for Medicaid patients
+     *
+     * EXAMPLE IMPLEMENTATION:
+     * ```typescript
+     * checkAuthorization: async ({ input }) => {
+     *   const { procedure, patient } = input
+     *
+     *   // Check if procedure requires auth for this payer
+     *   const rules = await authRulesService.check(procedure.cptCode, patient.insurance.payerId)
+     *
+     *   if (!rules.authRequired) {
+     *     return { required: false, authorization: null }
+     *   }
+     *
+     *   // Look for existing authorization in Epic
+     *   const existingAuths = await epicClient.getAuthorizations(
+     *     patient.id, tokens, procedure.cptCode
+     *   )
+     *
+     *   const validAuth = existingAuths.find(auth =>
+     *     auth.status === 'approved' &&
+     *     new Date(auth.validTo) > new Date()
+     *   )
+     *
+     *   return { required: true, authorization: validAuth || null }
+     * }
+     * ```
+     */
     checkAuthorization: fromPromise<
       { required: boolean; authorization: ClaimFlowContext['authorization'] },
       { procedure: ClaimFlowContext['procedure']; patient: ClaimFlowContext['patient'] }
     >(async ({ input }) => {
-      // Will be provided by the app
-      throw new Error('checkAuthorization actor not implemented')
+      // PRODUCTION NOTE: This default implementation throws to ensure the actor
+      // is properly provided. Authorization checking is critical for claim success.
+      const procedureInfo = input.procedure
+        ? `CPT: ${input.procedure.cptCode}, Drug: ${input.procedure.drugCode || 'N/A'}`
+        : 'No procedure selected'
+      const patientInfo = input.patient
+        ? `Patient: ${input.patient.id}, Payer: ${input.patient.insurance.payerId}`
+        : 'No patient selected'
+
+      const errorMessage = [
+        'checkAuthorization actor not configured.',
+        `Procedure: ${procedureInfo}`,
+        `${patientInfo}`,
+        'This actor must be provided via claimFlowMachine.provide() with an',
+        'implementation that checks payer authorization rules and Epic for existing auths.',
+        'Proper authorization checking prevents CO-15 denials.',
+      ].join('\n')
+      throw new Error(errorMessage)
     }),
+
+    /**
+     * submitClaim Actor
+     *
+     * Creates and submits the claim to the clearinghouse/payer.
+     * This is the final step that persists the claim and initiates submission.
+     *
+     * INPUT:
+     * - Full ClaimFlowContext containing:
+     *   - patient: Patient demographics and insurance
+     *   - procedure: Selected CPT/HCPCS codes with modifiers
+     *   - diagnoses: ICD-10 codes with proper ordering (primary first)
+     *   - authorization: Prior auth number if applicable
+     *   - dateOfService: Service date
+     *   - placeOfService: POS code (e.g., '11' for office, '22' for outpatient)
+     *   - totalCharge: Calculated charge amount
+     *
+     * OUTPUT:
+     * - claimId: string - The unique identifier for the created claim
+     *
+     * IMPLEMENTATION REQUIREMENTS:
+     * - Must create claim record in database with DRAFT status
+     * - Should trigger async validation pipeline (NCCI edits, LCD checks, etc.)
+     * - Must associate claim with practice and creating user for audit
+     * - Should generate EDI 837P format for clearinghouse submission
+     * - Must create audit log entry for compliance
+     *
+     * VALIDATION CHECKS TO PERFORM:
+     * - All required fields populated
+     * - ICD codes support medical necessity for CPT codes
+     * - Modifiers are valid for the procedure
+     * - Prior auth number valid if auth was required
+     * - Service date within auth validity period
+     *
+     * EXAMPLE IMPLEMENTATION:
+     * ```typescript
+     * submitClaim: async ({ input }) => {
+     *   // Validate all required data is present
+     *   if (!input.patient || !input.procedure || !input.diagnoses.length) {
+     *     throw new Error('Missing required claim data')
+     *   }
+     *
+     *   // Create claim via API
+     *   const claim = await claimsApi.create({
+     *     patientId: input.patient.id,
+     *     dateOfService: input.dateOfService,
+     *     placeOfService: input.placeOfService,
+     *     priorAuthNumber: input.authorization?.number,
+     *     serviceLines: [{
+     *       cptCode: input.procedure.cptCode,
+     *       modifiers: input.procedure.modifiers,
+     *       icdCodes: input.diagnoses.map(d => d.code),
+     *       charge: input.totalCharge,
+     *     }]
+     *   })
+     *
+     *   return { claimId: claim.id }
+     * }
+     * ```
+     */
     submitClaim: fromPromise<
       { claimId: string },
       ClaimFlowContext
     >(async ({ input }) => {
-      // Will be provided by the app
-      throw new Error('submitClaim actor not implemented')
+      // PRODUCTION NOTE: This default implementation throws to ensure the actor
+      // is properly provided. Claim submission requires proper API integration.
+      const contextSummary = [
+        `Patient: ${input.patient?.id || 'Not selected'}`,
+        `Procedure: ${input.procedure?.cptCode || 'Not selected'}`,
+        `Diagnoses: ${input.diagnoses.length} selected`,
+        `Auth: ${input.authorization?.number || 'None'}`,
+        `Charge: $${input.totalCharge}`,
+      ].join(', ')
+
+      const errorMessage = [
+        'submitClaim actor not configured.',
+        `Context: ${contextSummary}`,
+        'This actor must be provided via claimFlowMachine.provide() with an',
+        'implementation that creates the claim in your database and submits',
+        'to the clearinghouse. See claims.ts tRPC procedures for reference.',
+      ].join('\n')
+      throw new Error(errorMessage)
     }),
   },
   guards: {
