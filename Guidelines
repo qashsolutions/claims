@@ -1,0 +1,451 @@
+# Claude Code Prompt: B2B Healthcare Claim Scrubber Prototype
+
+## Project Overview
+
+Build a Pre-Submission Claim Scrubber MVP that validates healthcare claims before submission to prevent denials. This tool targets small-to-mid-sized practices in four specialties: OB-GYN, Endocrinology, Oncology, and Mental Health.
+
+The prototype leverages Claude for Healthcare connectors (ICD-10, CMS Coverage Database, NPI Registry) and uses Synthea FHIR sample data for testing.
+
+---
+
+## CRITICAL: VALIDATE CLAUDE CONNECTORS FIRST (Week 0)
+
+Before writing any code, you must test Claude Healthcare connectors to validate they work as expected. This is internal validation. If connectors don't return reliable data, the entire prototype premise fails.
+
+### Pre-Build Validation Checklist
+
+Run these tests manually in Claude Pro or Max ($20-200/month):
+
+**Test 1: ICD-10 Connector - Basic Validation**
+
+Ask Claude: "Using the ICD-10 connector, validate if diagnosis F32.1 supports CPT 90834"
+
+Expected result: Claude should confirm that F32.1 (Major depressive disorder, single episode, moderate) is a valid diagnosis for CPT 90834 (Psychotherapy, 45 minutes). This is a PASS scenario.
+
+**Test 2: ICD-10 Connector - Code Lookup**
+
+Ask Claude: "Look up ICD-10 code C50.911 and tell me what it means"
+
+Expected result: Claude should return "Malignant neoplasm of unspecified site of right female breast" with accurate clinical description.
+
+**Test 3: CMS Coverage Database - Prior Auth Check**
+
+Ask Claude: "Using CMS Coverage Database, does CPT 96413 require prior authorization for Medicare?"
+
+Expected result: Claude should return LCD/NCD reference information and indicate that chemotherapy infusion services typically require prior authorization. Should mention coverage criteria.
+
+**Test 4: NPI Registry - Provider Verification**
+
+Ask Claude: "Using NPI Registry, verify if NPI 1234567890 is active and tell me the provider details"
+
+Expected result: Claude should return provider status (active/inactive), provider name, specialty, and practice location if available.
+
+**Test 5: CPT-ICD Mismatch Detection - Should FAIL**
+
+Ask Claude: "Validate this claim: CPT 96413 (chemotherapy infusion) with ICD-10 J18.9 (pneumonia). Is this valid?"
+
+Expected result: Claude should return FAIL. Pneumonia (J18.9) does not support chemotherapy infusion (96413). The diagnosis must be a malignant neoplasm (C-codes) to justify chemotherapy. This tests whether Claude can detect mismatches.
+
+**Test 6: Specialty-Specific Validation - Mental Health**
+
+Ask Claude: "Using healthcare connectors, validate this mental health claim: CPT 90837 (60-min psychotherapy), ICD-10 F33.1 (Major depressive disorder, recurrent, moderate), Payer Medicare. Check if diagnosis supports procedure, if prior auth is required, and any documentation requirements."
+
+Expected result: Claude should confirm diagnosis supports procedure, note that some commercial payers like United Healthcare require prior authorization for 90837, and mention session time documentation requirements.
+
+**Test 7: Oncology High-Risk Claim**
+
+Ask Claude: "Validate this oncology claim using ICD-10 and CMS connectors: CPT 96413 (Chemotherapy IV infusion, first hour), Drug J9271 (Pembrolizumab), ICD-10 C50.911 (Breast cancer), No modifiers included. What's missing? What denial codes are we at risk for?"
+
+Expected result: Claude should return WARNING status, indicate that prior authorization is typically required for Pembrolizumab, suggest adding JW modifier if there was drug wastage, and flag CO-15 (missing auth) and potentially CO-4 (modifier) denial risks.
+
+### Validation Decision Gate
+
+If all 7 tests pass with accurate results: Proceed to Phase 1 build.
+
+If 5-6 tests pass: Document the limitations and proceed with caution. Note which connectors are unreliable.
+
+If fewer than 5 tests pass: STOP. Connectors are not ready. Revisit in 30 days or contact Anthropic support.
+
+### What We're Validating
+
+First, connector reliability: Do ICD-10, CMS, and NPI connectors return accurate data?
+
+Second, denial risk detection: Can Claude identify CO-11, CO-15, CO-16, and other denial risks?
+
+Third, specialty coverage: Do connectors work for all four specialties (OB-GYN, Endocrinology, Oncology, Mental Health)?
+
+Fourth, actionable output: Does Claude provide specific fix suggestions, not just generic responses?
+
+Time required: 2-4 hours. Cost: $20 for Claude Pro monthly subscription.
+
+---
+
+## Care Continuum Workflow Reference
+
+The Claim Scrubber fits into a specific point in the healthcare revenue cycle. Understanding this flow is critical for the build.
+
+### The 9-Stage Healthcare Revenue Cycle
+
+Stage 1 - Scheduling: Patient calls or books appointment. Demographics are captured. Insurance card is scanned. Patient enters the system.
+
+Stage 2 - Eligibility: The practice runs a 270/271 eligibility check. Coverage is verified. Benefits are looked up. This is where CO-16 (missing info) errors originate if data is incomplete.
+
+Stage 3 - Prior Authorization: The practice checks if the service requires prior auth. They submit a 278 authorization request if needed. Clinical documentation is attached. This is where CO-15 (missing auth) errors originate.
+
+Stage 4 - Service Delivery: The patient encounter happens. Clinical documentation is created. The procedure is performed. Notes are completed.
+
+Stage 5 - Coding: CPT codes are assigned to procedures. ICD-10 diagnosis codes are assigned. Modifiers are selected. This is where CO-11 (diagnosis mismatch) and CO-4 (modifier) errors originate.
+
+Stage 6 - Claim Submission: The 837 claim file is generated. Claims are scrubbed and validated. Claims are sent through the clearinghouse. This is where CO-29 (late filing) errors originate.
+
+Stage 7 - Adjudication: The payer receives the claim. Auto-adjudication runs. Medical review happens if flagged. This is where CO-97 (not medically necessary) denials occur.
+
+Stage 8 - Remittance: The 835 ERA (Electronic Remittance Advice) is received. Denials are identified. Payments are posted. Patient billing occurs.
+
+Stage 9 - Appeals: Appeals are generated for denials. Evidence is gathered. Claims are resubmitted. Recovery is tracked.
+
+### Where Each Use Case Fits in the Continuum
+
+Use Case 1 - Claim Scrubber (This Prototype): Operates at Stage 5-6, between Coding and Claim Submission. Runs before the claim is submitted. Prevents CO-11 (diagnosis mismatch), CO-16 (missing info), CO-4 (modifier issues), and CO-29 (late filing). Addresses 75% of all denials.
+
+Use Case 2 - Prior Auth Automation (Future Phase 2): Operates at Stage 2-3, between Eligibility and Prior Auth. Runs before the service is rendered. Prevents CO-15 (missing authorization) and CO-197 (auth expired). Addresses 15-25% of denials.
+
+Use Case 3 - Denial Management (Future Phase 3): Operates at Stage 8-9, between Remittance and Appeals. Runs after a denial is received. Focuses on revenue recovery through appeals. Success rate is 30-70% depending on denial type.
+
+### Build Sequence Rationale
+
+Phase 1 is the Claim Scrubber because it addresses 75% of denials, has lower complexity than prior auth, maps directly to Claude's ICD-10 and NPI connectors, takes 6-8 weeks to build, and does not require payer-specific integrations.
+
+Phase 2 is Prior Auth Automation because it addresses the next 15-25% of denials, requires CMS Coverage Database which only covers Medicare (commercial payers need separate integration), and adds 4-6 weeks to build.
+
+Phase 3 is Denial Management because it handles claims that already failed, requires 835 EOB parsing, uses PubMed connector for clinical evidence in appeals, and adds 6-8 weeks to build.
+
+### Key Statistics from Research
+
+15-22% of healthcare claims are denied on first submission (industry average).
+
+75% of denials are preventable at Stage 5-6 through proper coding and data validation.
+
+Physicians submit 39 prior authorization requests per week on average (AMA Survey).
+
+Staff spend 13 hours per week on prior authorization paperwork (AMA Survey).
+
+Appeal success rates range from 30-70% depending on denial type.
+
+Each denial costs $25-117 to rework.
+
+---
+
+## Business Context
+
+### Problem Statement
+
+15-22% of healthcare claims are denied on first submission. 75% of these denials are preventable through proper coding, complete data, and correct modifiers. Each denial costs $25-117 to rework. The top denial codes are CO-11 (diagnosis mismatch), CO-16 (missing info), CO-15 (no auth), CO-4 (modifier issues), and CO-29 (late filing).
+
+### Target Users
+
+Small practices with 1-10 providers in OB-GYN, Endocrinology, Oncology, and Mental Health. Billing staff and practice managers who prepare claims. Revenue cycle consultants who manage billing for multiple practices.
+
+### Value Proposition
+
+"Catch claim errors before payers do. Reduce denial rate from 15% to 5%."
+
+---
+
+## Technical Architecture
+
+### Recommended Tech Stack
+
+For the frontend, use React for a web dashboard or Expo React Native if mobile is preferred.
+
+For the backend, use Node.js with Express or Python with FastAPI.
+
+For the database, use Firebase Firestore for real-time data and easy scaling.
+
+For the AI engine, use Claude API from Anthropic with Healthcare Connectors enabled.
+
+For authentication, use Firebase Authentication.
+
+For file storage, use Firebase Storage for uploaded documents.
+
+For OCR in Phase 2, use Google Cloud Vision for scanning EOBs and documents.
+
+### Claude Healthcare Connectors to Use
+
+The ICD-10 Connector validates CPT-ICD-10 diagnosis matches and checks modifier appropriateness. Reference URL is https://claude.com/connectors/icd-10-codes
+
+The CMS Coverage Database looks up LCD/NCD coverage requirements, checks if prior auth is required for specific CPT codes, and verifies medical necessity criteria. This only covers Medicare; commercial payer rules require a separate database in Phase 2.
+
+The NPI Registry Connector validates that provider NPIs are active and verifies that provider specialty matches the service type.
+
+The PubMed Connector (for Phase 3) finds clinical evidence for appeals and supports medical necessity arguments.
+
+### FHIR Test Data Source
+
+Use Synthea synthetic patient data for testing. Download from https://synthetichealth.github.io/synthea/ or directly from https://synthea.mitre.org/downloads. The format is FHIR R4 bundles with 1,000 patients including full medical history. Resources included are Patient, Condition, Procedure, Encounter, Observation, and MedicationRequest.
+
+---
+
+## Specialty-Specific Denial Codes
+
+### OB-GYN (Obstetrics and Gynecology)
+
+Denial rate is 18-22% of claims.
+
+High-risk CPT codes include: 59400 (global maternity care) with high risk for bundling errors, 59510 (cesarean delivery) requiring authorization, 76805 (detailed OB ultrasound) often requiring auth, 58558 (hysteroscopy with biopsy) requiring auth, and 58571 (laparoscopic hysterectomy) with high risk for auth and bundling issues.
+
+Common denial codes for OB-GYN: CO-11 occurs when diagnosis is inconsistent with procedure, prevent by validating ICD-10 supports CPT. CO-15 occurs when prior authorization is missing, prevent by checking auth before scheduling surgery. CO-97 occurs for global period violations when billing for services included in the 90-day surgical package. CO-4 occurs when modifiers -25 or -59 are used incorrectly. CO-16 occurs when patient information is missing.
+
+Valid OB-GYN ICD-10 codes include Z34.xx for supervision of normal pregnancy, O09.xx for supervision of high-risk pregnancy, O26.xx for maternal care for other conditions, N80.xx for endometriosis, D25.xx for uterine fibroids, and N92.xx for excessive menstruation.
+
+### Endocrinology
+
+Denial rate is 15-20% of claims.
+
+High-risk CPT codes include: 95251 (CGM interpretation for 72+ hours) with high documentation requirements, 99453-99458 (Remote Patient Monitoring) requiring precise time documentation, 76536 (thyroid ultrasound) requiring medical necessity, and 60100 (thyroid biopsy) sometimes requiring auth.
+
+Common denial codes for Endocrinology: CO-11 occurs when diagnosis doesn't match procedure, prevent by ensuring diabetes or thyroid ICD-10 codes match services. CO-16 occurs when documentation is missing, CGM requires 72-hour data proof. CO-15 occurs when prior auth is missing for CGM devices or insulin pumps. CO-97 occurs when service is not medically necessary, document clinical justification. CO-4 occurs when modifier -25 is missing for E/M with same-day procedure.
+
+Valid Endocrinology ICD-10 codes include E11.xx for Type 2 diabetes mellitus with complications, E10.xx for Type 1 diabetes mellitus, E03.xx for hypothyroidism, E05.xx for hyperthyroidism, E06.xx for thyroiditis, E21.xx for hyperparathyroidism, E55.xx for vitamin D deficiency, and E66.xx for obesity.
+
+### Oncology
+
+Denial rate is approximately 30% of claims, the highest among all specialties.
+
+High-risk CPT codes include: 96413 (chemo IV infusion first hour) requiring exact timing documentation, 96415 (chemo IV infusion additional hour) requiring precise time records, 77385-77387 (IMRT radiation therapy) requiring authorization, and 77263 (radiation treatment planning) with bundling issues.
+
+High-risk J-Codes for drugs include: J9041 (Doxorubicin) requiring NDC and units, J9271 (Pembrolizumab) always requiring prior auth, J9305 (Pemetrexed) always requiring prior auth, J9310 (Rituximab) always requiring prior auth, and J9035 (Bevacizumab) always requiring prior auth.
+
+Common denial codes for Oncology: CO-15 occurs when prior auth is missing, all chemotherapy drugs need authorization. CO-11 occurs when diagnosis doesn't match, must link to malignant neoplasm ICD-10 (C-codes). CO-97 occurs when service is not medically necessary, cite NCCN guidelines. CO-4 occurs when modifier -JW for drug wastage is missing, track vial usage. CO-16 occurs when NDC or lot number is missing, capture all drug details.
+
+Valid Oncology ICD-10 codes include C50.xx for breast cancer, C34.xx for lung cancer, C18.xx for colon cancer, C61 for prostate cancer, C25.xx for pancreatic cancer, C43.xx for melanoma, C85.xx for non-Hodgkin lymphoma, and Z51.11 for encounter for antineoplastic chemotherapy.
+
+### Mental Health and Behavioral Health
+
+Denial rate is 20-25% of claims.
+
+High-risk CPT codes include: 90837 (psychotherapy 60 minutes, 53+ minutes actual) often requiring authorization, 90839 (crisis psychotherapy first 60 minutes) requiring detailed documentation, and 99213-99215 (E/M with psychotherapy add-on) with modifier issues.
+
+Common denial codes for Mental Health: CO-15 occurs when prior auth is missing, 90837 (60-minute sessions) often require auth especially with United Healthcare. CO-11 occurs when diagnosis doesn't support service, must have valid DSM-5 or ICD-10 mental health diagnosis. CO-16 occurs when session time documentation is missing, document start and end times for every session. CO-97 occurs when service is not covered, check session frequency limits. CO-18 occurs for duplicate claims, avoid rebilling same date of service. CO-4 occurs when modifier 95 for telehealth is missing.
+
+Valid Mental Health ICD-10 codes include F32.xx for major depressive disorder single episode, F33.xx for major depressive disorder recurrent, F41.xx for anxiety disorders, F43.xx for PTSD and adjustment disorders, F31.xx for bipolar disorder, F20.xx for schizophrenia, F90.xx for ADHD, F50.xx for eating disorders, and F10-F19.xx for substance use disorders.
+
+---
+
+## MVP Feature Specification
+
+### Phase 1: Claim Scrubber Core (6-8 weeks)
+
+**Feature 1: Claim Input**
+
+The system should accept claims through multiple input methods. First, a manual entry form where users enter CPT codes, ICD-10 codes, NPI, date of service, and patient demographics. Second, 837 file upload where users can upload standard X12 837 claim files for parsing. Third, CSV batch upload for practices that export claims from their EHR in spreadsheet format. Fourth, an API endpoint for EHR integration so claims can be sent programmatically.
+
+**Feature 2: CPT-ICD-10 Validation**
+
+When a user enters a CPT code and ICD-10 diagnosis code, the system should call Claude's ICD-10 connector to validate the match. The system should check if the diagnosis supports medical necessity for the procedure. If there is a mismatch, the system should flag it with a specific denial risk (CO-11) and suggest valid ICD-10 codes that would support the CPT code.
+
+For example, if a user enters CPT 96413 (chemo infusion) with ICD-10 J18.9 (pneumonia), the system should return FAIL because pneumonia does not justify chemotherapy. If a user enters CPT 96413 with ICD-10 C50.911 (breast cancer), the system should return PASS.
+
+**Feature 3: Modifier Validation**
+
+The system should check for missing or incorrect modifiers. Check for missing modifier -25 when an E/M service is billed with a procedure on the same day. Check for missing modifier -59 when distinct procedures are billed together. Check for missing modifier -JW when oncology drugs are billed and there may be wastage. Check for incorrect modifier combinations that violate NCCI edits. Flag any modifier issues with the specific denial risk (CO-4) and suggest the correct modifier.
+
+**Feature 4: NPI Verification**
+
+Using the NPI Registry Connector, the system should validate that the provider NPI is active and not deactivated. Check that the provider specialty matches the type of service being billed. Verify the billing NPI versus rendering NPI if different. Flag any inactive or mismatched NPIs with the specific denial risk (CO-16) and suggest corrections.
+
+**Feature 5: Prior Auth Check**
+
+Using the CMS Coverage Database, the system should look up whether the CPT code requires prior authorization for Medicare. Check the LCD/NCD for coverage criteria. Flag services that likely need authorization with the specific denial risk (CO-15). Note that commercial payer rules (United Healthcare, Aetna, Blue Cross Blue Shield, etc.) require a separate database which will be built in Phase 2. For Phase 1, clearly indicate when the system only has Medicare data and cannot confirm commercial payer requirements.
+
+**Feature 6: Data Completeness Check**
+
+The system should verify the presence of all required claim fields. Check for patient name, date of birth, gender, and address. Check for insurance ID and group number. Check for provider NPI and taxonomy code. Check for date of service and place of service code. Check for primary and secondary diagnosis codes. Flag any missing data with the specific denial risk (CO-16) and indicate which fields are missing.
+
+**Feature 7: Timely Filing Alert**
+
+The system should calculate days since the date of service. Flag claims approaching the 90-day filing limit (the most common payer deadline). Show an urgent alert if fewer than 7 days remain. Note payer-specific limits if known. Flag with the specific denial risk (CO-29) and show days remaining.
+
+---
+
+## Data Requirements
+
+### Claim Data Structure
+
+Each claim should capture the following information:
+
+A unique claim identifier for tracking.
+
+Practice identifier to associate claims with specific practices.
+
+Patient information including first name, last name, date of birth, gender, address, insurance ID, group number, and payer name.
+
+Provider information including NPI, provider name, and taxonomy code.
+
+Service information including date of service, place of service code, one or more CPT codes with modifiers, units, and charges, one or more ICD-10 diagnosis codes, and prior authorization number if obtained.
+
+Validation results including overall status (PASS, FAIL, or WARNING), list of specific errors or warnings, suggested fixes for each issue, and timestamp of validation.
+
+### Validation Rules Data Structure
+
+Each validation rule should capture:
+
+A rule identifier for tracking.
+
+The specialty it applies to (OB-GYN, Endocrinology, Oncology, or Mental Health).
+
+The rule type (CPT-ICD match, modifier check, auth requirement, or data completeness).
+
+The CPT codes the rule applies to.
+
+The valid ICD-10 patterns that support those CPT codes.
+
+Required modifiers for those CPT codes.
+
+Whether prior auth is typically required.
+
+Payer-specific variations for Medicare, Medicaid, and commercial payers.
+
+---
+
+## User Interface Requirements
+
+### Main Dashboard
+
+The dashboard should show quick statistics for today including total claims validated, number passed, number with warnings, and number failed.
+
+The dashboard should have action buttons for creating a new claim, uploading an 837 file, and batch uploading via CSV.
+
+The dashboard should show a list of recent validations with patient name, CPT code, validation status, denial risk codes, and action buttons to view details or fix issues.
+
+### Claim Entry Form
+
+The form should have sections for patient information (name, DOB, insurance details), provider information (NPI, name, taxonomy), and service details (date of service, place of service).
+
+The form should allow entering multiple procedures with CPT code, modifiers, ICD-10 codes, units, and charges for each line.
+
+The form should have a field for prior authorization number if already obtained.
+
+The form should have a prominent "Validate Claim" button.
+
+### Validation Results Screen
+
+The results should show an overall status prominently (PASS with green checkmark, WARNING with yellow warning icon, or FAIL with red X).
+
+The results should show a claim score out of 100.
+
+The results should list each validation check performed with its status, explanation, denial code risk if any, and suggested fix if applicable.
+
+The results should have buttons to fix issues, submit the claim anyway, or export a validation report.
+
+---
+
+## Development Phases
+
+### Phase 1: MVP (Weeks 1-8)
+
+Set up the project structure with the chosen frontend and backend frameworks. Implement the claim data model and database schema. Build the claim entry form user interface. Integrate Claude API for CPT-ICD-10 validation using the ICD-10 connector. Integrate the NPI Registry connector for provider verification. Integrate the CMS Coverage Database connector for prior auth checks. Build the validation results display. Create specialty-specific rule sets for OB-GYN, Endocrinology, Oncology, and Mental Health. Load Synthea FHIR test data and run validation tests. Implement user authentication.
+
+### Phase 2: Enhanced Features (Weeks 9-14)
+
+Build an 837 file parser to accept standard claim files. Build CSV batch upload functionality. Create a commercial payer rule database (this is a significant undertaking as each payer has different rules). Add prior authorization tracking and status monitoring. Build a denial analytics dashboard showing trends. Add practice and user management for multi-tenant support.
+
+### Phase 3: Denial Management (Weeks 15-20)
+
+Build an 835 EOB parser to ingest denial information. Implement denial categorization by reason code. Build an appeal letter generator using Claude. Integrate PubMed connector to find clinical evidence for appeals. Add revenue recovery tracking to measure appeal success.
+
+---
+
+## Testing Strategy
+
+### Test Cases by Specialty
+
+For OB-GYN, test a valid prenatal visit with CPT 59400 and ICD-10 Z34.00, expected result is PASS. Test a hysterectomy without auth check with CPT 58571 and ICD-10 D25.9, expected result is WARNING for auth required. Test an invalid diagnosis for C-section with CPT 59510 and ICD-10 J18.9 (pneumonia), expected result is FAIL with CO-11 risk.
+
+For Endocrinology, test valid diabetes management with CPT 99214 and ICD-10 E11.65, expected result is PASS. Test CGM interpretation with CPT 95251 and ICD-10 E11.9, expected result is WARNING about 72-hour data documentation requirement. Test a valid TSH test with CPT 84443 and ICD-10 E03.9, expected result is PASS.
+
+For Oncology, test a valid chemo infusion with CPT 96413, ICD-10 C50.911, and JW modifier, expected result is PASS. Test chemo without auth with CPT 96413, ICD-10 C50.911, and no modifiers, expected result is WARNING for auth required and JW modifier missing. Test an invalid diagnosis for chemo with CPT 96413 and ICD-10 Z00.00 (general exam), expected result is FAIL with CO-11 risk.
+
+For Mental Health, test a valid 45-minute therapy session with CPT 90834 and ICD-10 F32.1, expected result is PASS. Test a 60-minute therapy session with CPT 90837 and ICD-10 F33.1, expected result is WARNING that some payers require auth for 90837. Test a telehealth session with CPT 90834, ICD-10 F41.1, place of service 02 (telehealth), and no modifiers, expected result is WARNING for missing modifier 95.
+
+### Using Synthea Test Data
+
+Download the Synthea FHIR R4 data from the Synthea website. Each patient bundle contains conditions (which map to ICD-10 codes) and procedures (which map to CPT codes). Extract ICD-10 codes from the Condition resources by looking for the coding system "http://hl7.org/fhir/sid/icd-10-cm". Extract CPT codes from the Procedure resources by looking for the coding system "http://www.ama-assn.org/go/cpt". Create test claims by pairing the extracted codes and run them through validation.
+
+---
+
+## Deployment Recommendations
+
+### Environment Configuration
+
+The system needs an Anthropic API key for Claude access. The system needs Firebase project credentials for database and authentication. In Phase 2, the system will need Google Cloud Vision credentials for OCR.
+
+### Hosting Recommendations
+
+Host the frontend on Vercel or Firebase Hosting for easy deployment and scaling. Host the backend on Cloud Run or Firebase Functions for serverless operation. Use Firestore as the database for real-time data and automatic scaling.
+
+---
+
+## Success Metrics
+
+Target claim validation accuracy of greater than 95% (validated against known good and bad claims).
+
+Target false positive rate of less than 5% (claims flagged incorrectly).
+
+Target processing time of less than 3 seconds per claim.
+
+Target user denial rate reduction from 15% to 5% after using the tool.
+
+Target customer satisfaction NPS score of greater than 50.
+
+---
+
+## References
+
+### Anthropic Healthcare Resources
+
+Anthropic blog post on healthcare and life sciences: https://www.anthropic.com/news/healthcare-life-sciences
+
+ICD-10 Connector documentation: https://claude.com/connectors/icd-10-codes
+
+Healthcare Solutions page: https://claude.com/solutions/healthcare
+
+### FHIR Test Data Resources
+
+Synthea synthetic patient generator: https://synthetichealth.github.io/synthea/
+
+SMART on FHIR sample bulk datasets: https://github.com/smart-on-fhir/sample-bulk-fhir-datasets
+
+### Denial Code References
+
+CMS Review Reason Codes: https://www.cms.gov/data-research/monitoring-programs/medicare-fee-service-compliance-programs/review-reason-codes-and-statements
+
+X12 CARC/RARC Code Lists: https://x12.org/codes
+
+### Specialty Billing Guides
+
+OB-GYN billing: ACOG (American College of Obstetricians and Gynecologists) billing resources
+
+Oncology billing: NCCN (National Comprehensive Cancer Network) guidelines and ASCO billing guides
+
+Mental Health billing: APA (American Psychological Association) billing codes reference
+
+Endocrinology billing: ADA (American Diabetes Association) coding standards
+
+---
+
+## Next Steps
+
+ Test Claude Healthcare connectors with the sample prompts provided in the validation checklist. Document which connectors work and any limitations found.
+
+ If connectors pass validation, set up the project scaffolding and Firestore database schema.
+
+: Build the claim entry user interface and basic validation flow.
+
+: Implement specialty-specific validation rules for all four specialties.
+
+: Integration testing with Synthea FHIR test data.
+
+: Bug fixes and preparation for beta testing with real practices.
+
+ : Beta testing with actual provider practices from your network.
