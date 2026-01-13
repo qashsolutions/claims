@@ -2,21 +2,51 @@
 
 ## Overview
 
-Monorepo structure with separate frontend (PWA) and backend (API) packages.
+Monorepo architecture with modern, type-safe, and scalable stack.
+100% agentic UX with XState state machine orchestration.
 
 ```
 claimscrub/
 ├── apps/
 │   ├── web/                    # React PWA (Vite)
-│   └── api/                    # Node.js + Express API
+│   └── api/                    # Hono + tRPC API
 ├── packages/
-│   ├── shared/                 # Shared types, utils, constants
-│   ├── ui/                     # Shared UI components
-│   └── validators/             # Claim validation logic
-├── docs/                       # Documentation
-├── scripts/                    # Build/deploy scripts
+│   ├── shared/                 # Shared types, constants
+│   ├── ui/                     # Radix + Tailwind components
+│   ├── validators/             # Claim validation logic
+│   └── agentic-engine/         # XState flow orchestration
+├── docs/
+├── scripts/
 └── config files
 ```
+
+---
+
+## Tech Stack
+
+| Layer | Technology | Version | Purpose |
+|-------|------------|---------|---------|
+| **Framework** | React | 19 | UI library |
+| **Bundler** | Vite | 6 | Fast builds, HMR |
+| **Language** | TypeScript | 5.4 | Type safety |
+| **Styling** | Tailwind CSS | 4 | Utility-first CSS |
+| **Components** | Radix UI | Latest | Accessible primitives |
+| **API Runtime** | Hono | 4 | Fast, edge-ready |
+| **Type-Safe API** | tRPC | 11 | End-to-end types |
+| **Data Fetching** | TanStack Query | 5 | Caching, mutations |
+| **Client State** | Zustand | 5 | Simple state |
+| **Flow State** | XState | 5 | Agentic state machine |
+| **Database** | PostgreSQL | 16 | Relational data |
+| **ORM** | Prisma | 5 | Type-safe queries |
+| **Auth** | Supabase Auth | Latest | MFA, HIPAA ready |
+| **Cache** | Upstash Redis | Serverless | Rate limiting, cache |
+| **Queue** | Trigger.dev | 3 | Background jobs |
+| **Hosting** | Vercel | Enterprise | Edge, HIPAA BAA |
+| **Payments** | Stripe | Latest | Usage billing |
+| **AI** | Claude API | Latest | Health connectors |
+| **Dev Tools** | Storybook | 8 | Component dev |
+| **Monorepo** | Turborepo | 2 | Build orchestration |
+| **Package Manager** | pnpm | 9 | Fast, efficient |
 
 ---
 
@@ -30,7 +60,8 @@ claimscrub/
 ├── packages/
 │   ├── shared/
 │   ├── ui/
-│   └── validators/
+│   ├── validators/
+│   └── agentic-engine/
 ├── docs/
 │   ├── api/
 │   ├── architecture/
@@ -41,13 +72,15 @@ claimscrub/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml
-│       └── deploy.yml
+│       ├── deploy.yml
+│       └── security.yml
 ├── .env.example
 ├── .gitignore
-├── package.json                # Workspace root
+├── package.json
 ├── pnpm-workspace.yaml
-├── turbo.json                  # Turborepo config
+├── turbo.json
 ├── tsconfig.base.json
+├── biome.json                  # Linting + formatting
 └── README.md
 ```
 
@@ -58,75 +91,71 @@ claimscrub/
 ```
 apps/web/
 ├── public/
-│   ├── manifest.json           # PWA manifest
-│   ├── sw.js                   # Service worker
+│   ├── manifest.json
+│   ├── sw.js
 │   ├── icons/
-│   │   ├── icon-192.png
-│   │   └── icon-512.png
 │   └── fonts/
 │       ├── merriweather/
 │       ├── inter/
 │       └── jetbrains-mono/
+│
 ├── src/
-│   ├── main.tsx                # Entry point
-│   ├── App.tsx                 # Root component
+│   ├── main.tsx
+│   ├── App.tsx
 │   ├── vite-env.d.ts
 │   │
 │   ├── assets/
-│   │   ├── logo.svg
-│   │   └── icons/
+│   │   └── logo.svg
 │   │
 │   ├── components/
-│   │   ├── ui/                 # Base UI components
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── Select.tsx
-│   │   │   ├── Badge.tsx
-│   │   │   ├── Modal.tsx
-│   │   │   ├── Tabs.tsx
-│   │   │   ├── Table.tsx
-│   │   │   ├── Toast.tsx
-│   │   │   └── index.ts
+│   │   ├── ui/                     # Base components (from packages/ui)
+│   │   │   └── index.ts            # Re-exports
 │   │   │
 │   │   ├── layout/
-│   │   │   ├── AppShell.tsx        # Main layout wrapper
+│   │   │   ├── AppShell.tsx
 │   │   │   ├── Sidebar.tsx
 │   │   │   ├── TopNav.tsx
 │   │   │   ├── PageHeader.tsx
-│   │   │   └── BottomNav.tsx       # Mobile
+│   │   │   ├── BottomNav.tsx
+│   │   │   └── index.ts
 │   │   │
 │   │   ├── auth/
 │   │   │   ├── LoginForm.tsx
 │   │   │   ├── MFAInput.tsx
 │   │   │   ├── EpicOAuthButton.tsx
-│   │   │   └── ProtectedRoute.tsx
+│   │   │   ├── ProtectedRoute.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── agentic/                # Agentic flow UI
+│   │   │   ├── FlowProvider.tsx        # XState context provider
+│   │   │   ├── FlowContainer.tsx       # Main flow wrapper
+│   │   │   ├── ProgressSteps.tsx
+│   │   │   ├── KeyboardHint.tsx
+│   │   │   ├── steps/
+│   │   │   │   ├── PatientContext.tsx
+│   │   │   │   ├── ProcedureSelect.tsx
+│   │   │   │   ├── DiagnosisMatch.tsx
+│   │   │   │   ├── AuthCheck.tsx
+│   │   │   │   └── ReviewSubmit.tsx
+│   │   │   ├── SuggestionCard.tsx
+│   │   │   ├── ValidationInline.tsx
+│   │   │   ├── ConfirmButton.tsx
+│   │   │   └── index.ts
 │   │   │
 │   │   ├── claims/
 │   │   │   ├── ClaimsList.tsx
 │   │   │   ├── ClaimCard.tsx
 │   │   │   ├── ClaimFilters.tsx
-│   │   │   └── ClaimBulkActions.tsx
-│   │   │
-│   │   ├── agentic/                # Agentic flow components
-│   │   │   ├── FlowContainer.tsx       # Tab+Enter orchestrator
-│   │   │   ├── ProgressSteps.tsx
-│   │   │   ├── KeyboardHint.tsx
-│   │   │   ├── PatientContext.tsx      # Screen 08
-│   │   │   ├── ProcedureSuggest.tsx    # Screen 09
-│   │   │   ├── DiagnosisSuggest.tsx    # Screen 10
-│   │   │   ├── AuthDetection.tsx       # Screen 11
-│   │   │   ├── ReviewSubmit.tsx        # Screen 12
-│   │   │   ├── SuggestionCard.tsx
-│   │   │   ├── ValidationInline.tsx
-│   │   │   └── ConfirmButton.tsx
+│   │   │   ├── ClaimBulkActions.tsx
+│   │   │   └── index.ts
 │   │   │
 │   │   ├── validation/
 │   │   │   ├── ValidationResult.tsx
 │   │   │   ├── ValidationCheck.tsx
 │   │   │   ├── DenialRiskBadge.tsx
 │   │   │   ├── SuggestedFix.tsx
-│   │   │   └── CoveragePanel.tsx
+│   │   │   ├── CoveragePanel.tsx
+│   │   │   └── index.ts
 │   │   │
 │   │   ├── chat/
 │   │   │   ├── ChatPanel.tsx
@@ -134,21 +163,21 @@ apps/web/
 │   │   │   ├── ChatInput.tsx
 │   │   │   ├── VoiceInput.tsx
 │   │   │   ├── SuggestedQueries.tsx
-│   │   │   └── ResultsTable.tsx
+│   │   │   └── index.ts
 │   │   │
 │   │   ├── billing/
 │   │   │   ├── PricingCards.tsx
 │   │   │   ├── PlanComparison.tsx
 │   │   │   ├── UsageStats.tsx
 │   │   │   ├── PaymentMethod.tsx
-│   │   │   └── InvoiceHistory.tsx
+│   │   │   └── index.ts
 │   │   │
 │   │   └── dashboard/
 │   │       ├── StatCard.tsx
 │   │       ├── QuickActions.tsx
 │   │       ├── RecentValidations.tsx
 │   │       ├── DenialRiskChart.tsx
-│   │       └── SpecialtyChart.tsx
+│   │       └── index.ts
 │   │
 │   ├── pages/
 │   │   ├── auth/
@@ -159,20 +188,19 @@ apps/web/
 │   │   │
 │   │   ├── onboarding/
 │   │   │   ├── OnboardingFlow.tsx
-│   │   │   ├── steps/
-│   │   │   │   ├── WelcomeStep.tsx
-│   │   │   │   ├── EpicConnectStep.tsx
-│   │   │   │   ├── PracticeProfileStep.tsx
-│   │   │   │   ├── MFASetupStep.tsx
-│   │   │   │   └── FirstClaimStep.tsx
-│   │   │   └── index.ts
+│   │   │   └── steps/
+│   │   │       ├── WelcomeStep.tsx
+│   │   │       ├── EpicConnectStep.tsx
+│   │   │       ├── PracticeProfileStep.tsx
+│   │   │       ├── MFASetupStep.tsx
+│   │   │       └── FirstClaimStep.tsx
 │   │   │
 │   │   ├── dashboard/
 │   │   │   └── DashboardPage.tsx
 │   │   │
 │   │   ├── claims/
 │   │   │   ├── ClaimsListPage.tsx
-│   │   │   ├── NewClaimPage.tsx        # Agentic flow
+│   │   │   ├── NewClaimPage.tsx        # Uses FlowProvider
 │   │   │   └── ClaimDetailPage.tsx
 │   │   │
 │   │   ├── chat/
@@ -191,47 +219,39 @@ apps/web/
 │   │
 │   ├── hooks/
 │   │   ├── useAuth.ts
-│   │   ├── useEpic.ts              # Epic FHIR data
+│   │   ├── useEpic.ts
 │   │   ├── useClaims.ts
 │   │   ├── useValidation.ts
 │   │   ├── useChat.ts
-│   │   ├── useVoice.ts             # Web Speech API
-│   │   ├── useKeyboardNav.ts       # Tab+Enter navigation
-│   │   ├── useAgenticFlow.ts       # Flow orchestration
+│   │   ├── useVoice.ts
+│   │   ├── useAgenticFlow.ts           # XState hook
+│   │   ├── useKeyboardNav.ts           # Tab+Enter
+│   │   ├── useFocusManager.ts          # Focus control
 │   │   └── useToast.ts
 │   │
 │   ├── stores/
-│   │   ├── authStore.ts            # Zustand
-│   │   ├── claimStore.ts
-│   │   ├── flowStore.ts            # Agentic flow state
-│   │   └── uiStore.ts
-│   │
-│   ├── services/
-│   │   ├── api.ts                  # API client (axios)
-│   │   ├── auth.ts
-│   │   ├── claims.ts
-│   │   ├── validation.ts
-│   │   ├── chat.ts
-│   │   ├── epic.ts                 # Epic FHIR client
-│   │   └── stripe.ts
+│   │   ├── authStore.ts
+│   │   ├── uiStore.ts
+│   │   └── index.ts
 │   │
 │   ├── lib/
-│   │   ├── utils.ts                # cn(), formatters
+│   │   ├── trpc.ts                     # tRPC client
+│   │   ├── query-client.ts             # TanStack Query
+│   │   ├── supabase.ts                 # Auth client
+│   │   ├── utils.ts
 │   │   ├── constants.ts
-│   │   ├── validation-rules.ts
-│   │   └── keyboard.ts             # Tab+Enter helpers
+│   │   └── keyboard.ts
 │   │
 │   ├── types/
-│   │   ├── claim.ts
-│   │   ├── patient.ts
-│   │   ├── provider.ts
-│   │   ├── validation.ts
-│   │   ├── epic.ts
-│   │   └── api.ts
+│   │   └── index.ts                    # Re-export from shared
 │   │
 │   └── styles/
 │       ├── globals.css
 │       └── fonts.css
+│
+├── .storybook/
+│   ├── main.ts
+│   └── preview.ts
 │
 ├── index.html
 ├── vite.config.ts
@@ -248,40 +268,36 @@ apps/web/
 ```
 apps/api/
 ├── src/
-│   ├── index.ts                # Entry point
-│   ├── app.ts                  # Express app setup
+│   ├── index.ts                    # Entry point
+│   ├── app.ts                      # Hono app setup
+│   │
 │   ├── config/
 │   │   ├── index.ts
-│   │   ├── database.ts
-│   │   ├── auth.ts
-│   │   └── stripe.ts
+│   │   ├── env.ts                  # Zod env validation
+│   │   └── constants.ts
 │   │
-│   ├── routes/
-│   │   ├── index.ts            # Route aggregator
-│   │   ├── auth.routes.ts
-│   │   ├── claims.routes.ts
-│   │   ├── validation.routes.ts
-│   │   ├── chat.routes.ts
-│   │   ├── epic.routes.ts
-│   │   ├── billing.routes.ts
-│   │   └── webhooks.routes.ts
-│   │
-│   ├── controllers/
-│   │   ├── auth.controller.ts
-│   │   ├── claims.controller.ts
-│   │   ├── validation.controller.ts
-│   │   ├── chat.controller.ts
-│   │   ├── epic.controller.ts
-│   │   └── billing.controller.ts
+│   ├── trpc/                       # tRPC setup
+│   │   ├── index.ts
+│   │   ├── context.ts              # Request context
+│   │   ├── router.ts               # Root router
+│   │   ├── middleware.ts           # Auth, logging
+│   │   └── procedures/
+│   │       ├── auth.ts
+│   │       ├── claims.ts
+│   │       ├── validation.ts
+│   │       ├── epic.ts
+│   │       ├── chat.ts
+│   │       ├── billing.ts
+│   │       └── index.ts
 │   │
 │   ├── services/
-│   │   ├── auth.service.ts
 │   │   ├── claims.service.ts
 │   │   ├── validation.service.ts
 │   │   ├── chat.service.ts
 │   │   │
 │   │   ├── connectors/             # Claude Health Connectors
 │   │   │   ├── index.ts
+│   │   │   ├── base.connector.ts
 │   │   │   ├── icd10.connector.ts
 │   │   │   ├── cms.connector.ts
 │   │   │   ├── npi.connector.ts
@@ -289,6 +305,7 @@ apps/api/
 │   │   │
 │   │   ├── epic/                   # Epic FHIR
 │   │   │   ├── index.ts
+│   │   │   ├── client.ts           # FHIR client
 │   │   │   ├── oauth.ts
 │   │   │   ├── patient.ts
 │   │   │   ├── condition.ts
@@ -302,40 +319,44 @@ apps/api/
 │   │   │   ├── usage.ts
 │   │   │   └── webhooks.ts
 │   │   │
-│   │   └── claude/
+│   │   ├── claude/
+│   │   │   ├── index.ts
+│   │   │   ├── client.ts
+│   │   │   └── prompts.ts
+│   │   │
+│   │   └── cache/
 │   │       ├── index.ts
-│   │       ├── client.ts
-│   │       └── prompts.ts
+│   │       └── redis.ts            # Upstash Redis
 │   │
 │   ├── middleware/
-│   │   ├── auth.middleware.ts
-│   │   ├── rateLimit.middleware.ts
-│   │   ├── validate.middleware.ts
-│   │   ├── audit.middleware.ts     # HIPAA audit logging
-│   │   └── error.middleware.ts
-│   │
-│   ├── models/                     # Database models
 │   │   ├── index.ts
-│   │   ├── user.model.ts
-│   │   ├── practice.model.ts
-│   │   ├── claim.model.ts
-│   │   ├── validation.model.ts
-│   │   ├── audit.model.ts
-│   │   └── subscription.model.ts
+│   │   ├── security.ts             # Headers, CORS, CSP
+│   │   ├── rateLimit.ts            # Upstash rate limiting
+│   │   ├── audit.ts                # HIPAA audit logging
+│   │   └── error.ts
 │   │
-│   ├── validators/                 # Request validation (Zod)
-│   │   ├── auth.validator.ts
-│   │   ├── claim.validator.ts
-│   │   └── common.validator.ts
+│   ├── jobs/                       # Trigger.dev jobs
+│   │   ├── index.ts
+│   │   ├── claim-submit.ts
+│   │   ├── auth-check.ts
+│   │   └── notification.ts
+│   │
+│   ├── db/
+│   │   ├── index.ts                # Prisma client
+│   │   ├── queries/
+│   │   │   ├── claims.ts
+│   │   │   ├── users.ts
+│   │   │   └── validations.ts
+│   │   └── extensions/
+│   │       └── encryption.ts       # Field-level encryption
 │   │
 │   ├── utils/
-│   │   ├── logger.ts
+│   │   ├── logger.ts               # Pino logger
 │   │   ├── encryption.ts
 │   │   ├── npi-luhn.ts
 │   │   └── response.ts
 │   │
 │   └── types/
-│       ├── express.d.ts
 │       └── index.ts
 │
 ├── prisma/
@@ -343,10 +364,62 @@ apps/api/
 │   ├── migrations/
 │   └── seed.ts
 │
+├── trigger.config.ts               # Trigger.dev config
+├── tsconfig.json
+└── package.json
+```
+
+---
+
+## Agentic Engine (packages/agentic-engine)
+
+```
+packages/agentic-engine/
+├── src/
+│   ├── index.ts
+│   │
+│   ├── machines/
+│   │   ├── claim-flow.machine.ts       # Main flow machine
+│   │   ├── onboarding.machine.ts       # Onboarding flow
+│   │   └── index.ts
+│   │
+│   ├── states/
+│   │   ├── patient-context.ts
+│   │   ├── procedure-select.ts
+│   │   ├── diagnosis-match.ts
+│   │   ├── auth-check.ts
+│   │   ├── review-submit.ts
+│   │   └── index.ts
+│   │
+│   ├── actions/                        # Side effects
+│   │   ├── fetch-patient.ts
+│   │   ├── validate-codes.ts
+│   │   ├── check-auth.ts
+│   │   ├── submit-claim.ts
+│   │   └── index.ts
+│   │
+│   ├── guards/                         # Transition conditions
+│   │   ├── is-valid-patient.ts
+│   │   ├── is-valid-procedure.ts
+│   │   ├── is-auth-required.ts
+│   │   └── index.ts
+│   │
+│   ├── context/
+│   │   ├── types.ts                    # Flow context types
+│   │   └── initial.ts                  # Initial context
+│   │
+│   ├── events/
+│   │   ├── types.ts                    # Event definitions
+│   │   └── creators.ts                 # Event factories
+│   │
+│   └── hooks/
+│       ├── useFlowMachine.ts           # React hook
+│       ├── useFlowState.ts
+│       └── useFlowActions.ts
+│
 ├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── fixtures/
+│   ├── machines/
+│   └── guards/
 │
 ├── tsconfig.json
 └── package.json
@@ -354,9 +427,7 @@ apps/api/
 
 ---
 
-## Shared Packages
-
-### packages/shared
+## Shared Package (packages/shared)
 
 ```
 packages/shared/
@@ -366,14 +437,22 @@ packages/shared/
 │   │   ├── patient.ts
 │   │   ├── provider.ts
 │   │   ├── validation.ts
-│   │   ├── denial-codes.ts
+│   │   ├── epic.ts
+│   │   ├── api.ts
 │   │   └── index.ts
 │   │
 │   ├── constants/
-│   │   ├── denial-codes.ts         # CO-11, CO-15, etc.
-│   │   ├── specialties.ts          # OB-GYN, Oncology, etc.
+│   │   ├── denial-codes.ts
+│   │   ├── specialties.ts
 │   │   ├── modifiers.ts
 │   │   ├── place-of-service.ts
+│   │   ├── payers.ts
+│   │   └── index.ts
+│   │
+│   ├── schemas/                    # Zod schemas
+│   │   ├── claim.schema.ts
+│   │   ├── patient.schema.ts
+│   │   ├── validation.schema.ts
 │   │   └── index.ts
 │   │
 │   └── utils/
@@ -385,29 +464,93 @@ packages/shared/
 └── package.json
 ```
 
-### packages/validators
+---
+
+## UI Package (packages/ui)
+
+```
+packages/ui/
+├── src/
+│   ├── components/
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.stories.tsx
+│   │   │   ├── Button.test.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── Card/
+│   │   │   ├── Card.tsx
+│   │   │   ├── Card.stories.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── Input/
+│   │   │   ├── Input.tsx
+│   │   │   ├── Input.stories.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── Select/
+│   │   ├── Badge/
+│   │   ├── Modal/
+│   │   ├── Tabs/
+│   │   ├── Table/
+│   │   ├── Toast/
+│   │   ├── Tooltip/
+│   │   ├── Dropdown/
+│   │   │
+│   │   └── index.ts
+│   │
+│   ├── primitives/                 # Radix wrappers
+│   │   ├── Dialog.tsx
+│   │   ├── Popover.tsx
+│   │   ├── Select.tsx
+│   │   └── index.ts
+│   │
+│   ├── utils/
+│   │   ├── cn.ts                   # Class merge utility
+│   │   └── focus.ts                # Focus management
+│   │
+│   └── index.ts
+│
+├── .storybook/
+├── tsconfig.json
+├── tailwind.config.ts
+└── package.json
+```
+
+---
+
+## Validators Package (packages/validators)
 
 ```
 packages/validators/
 ├── src/
 │   ├── index.ts
-│   ├── cpt-icd-match.ts            # CPT-ICD validation rules
-│   ├── modifier-rules.ts
-│   ├── npi-validator.ts
-│   ├── timely-filing.ts
-│   ├── ncci-edits.ts               # Bundling edits
+│   │
+│   ├── engine/
+│   │   ├── rule-engine.ts
+│   │   ├── rule-types.ts
+│   │   └── index.ts
+│   │
+│   ├── rules/
+│   │   ├── cpt-icd-match.ts
+│   │   ├── modifier-rules.ts
+│   │   ├── npi-validator.ts
+│   │   ├── timely-filing.ts
+│   │   ├── ncci-edits.ts
+│   │   ├── data-completeness.ts
+│   │   └── index.ts
 │   │
 │   ├── specialty/
-│   │   ├── index.ts
 │   │   ├── oncology.ts
 │   │   ├── mental-health.ts
 │   │   ├── obgyn.ts
-│   │   └── endocrinology.ts
+│   │   ├── endocrinology.ts
+│   │   └── index.ts
 │   │
-│   └── rules/
-│       ├── index.ts
-│       ├── rule-engine.ts
-│       └── rule-types.ts
+│   └── data/
+│       ├── cpt-icd-mappings.json
+│       ├── ncci-edits.json
+│       └── modifier-rules.json
 │
 ├── tests/
 ├── tsconfig.json
@@ -430,53 +573,73 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ============================================
+// USERS & PRACTICES
+// ============================================
+
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
+  id            String    @id @default(cuid())
+  email         String    @unique
   passwordHash  String?
-  mfaSecret     String?
-  mfaEnabled    Boolean  @default(false)
-  role          UserRole @default(BILLING_STAFF)
+  mfaSecret     String?   @db.Text  // Encrypted
+  mfaEnabled    Boolean   @default(false)
+  role          UserRole  @default(BILLING_STAFF)
 
   practiceId    String
-  practice      Practice @relation(fields: [practiceId], references: [id])
+  practice      Practice  @relation(fields: [practiceId], references: [id])
 
   epicUserId    String?
+  epicTokens    Json?     @db.JsonB  // Encrypted OAuth tokens
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   claims        Claim[]
   auditLogs     AuditLog[]
+
+  @@index([email])
+  @@index([practiceId])
 }
 
 model Practice {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
-  npi           String   @unique
+  npi           String    @unique
+  taxId         String?   // Encrypted
   specialty     Specialty
+  address       Json?
 
   epicOrgId     String?
+  epicConnected Boolean   @default(false)
 
-  subscriptionId String?
+  subscriptionId String?  @unique
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   users         User[]
   claims        Claim[]
+
+  @@index([npi])
 }
 
-model Claim {
-  id            String   @id @default(cuid())
+// ============================================
+// CLAIMS
+// ============================================
 
-  // Patient
-  patientName   String
+model Claim {
+  id            String      @id @default(cuid())
+  claimNumber   String      @unique @default(cuid())
+
+  // Patient (encrypted fields)
+  patientName   String      @db.Text  // Encrypted
   patientDob    DateTime
   patientGender String
-  insuranceId   String
+  insuranceId   String      @db.Text  // Encrypted
   payerName     String
+  payerId       String?
 
   // Provider
   providerNpi   String
@@ -485,84 +648,150 @@ model Claim {
   // Service
   dateOfService DateTime
   placeOfService String
+  priorAuthNumber String?
 
-  // Validation
-  status        ClaimStatus @default(PENDING)
+  // Status
+  status        ClaimStatus @default(DRAFT)
   score         Int?
+  totalCharge   Decimal     @db.Decimal(10, 2)
 
+  // Relations
   practiceId    String
-  practice      Practice @relation(fields: [practiceId], references: [id])
+  practice      Practice    @relation(fields: [practiceId], references: [id])
 
   createdById   String
-  createdBy     User     @relation(fields: [createdById], references: [id])
+  createdBy     User        @relation(fields: [createdById], references: [id])
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  submittedAt   DateTime?
 
   serviceLines  ServiceLine[]
   validations   Validation[]
+
+  @@index([practiceId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([dateOfService])
 }
 
 model ServiceLine {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
+  lineNumber    Int
 
   claimId       String
-  claim         Claim    @relation(fields: [claimId], references: [id])
+  claim         Claim     @relation(fields: [claimId], references: [id], onDelete: Cascade)
 
   cptCode       String
+  cptDescription String?
   modifiers     String[]
   icdCodes      String[]
   drugCode      String?
-  units         Int      @default(1)
-  charge        Decimal
+  drugUnits     Int?
+  units         Int       @default(1)
+  charge        Decimal   @db.Decimal(10, 2)
 
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
+
+  @@index([claimId])
 }
 
 model Validation {
-  id            String   @id @default(cuid())
+  id            String           @id @default(cuid())
 
   claimId       String
-  claim         Claim    @relation(fields: [claimId], references: [id])
+  claim         Claim            @relation(fields: [claimId], references: [id], onDelete: Cascade)
 
-  checkType     String   // CPT_ICD_MATCH, NPI_VERIFY, etc.
+  checkType     ValidationCheck
   status        ValidationStatus
-  denialCode    String?  // CO-11, CO-15, etc.
+  denialCode    String?
   message       String
   suggestion    String?
+  metadata      Json?
 
-  createdAt     DateTime @default(now())
+  createdAt     DateTime         @default(now())
+
+  @@index([claimId])
+  @@index([status])
 }
+
+// ============================================
+// BILLING
+// ============================================
 
 model Subscription {
-  id            String   @id @default(cuid())
-  stripeSubId   String   @unique
-  plan          PlanType
-  status        SubStatus
+  id                  String    @id @default(cuid())
+  stripeCustomerId    String    @unique
+  stripeSubscriptionId String?  @unique
 
-  currentPeriodStart DateTime
-  currentPeriodEnd   DateTime
+  plan                PlanType
+  status              SubStatus
 
-  practices     Practice[]
+  currentPeriodStart  DateTime?
+  currentPeriodEnd    DateTime?
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  claimsThisPeriod    Int       @default(0)
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  practice            Practice?
+  usageRecords        UsageRecord[]
+
+  @@index([stripeCustomerId])
 }
 
+model UsageRecord {
+  id              String    @id @default(cuid())
+
+  subscriptionId  String
+  subscription    Subscription @relation(fields: [subscriptionId], references: [id])
+
+  claimId         String
+  sizeBytes       Int
+
+  createdAt       DateTime  @default(now())
+
+  @@index([subscriptionId])
+  @@index([createdAt])
+}
+
+// ============================================
+// AUDIT & SECURITY
+// ============================================
+
 model AuditLog {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
 
   userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  user          User      @relation(fields: [userId], references: [id])
 
-  action        String   // VIEW_CLAIM, EDIT_CLAIM, etc.
-  resource      String   // claim, patient, etc.
+  action        AuditAction
+  resource      String
   resourceId    String
   metadata      Json?
   ipAddress     String
+  userAgent     String?
 
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([resourceId])
 }
+
+model RateLimit {
+  id            String    @id
+  count         Int       @default(0)
+  resetAt       DateTime
+
+  @@index([resetAt])
+}
+
+// ============================================
+// ENUMS
+// ============================================
 
 enum UserRole {
   PROVIDER
@@ -578,11 +807,24 @@ enum Specialty {
 }
 
 enum ClaimStatus {
-  PENDING
+  DRAFT
+  VALIDATING
   VALIDATED
   SUBMITTED
+  ACCEPTED
   PAID
   DENIED
+  APPEALING
+}
+
+enum ValidationCheck {
+  CPT_ICD_MATCH
+  NPI_VERIFY
+  MODIFIER_CHECK
+  PRIOR_AUTH
+  DATA_COMPLETENESS
+  TIMELY_FILING
+  NCCI_EDITS
 }
 
 enum ValidationStatus {
@@ -599,10 +841,241 @@ enum PlanType {
 }
 
 enum SubStatus {
+  TRIALING
   ACTIVE
   PAST_DUE
   CANCELED
+  UNPAID
 }
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  VIEW_CLAIM
+  CREATE_CLAIM
+  UPDATE_CLAIM
+  DELETE_CLAIM
+  SUBMIT_CLAIM
+  VIEW_PATIENT
+  EXPORT_DATA
+  CHANGE_SETTINGS
+}
+```
+
+---
+
+## Security Middleware
+
+```typescript
+// apps/api/src/middleware/security.ts
+
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+import { secureHeaders } from 'hono/secure-headers'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
+
+const redis = Redis.fromEnv()
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(100, '1 m'),
+  analytics: true,
+})
+
+export const securityMiddleware = new Hono()
+
+// CORS
+securityMiddleware.use('*', cors({
+  origin: process.env.FRONTEND_URL!,
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 86400,
+}))
+
+// Security Headers
+securityMiddleware.use('*', secureHeaders({
+  contentSecurityPolicy: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
+    imgSrc: ["'self'", 'data:', 'https:'],
+    connectSrc: ["'self'", process.env.SUPABASE_URL!],
+    fontSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    frameAncestors: ["'none'"],
+  },
+  xContentTypeOptions: 'nosniff',
+  xFrameOptions: 'DENY',
+  xXssProtection: '1; mode=block',
+  strictTransportSecurity: 'max-age=31536000; includeSubDomains; preload',
+  referrerPolicy: 'strict-origin-when-cross-origin',
+}))
+
+// Rate Limiting
+securityMiddleware.use('*', async (c, next) => {
+  const ip = c.req.header('x-forwarded-for') || 'unknown'
+  const { success, limit, remaining, reset } = await ratelimit.limit(ip)
+
+  c.header('X-RateLimit-Limit', limit.toString())
+  c.header('X-RateLimit-Remaining', remaining.toString())
+  c.header('X-RateLimit-Reset', reset.toString())
+
+  if (!success) {
+    return c.json({ error: 'Too many requests' }, 429)
+  }
+
+  await next()
+})
+```
+
+---
+
+## XState Flow Machine
+
+```typescript
+// packages/agentic-engine/src/machines/claim-flow.machine.ts
+
+import { setup, assign, fromPromise } from 'xstate'
+import type { ClaimFlowContext, ClaimFlowEvent } from '../context/types'
+
+export const claimFlowMachine = setup({
+  types: {
+    context: {} as ClaimFlowContext,
+    events: {} as ClaimFlowEvent,
+  },
+  actors: {
+    fetchPatient: fromPromise(async ({ input }) => {
+      // Fetch patient from Epic FHIR
+    }),
+    validateCodes: fromPromise(async ({ input }) => {
+      // Validate CPT-ICD match
+    }),
+    checkAuth: fromPromise(async ({ input }) => {
+      // Check prior auth requirements
+    }),
+    submitClaim: fromPromise(async ({ input }) => {
+      // Submit claim
+    }),
+  },
+  guards: {
+    isValidPatient: ({ context }) => !!context.patient?.id,
+    isValidProcedure: ({ context }) => !!context.procedure?.cptCode,
+    isValidDiagnosis: ({ context }) => context.diagnoses.length > 0,
+    isAuthRequired: ({ context }) => context.authRequired === true,
+    hasValidAuth: ({ context }) => !!context.authorization?.number,
+  },
+}).createMachine({
+  id: 'claimFlow',
+  initial: 'patientContext',
+  context: {
+    patient: null,
+    procedure: null,
+    diagnoses: [],
+    modifiers: [],
+    authorization: null,
+    authRequired: false,
+    validations: [],
+    score: null,
+  },
+  states: {
+    patientContext: {
+      on: {
+        CONFIRM_PATIENT: {
+          target: 'procedureSelect',
+          guard: 'isValidPatient',
+          actions: assign({ patient: ({ event }) => event.patient }),
+        },
+        EDIT_PATIENT: 'patientEdit',
+      },
+    },
+    patientEdit: {
+      on: {
+        SAVE_PATIENT: {
+          target: 'patientContext',
+          actions: assign({ patient: ({ event }) => event.patient }),
+        },
+        CANCEL: 'patientContext',
+      },
+    },
+    procedureSelect: {
+      on: {
+        SELECT_PROCEDURE: {
+          target: 'diagnosisMatch',
+          actions: assign({ procedure: ({ event }) => event.procedure }),
+        },
+        BACK: 'patientContext',
+      },
+    },
+    diagnosisMatch: {
+      on: {
+        APPLY_DIAGNOSIS: {
+          target: 'authCheck',
+          actions: assign({
+            diagnoses: ({ event }) => event.diagnoses,
+          }),
+        },
+        BACK: 'procedureSelect',
+      },
+    },
+    authCheck: {
+      entry: 'checkAuthRequirements',
+      on: {
+        USE_AUTH: {
+          target: 'reviewSubmit',
+          actions: assign({ authorization: ({ event }) => event.auth }),
+        },
+        SKIP_AUTH: {
+          target: 'reviewSubmit',
+          guard: ({ context }) => !context.authRequired,
+        },
+        REQUEST_AUTH: 'authRequest',
+        BACK: 'diagnosisMatch',
+      },
+    },
+    authRequest: {
+      on: {
+        AUTH_RECEIVED: {
+          target: 'reviewSubmit',
+          actions: assign({ authorization: ({ event }) => event.auth }),
+        },
+        CANCEL: 'authCheck',
+      },
+    },
+    reviewSubmit: {
+      on: {
+        SUBMIT: 'submitting',
+        EDIT_PATIENT: 'patientEdit',
+        EDIT_PROCEDURE: 'procedureSelect',
+        EDIT_DIAGNOSIS: 'diagnosisMatch',
+        BACK: 'authCheck',
+      },
+    },
+    submitting: {
+      invoke: {
+        src: 'submitClaim',
+        input: ({ context }) => context,
+        onDone: {
+          target: 'success',
+          actions: assign({ claimId: ({ event }) => event.output.claimId }),
+        },
+        onError: {
+          target: 'error',
+          actions: assign({ error: ({ event }) => event.error }),
+        },
+      },
+    },
+    success: {
+      type: 'final',
+    },
+    error: {
+      on: {
+        RETRY: 'submitting',
+        EDIT: 'reviewSubmit',
+      },
+    },
+  },
+})
 ```
 
 ---
@@ -612,62 +1085,102 @@ enum SubStatus {
 ```bash
 # .env.example
 
-# App
+# ============================================
+# APP
+# ============================================
 NODE_ENV=development
 PORT=3001
 FRONTEND_URL=http://localhost:5173
+API_URL=http://localhost:3001
 
-# Database (Supabase)
-DATABASE_URL=postgresql://...
+# ============================================
+# DATABASE
+# ============================================
+DATABASE_URL=postgresql://postgres:password@localhost:5432/claimscrub
 
-# Supabase Auth
+# ============================================
+# SUPABASE AUTH
+# ============================================
 SUPABASE_URL=https://xxx.supabase.co
 SUPABASE_ANON_KEY=xxx
 SUPABASE_SERVICE_KEY=xxx
 
-# Epic FHIR
+# ============================================
+# EPIC FHIR
+# ============================================
 EPIC_CLIENT_ID=xxx
 EPIC_CLIENT_SECRET=xxx
 EPIC_REDIRECT_URI=http://localhost:5173/auth/epic/callback
 EPIC_SANDBOX_URL=https://fhir.epic.com/interconnect-fhir-oauth
+EPIC_FHIR_BASE_URL=https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4
 
-# Claude API
+# ============================================
+# CLAUDE API
+# ============================================
 ANTHROPIC_API_KEY=xxx
 
-# Stripe
+# ============================================
+# STRIPE
+# ============================================
 STRIPE_SECRET_KEY=xxx
 STRIPE_WEBHOOK_SECRET=xxx
 STRIPE_PRICE_PAY_PER_CLAIM=price_xxx
 STRIPE_PRICE_UNLIMITED_MONTHLY=price_xxx
 STRIPE_PRICE_UNLIMITED_ANNUAL=price_xxx
 
-# Encryption
-ENCRYPTION_KEY=xxx
+# ============================================
+# UPSTASH REDIS
+# ============================================
+UPSTASH_REDIS_REST_URL=xxx
+UPSTASH_REDIS_REST_TOKEN=xxx
 
-# MFA
+# ============================================
+# TRIGGER.DEV
+# ============================================
+TRIGGER_API_KEY=xxx
+TRIGGER_API_URL=https://api.trigger.dev
+
+# ============================================
+# SECURITY
+# ============================================
+ENCRYPTION_KEY=xxx                    # 32-byte hex key
+JWT_SECRET=xxx
 MFA_ISSUER=ClaimScrub
+
+# ============================================
+# OBSERVABILITY
+# ============================================
+SENTRY_DSN=xxx
+LOG_LEVEL=info
 ```
 
 ---
 
-## Key Files Summary
+## Summary
 
-| Category | Count | Purpose |
-|----------|-------|---------|
-| **Agentic Components** | 10 | Tab+Enter guided flow |
+| Category | Count | Key Items |
+|----------|-------|-----------|
+| **Packages** | 4 | shared, ui, validators, agentic-engine |
+| **Agentic Components** | 12 | FlowProvider, steps, hooks |
+| **API Procedures** | 6 | claims, validation, epic, chat, billing, auth |
 | **Connectors** | 4 | ICD-10, CMS, NPI, PubMed |
-| **Epic Services** | 6 | OAuth, Patient, Coverage, etc. |
-| **Validation Rules** | 8 | CPT-ICD, modifiers, NCCI, specialty |
-| **Database Models** | 7 | User, Practice, Claim, etc. |
+| **Epic Services** | 7 | OAuth, patient, condition, procedure, coverage, auth |
+| **Database Models** | 9 | User, Practice, Claim, ServiceLine, Validation, etc. |
+| **Security Layers** | 5 | CORS, CSP, rate limit, audit, encryption |
+| **XState States** | 10 | Patient, procedure, diagnosis, auth, review, etc. |
 
 ---
 
-## Next Steps
+## Approval Checklist
 
-1. Review and approve file structure
-2. Initialize project with scaffolding
-3. Set up Turborepo + pnpm workspaces
-4. Configure Tailwind with design system
-5. Build core UI components
+- [x] Modern stack (React 19, Vite 6, Hono, tRPC)
+- [x] Type-safe (TypeScript, tRPC, Prisma, Zod)
+- [x] Secure (rate limiting, CSP, encryption, audit)
+- [x] Scalable (Redis cache, Trigger.dev queues)
+- [x] Modular (monorepo, packages)
+- [x] 100% Agentic (XState state machine)
+- [x] HIPAA-ready (audit logs, encryption, Vercel BAA)
 
-Approve to proceed with scaffolding?
+---
+
+Ready for scaffolding?
