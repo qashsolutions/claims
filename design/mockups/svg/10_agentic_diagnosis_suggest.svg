@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#f8fafc"/>
+
+  <!-- Top Navigation -->
+  <rect width="1440" height="64" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(24, 16)">
+    <rect width="32" height="32" rx="6" fill="#d97706"/>
+    <path d="M8 16 L14 22 L24 12" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="68" y="42" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#0f172a">ClaimScrub</text>
+
+  <!-- Sidebar -->
+  <rect y="64" width="240" height="836" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Page Title -->
+  <text x="280" y="112" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0f172a">Add Diagnosis</text>
+  <text x="280" y="140" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">CPT 96413 requires oncology diagnosis. Suggested from patient chart.</text>
+
+  <!-- Progress Steps -->
+  <rect x="280" y="160" width="940" height="56" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Step 1 - Complete -->
+  <rect x="300" y="172" width="100" height="32" rx="16" fill="#dcfce7"/>
+  <circle cx="330" cy="188" r="10" fill="#16a34a"/>
+  <path d="M325 188 L329 192 L336 184" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="370" y="194" font-family="system-ui, sans-serif" font-size="12" fill="#166534">Patient</text>
+
+  <!-- Step 2 - Complete -->
+  <rect x="420" y="172" width="120" height="32" rx="16" fill="#dcfce7"/>
+  <circle cx="450" cy="188" r="10" fill="#16a34a"/>
+  <path d="M445 188 L449 192 L456 184" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500" y="194" font-family="system-ui, sans-serif" font-size="12" fill="#166534">Procedure</text>
+
+  <!-- Step 3 - Active -->
+  <rect x="560" y="172" width="120" height="32" rx="16" fill="#fef3c7"/>
+  <text x="620" y="194" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#92400e" text-anchor="middle">3. Diagnosis</text>
+
+  <text x="740" y="194" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">4. Review</text>
+
+  <!-- Main Content -->
+  <rect x="280" y="232" width="940" height="620" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Context Bar -->
+  <rect x="280" y="232" width="940" height="56" rx="12" fill="#f0fdf4"/>
+  <rect x="280" y="264" width="940" height="24" fill="#f0fdf4"/>
+  <circle cx="312" cy="260" r="12" fill="#dcfce7"/>
+  <path d="M306 260 L310 264 L318 256" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="336" y="266" font-family="system-ui, sans-serif" font-size="13" fill="#166534">Selected: CPT 96413 (Chemotherapy IV infusion) - Requires C-code (malignant neoplasm)</text>
+
+  <!-- From Patient Chart Section -->
+  <text x="312" y="324" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#0f172a">From Patient's Active Diagnoses</text>
+  <text x="312" y="346" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">These match CPT 96413 requirements</text>
+
+  <!-- Diagnosis Card 1 - Perfect Match, Highlighted -->
+  <rect x="312" y="364" width="400" height="100" rx="12" fill="white" stroke="#16a34a" stroke-width="2"/>
+  <rect x="612" y="372" width="92" height="24" rx="12" fill="#dcfce7"/>
+  <text x="658" y="390" font-family="system-ui, sans-serif" font-size="11" font-weight="500" fill="#166534" text-anchor="middle">Perfect Match</text>
+
+  <text x="336" y="404" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700" fill="#0f172a">C50.911</text>
+  <text x="336" y="428" font-family="system-ui, sans-serif" font-size="14" fill="#334155">Malignant neoplasm of right female breast</text>
+  <rect x="336" y="440" width="80" height="20" rx="4" fill="#f0fdf4"/>
+  <text x="376" y="454" font-family="system-ui, sans-serif" font-size="11" fill="#166534" text-anchor="middle">Active Dx</text>
+
+  <!-- Diagnosis Card 2 - Not matching -->
+  <rect x="732" y="364" width="400" height="100" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="1032" y="372" width="92" height="24" rx="12" fill="#fee2e2"/>
+  <text x="1078" y="390" font-family="system-ui, sans-serif" font-size="11" font-weight="500" fill="#991b1b" text-anchor="middle">No Match</text>
+
+  <text x="756" y="404" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700" fill="#94a3b8">E11.9</text>
+  <text x="756" y="428" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">Type 2 diabetes mellitus</text>
+  <text x="756" y="452" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">Does not support chemotherapy</text>
+
+  <!-- Validation Indicator -->
+  <rect x="312" y="484" width="880" height="64" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <circle cx="344" cy="516" r="16" fill="#16a34a"/>
+  <path d="M336 516 L342 522 L352 510" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="376" y="512" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#166534">C50.911 validates with CPT 96413</text>
+  <text x="376" y="532" font-family="system-ui, sans-serif" font-size="13" fill="#166534">This diagnosis supports medical necessity for chemotherapy infusion</text>
+
+  <!-- Other Valid Codes Section -->
+  <text x="312" y="588" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#0f172a">Other Valid Oncology Codes for CPT 96413</text>
+
+  <rect x="312" y="608" width="880" height="44" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="336" y="636" font-family="JetBrains Mono, monospace" font-size="14" fill="#334155">C34.90</text>
+  <text x="420" y="636" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">Malignant neoplasm of unspecified part of bronchus or lung</text>
+
+  <rect x="312" y="660" width="880" height="44" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="336" y="688" font-family="JetBrains Mono, monospace" font-size="14" fill="#334155">C18.9</text>
+  <text x="420" y="688" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">Malignant neoplasm of colon, unspecified</text>
+
+  <rect x="312" y="712" width="880" height="44" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="336" y="740" font-family="JetBrains Mono, monospace" font-size="14" fill="#334155">C61</text>
+  <text x="420" y="740" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">Malignant neoplasm of prostate</text>
+
+  <!-- Action Buttons -->
+  <rect x="312" y="780" width="120" height="48" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="372" y="810" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">Back</text>
+
+  <rect x="1000" y="780" width="192" height="48" rx="8" fill="#16a34a"/>
+  <text x="1096" y="800" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Apply C50.911</text>
+  <text x="1096" y="818" font-family="JetBrains Mono, monospace" font-size="10" fill="#dcfce7" text-anchor="middle">Tab + Enter</text>
+
+  <!-- Bottom Guide -->
+  <rect x="280" y="850" width="940" height="40" rx="8" fill="#f0fdf4"/>
+  <text x="750" y="876" font-family="system-ui, sans-serif" font-size="13" fill="#166534" text-anchor="middle">C50.911 found in patient chart and validates with CPT 96413. One-click to apply.</text>
+</svg>
