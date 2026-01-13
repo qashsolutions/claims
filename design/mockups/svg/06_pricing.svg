@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#f8fafc"/>
+
+  <!-- Top Navigation -->
+  <rect width="1440" height="64" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(24, 16)">
+    <rect width="32" height="32" rx="6" fill="#d97706"/>
+    <path d="M8 16 L14 22 L24 12" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="68" y="42" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#0f172a">ClaimScrub</text>
+
+  <!-- Nav Links -->
+  <text x="1180" y="40" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">Login</text>
+  <rect x="1240" y="16" width="160" height="40" rx="8" fill="#d97706"/>
+  <text x="1320" y="42" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Start Free Trial</text>
+
+  <!-- Hero Section -->
+  <text x="720" y="140" font-family="Georgia, serif" font-size="40" font-weight="700" fill="#0f172a" text-anchor="middle">Simple, Transparent Pricing</text>
+  <text x="720" y="180" font-family="system-ui, sans-serif" font-size="18" fill="#64748b" text-anchor="middle">Reduce denials. Recover revenue. No surprises.</text>
+
+  <!-- Pricing Cards Container -->
+  <!-- Card 1: Free Trial -->
+  <rect x="200" y="220" width="320" height="420" rx="16" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="360" y="272" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#64748b" text-anchor="middle">Free Trial</text>
+  <text x="360" y="330" font-family="Georgia, serif" font-size="48" font-weight="700" fill="#0f172a" text-anchor="middle">$0</text>
+  <text x="360" y="358" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">for 7 days</text>
+
+  <line x1="240" y1="385" x2="480" y2="385" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Features -->
+  <g transform="translate(240, 410)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">1 claim per day</text>
+  </g>
+  <g transform="translate(240, 440)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Up to 10 MB each</text>
+  </g>
+  <g transform="translate(240, 470)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">All 4 specialties</text>
+  </g>
+  <g transform="translate(240, 500)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Basic validation</text>
+  </g>
+  <g transform="translate(240, 530)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Email support</text>
+  </g>
+
+  <rect x="240" y="580" width="240" height="44" rx="8" fill="white" stroke="#d97706" stroke-width="2"/>
+  <text x="360" y="608" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#d97706" text-anchor="middle">Start Free Trial</text>
+
+  <!-- Card 2: Pay Per Claim -->
+  <rect x="560" y="220" width="320" height="420" rx="16" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="720" y="272" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#64748b" text-anchor="middle">Pay Per Claim</text>
+  <text x="720" y="330" font-family="Georgia, serif" font-size="48" font-weight="700" fill="#0f172a" text-anchor="middle">$10</text>
+  <text x="720" y="358" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">per claim</text>
+
+  <line x1="600" y1="385" x2="840" y2="385" stroke="#e2e8f0" stroke-width="1"/>
+
+  <g transform="translate(600, 410)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Unlimited claims</text>
+  </g>
+  <g transform="translate(600, 440)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Up to 10 MB each</text>
+  </g>
+  <g transform="translate(600, 470)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Full validation suite</text>
+  </g>
+  <g transform="translate(600, 500)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Chat assistant</text>
+  </g>
+  <g transform="translate(600, 530)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Email support</text>
+  </g>
+
+  <rect x="600" y="580" width="240" height="44" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="720" y="608" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#334155" text-anchor="middle">Get Started</text>
+
+  <!-- Card 3: Unlimited - Featured -->
+  <rect x="920" y="200" width="320" height="460" rx="16" fill="white" stroke="#d97706" stroke-width="2"/>
+  <rect x="1000" y="208" width="160" height="28" rx="14" fill="#d97706"/>
+  <text x="1080" y="228" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">MOST POPULAR</text>
+
+  <text x="1080" y="292" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#64748b" text-anchor="middle">Unlimited</text>
+  <text x="1080" y="350" font-family="Georgia, serif" font-size="48" font-weight="700" fill="#0f172a" text-anchor="middle">$100</text>
+  <text x="1080" y="378" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">per month</text>
+
+  <line x1="960" y1="405" x2="1200" y2="405" stroke="#e2e8f0" stroke-width="1"/>
+
+  <g transform="translate(960, 430)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Unlimited claims</text>
+  </g>
+  <g transform="translate(960, 460)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">All file sizes</text>
+  </g>
+  <g transform="translate(960, 490)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Priority support</text>
+  </g>
+  <g transform="translate(960, 520)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Chat assistant + Voice</text>
+  </g>
+  <g transform="translate(960, 550)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">API access</text>
+  </g>
+  <g transform="translate(960, 580)">
+    <circle cx="8" cy="8" r="8" fill="#dcfce7"/>
+    <path d="M4 8 L7 11 L12 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="28" y="12" font-family="system-ui, sans-serif" font-size="13" fill="#334155">Analytics dashboard</text>
+  </g>
+
+  <rect x="960" y="610" width="240" height="44" rx="8" fill="#d97706"/>
+  <text x="1080" y="638" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Subscribe</text>
+
+  <!-- Annual Savings Banner -->
+  <rect x="360" y="680" width="720" height="80" rx="12" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="720" y="715" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#166534" text-anchor="middle">Save 30% with Annual Billing</text>
+  <text x="720" y="740" font-family="system-ui, sans-serif" font-size="14" fill="#166534" text-anchor="middle">Unlimited Plan: $70/month when paid annually ($840/year)</text>
+
+  <!-- Success Fee Banner -->
+  <rect x="360" y="780" width="720" height="80" rx="12" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+  <text x="720" y="815" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#92400e" text-anchor="middle">Coming Soon: Success-Based Pricing for Appeals</text>
+  <text x="720" y="840" font-family="system-ui, sans-serif" font-size="14" fill="#92400e" text-anchor="middle">5% of recovered amount - Industry lowest rate</text>
+</svg>

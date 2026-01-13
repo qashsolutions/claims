@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#f8fafc"/>
+
+  <!-- Left Panel - Brand -->
+  <rect width="600" height="900" fill="#1e293b"/>
+
+  <!-- Logo Mark -->
+  <g transform="translate(240, 340)">
+    <rect x="0" y="0" width="48" height="48" rx="8" fill="#d97706"/>
+    <path d="M12 24 L20 32 L36 16" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Brand Name -->
+  <text x="300" y="370" font-family="Georgia, serif" font-size="32" font-weight="700" fill="white">ClaimScrub</text>
+
+  <!-- Tagline -->
+  <text x="300" y="420" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">Catch claim errors before payers do.</text>
+
+  <!-- Trust Badges -->
+  <g transform="translate(180, 520)">
+    <rect x="0" y="0" width="100" height="32" rx="4" fill="#334155"/>
+    <text x="50" y="21" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">HIPAA Compliant</text>
+  </g>
+  <g transform="translate(190, 520)">
+    <rect x="130" y="0" width="100" height="32" rx="4" fill="#334155"/>
+    <text x="180" y="21" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">SOC 2 Type II</text>
+  </g>
+
+  <!-- Right Panel - Login Form -->
+  <rect x="600" width="840" height="900" fill="white"/>
+
+  <!-- Login Card -->
+  <rect x="820" y="180" width="440" height="540" rx="16" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Card Header -->
+  <text x="1040" y="240" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0f172a" text-anchor="middle">Welcome Back</text>
+  <text x="1040" y="270" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">Sign in to continue to your dashboard</text>
+
+  <!-- Epic Button -->
+  <rect x="860" y="310" width="360" height="52" rx="8" fill="#1d4ed8"/>
+  <text x="1040" y="342" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">Continue with Epic</text>
+
+  <!-- Divider -->
+  <line x1="860" y1="392" x2="980" y2="392" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1040" y="397" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">or</text>
+  <line x1="1100" y1="392" x2="1220" y2="392" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Email Field -->
+  <text x="860" y="440" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#334155">Email</text>
+  <rect x="860" y="450" width="360" height="48" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="876" y="480" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">provider@clinic.com</text>
+
+  <!-- Password Field -->
+  <text x="860" y="524" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#334155">Password</text>
+  <rect x="860" y="534" width="360" height="48" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="876" y="564" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">********</text>
+
+  <!-- Sign In Button -->
+  <rect x="860" y="610" width="360" height="52" rx="8" fill="#d97706"/>
+  <text x="1040" y="642" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">Sign In</text>
+
+  <!-- Forgot Password -->
+  <text x="1040" y="690" font-family="system-ui, sans-serif" font-size="14" fill="#d97706" text-anchor="middle">Forgot password?</text>
+
+  <!-- Sign Up Link -->
+  <line x1="860" y1="720" x2="1220" y2="720" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1040" y="760" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">
+    <tspan>New to ClaimScrub? </tspan>
+    <tspan fill="#d97706" font-weight="500">Create an account</tspan>
+  </text>
+</svg>

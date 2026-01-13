@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#f8fafc"/>
+
+  <!-- Top Navigation -->
+  <rect width="1440" height="64" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Logo -->
+  <g transform="translate(24, 16)">
+    <rect width="32" height="32" rx="6" fill="#d97706"/>
+    <path d="M8 16 L14 22 L24 12" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="68" y="42" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#0f172a">ClaimScrub</text>
+
+  <!-- Search Bar -->
+  <rect x="520" y="16" width="400" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="548" y="42" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">Search claims...</text>
+
+  <!-- User Avatar -->
+  <circle cx="1380" cy="32" r="18" fill="#e2e8f0"/>
+  <text x="1380" y="38" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#64748b" text-anchor="middle">SC</text>
+
+  <!-- Notification Bell -->
+  <circle cx="1320" cy="32" r="18" fill="#f1f5f9"/>
+
+  <!-- Sidebar -->
+  <rect y="64" width="240" height="836" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Sidebar Items -->
+  <!-- Dashboard Active -->
+  <rect x="12" y="80" width="216" height="44" rx="8" fill="#fef3c7"/>
+  <rect x="12" y="80" width="4" height="44" rx="2" fill="#d97706"/>
+  <text x="56" y="108" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#92400e">Dashboard</text>
+
+  <!-- Claims -->
+  <text x="56" y="160" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#64748b">Claims</text>
+
+  <!-- Chat -->
+  <text x="56" y="208" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#64748b">Assistant</text>
+
+  <!-- Reports -->
+  <text x="56" y="256" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#64748b">Reports</text>
+
+  <!-- Settings -->
+  <text x="56" y="800" font-family="system-ui, sans-serif" font-size="14" font-weight="500" fill="#64748b">Settings</text>
+
+  <!-- Main Content Area -->
+  <!-- Page Title -->
+  <text x="280" y="112" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0f172a">Dashboard</text>
+
+  <!-- Stat Cards Row -->
+  <!-- Card 1: Claims Today -->
+  <rect x="280" y="140" width="220" height="120" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="172" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Claims Today</text>
+  <text x="304" y="220" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#0f172a">47</text>
+  <text x="304" y="248" font-family="system-ui, sans-serif" font-size="12" fill="#16a34a">+12 from yesterday</text>
+
+  <!-- Card 2: Pass Rate -->
+  <rect x="520" y="140" width="220" height="120" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="544" y="172" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Pass Rate</text>
+  <text x="544" y="220" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#0f172a">94.2%</text>
+  <text x="544" y="248" font-family="system-ui, sans-serif" font-size="12" fill="#16a34a">+2.1% this week</text>
+
+  <!-- Card 3: Flagged -->
+  <rect x="760" y="140" width="220" height="120" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="784" y="172" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Flagged</text>
+  <text x="784" y="220" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#dc2626">3</text>
+  <text x="784" y="248" font-family="system-ui, sans-serif" font-size="12" fill="#16a34a">-5 from yesterday</text>
+
+  <!-- Card 4: Saved -->
+  <rect x="1000" y="140" width="220" height="120" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="1024" y="172" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Est. Saved</text>
+  <text x="1024" y="220" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#16a34a">$2,847</text>
+  <text x="1024" y="248" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">this week</text>
+
+  <!-- Quick Actions -->
+  <rect x="280" y="280" width="940" height="100" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="316" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Quick Actions</text>
+
+  <!-- Action Buttons -->
+  <rect x="304" y="336" width="160" height="36" rx="6" fill="#d97706"/>
+  <text x="384" y="360" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="white" text-anchor="middle">+ New Claim</text>
+
+  <rect x="480" y="336" width="160" height="36" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="560" y="360" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155" text-anchor="middle">Upload 837</text>
+
+  <rect x="656" y="336" width="160" height="36" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="736" y="360" font-family="system-ui, sans-serif" font-size="13" font-weight="500" fill="#334155" text-anchor="middle">Batch CSV</text>
+
+  <!-- Recent Validations Table -->
+  <rect x="280" y="400" width="940" height="340" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="436" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Recent Validations</text>
+  <text x="1180" y="436" font-family="system-ui, sans-serif" font-size="13" fill="#d97706" text-anchor="end">View All</text>
+
+  <!-- Table Header -->
+  <rect x="280" y="456" width="940" height="40" fill="#f8fafc"/>
+  <text x="304" y="482" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b">PATIENT</text>
+  <text x="540" y="482" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b">CPT</text>
+  <text x="680" y="482" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b">STATUS</text>
+  <text x="820" y="482" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b">RISK</text>
+  <text x="980" y="482" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b">TIME</text>
+
+  <!-- Table Row 1 -->
+  <line x1="280" y1="496" x2="1220" y2="496" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="528" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Maria Santos</text>
+  <text x="540" y="528" font-family="JetBrains Mono, monospace" font-size="13" fill="#334155">96413</text>
+  <rect x="680" y="512" width="56" height="24" rx="4" fill="#dcfce7"/>
+  <text x="708" y="530" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#166534" text-anchor="middle">PASS</text>
+  <text x="820" y="528" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">--</text>
+  <text x="980" y="528" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">2 min ago</text>
+
+  <!-- Table Row 2 -->
+  <line x1="280" y1="548" x2="1220" y2="548" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="580" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">James Wilson</text>
+  <text x="540" y="580" font-family="JetBrains Mono, monospace" font-size="13" fill="#334155">90837</text>
+  <rect x="680" y="564" width="56" height="24" rx="4" fill="#fef3c7"/>
+  <text x="708" y="582" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#92400e" text-anchor="middle">WARN</text>
+  <text x="820" y="580" font-family="JetBrains Mono, monospace" font-size="12" fill="#d97706">CO-15</text>
+  <text x="980" y="580" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">5 min ago</text>
+
+  <!-- Table Row 3 -->
+  <line x1="280" y1="600" x2="1220" y2="600" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="632" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Emily Chen</text>
+  <text x="540" y="632" font-family="JetBrains Mono, monospace" font-size="13" fill="#334155">59400</text>
+  <rect x="680" y="616" width="56" height="24" rx="4" fill="#dcfce7"/>
+  <text x="708" y="634" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#166534" text-anchor="middle">PASS</text>
+  <text x="820" y="632" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">--</text>
+  <text x="980" y="632" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">12 min ago</text>
+
+  <!-- Table Row 4 -->
+  <line x1="280" y1="652" x2="1220" y2="652" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="684" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Robert Johnson</text>
+  <text x="540" y="684" font-family="JetBrains Mono, monospace" font-size="13" fill="#334155">99214</text>
+  <rect x="680" y="668" width="56" height="24" rx="4" fill="#fee2e2"/>
+  <text x="708" y="686" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#991b1b" text-anchor="middle">FAIL</text>
+  <text x="820" y="684" font-family="JetBrains Mono, monospace" font-size="12" fill="#dc2626">CO-11</text>
+  <text x="980" y="684" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">18 min ago</text>
+
+  <!-- Table Row 5 -->
+  <line x1="280" y1="704" x2="1220" y2="704" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="304" y="736" font-family="system-ui, sans-serif" font-size="14" fill="#0f172a">Sarah Williams</text>
+  <text x="540" y="736" font-family="JetBrains Mono, monospace" font-size="13" fill="#334155">95251</text>
+  <rect x="680" y="720" width="56" height="24" rx="4" fill="#fef3c7"/>
+  <text x="708" y="738" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#92400e" text-anchor="middle">WARN</text>
+  <text x="820" y="736" font-family="JetBrains Mono, monospace" font-size="12" fill="#d97706">CO-16</text>
+  <text x="980" y="736" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">24 min ago</text>
+
+  <!-- Floating Chat Button -->
+  <circle cx="1380" cy="840" r="28" fill="#d97706"/>
+  <rect x="1368" y="830" width="24" height="18" rx="3" fill="white"/>
+  <circle cx="1374" cy="839" r="2" fill="#d97706"/>
+  <circle cx="1380" cy="839" r="2" fill="#d97706"/>
+  <circle cx="1386" cy="839" r="2" fill="#d97706"/>
+</svg>
