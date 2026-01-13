@@ -1,3 +1,6 @@
 export { npiValidatorRule } from './npi-validator'
 export { timelyFilingRule } from './timely-filing'
 export { dataCompletenessRule } from './data-completeness'
+export { cptIcdMatchRule } from './cpt-icd-match'
+export { ncciEditsRule } from './ncci-edits'
+export { modifierRulesRule } from './modifier-rules'
