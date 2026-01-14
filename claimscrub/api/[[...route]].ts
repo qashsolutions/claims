@@ -115,7 +115,8 @@ export const config = {
 }
 
 console.log('[Vercel API] Creating Hono app...')
-const app = new Hono().basePath('/api')
+// Note: Don't use basePath - Vercel passes the full URL including /api
+const app = new Hono()
 console.log('[Vercel API] ✓ Hono app created')
 
 // Request logging middleware - runs first on every request
@@ -163,15 +164,15 @@ app.use('*', secureHeaders())
 console.log('[Vercel API] ✓ Security headers middleware added')
 
 // Health check
-app.get('/health', (c) => {
+app.get('/api/health', (c) => {
   console.log('[Vercel API] Health check endpoint hit')
   return c.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 console.log('[Vercel API] ✓ Health check route added')
 
-// tRPC
+// tRPC - handles /api/trpc/*
 app.use(
-  '/trpc/*',
+  '/api/trpc/*',
   trpcServer({
     router: appRouter,
     createContext: (_opts, c) => {
@@ -183,7 +184,7 @@ app.use(
 console.log('[Vercel API] ✓ tRPC middleware added')
 
 // Catch-all for other API routes
-app.all('/*', (c) => {
+app.all('/api/*', (c) => {
   console.log('[Vercel API] Catch-all route hit:', c.req.method, c.req.path)
   return c.json({
     message: 'API is running',
