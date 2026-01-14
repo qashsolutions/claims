@@ -141,9 +141,9 @@ function HeroSection() {
             {/* Badge */}
             <div className="mb-6">
               <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
-                Denials Management for Providers
+                Denials Prevention for Providers
               </div>
-              <p className="mt-2 text-xs italic text-neutral-400">
+              <p className="mt-1.5 text-[10px] italic text-neutral-400">
                 Powered by Claude for Healthcare from Anthropic
               </p>
             </div>
