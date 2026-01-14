@@ -908,42 +908,6 @@ function FAQSection() {
 }
 
 // ============================================================================
-// CTA SECTION
-// ============================================================================
-
-function CTASection() {
-  return (
-    <section className="py-20 bg-gradient-to-br from-amber-600 to-amber-700">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white">
-          Ready to stop losing revenue to denials?
-        </h2>
-        <p className="mt-4 text-xl text-amber-100">
-          Join 500+ practices already saving thousands monthly with Denali Health.
-        </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            to="/register"
-            className="inline-flex items-center justify-center px-8 py-4 bg-white text-amber-700 font-semibold rounded-xl hover:bg-amber-50 transition-all shadow-lg"
-          >
-            Start Free Trial
-          </Link>
-          <a
-            href="mailto:sales@claimscrub.com"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/10 transition-all"
-          >
-            Talk to Sales
-          </a>
-        </div>
-        <p className="mt-6 text-amber-200 text-sm">
-          No credit card required · HIPAA compliant · Cancel anytime
-        </p>
-      </div>
-    </section>
-  )
-}
-
-// ============================================================================
 // FOOTER
 // ============================================================================
 
@@ -1054,7 +1018,6 @@ export function LandingPage() {
       <PricingSection />
       {/* <TestimonialsSection /> */}
       <FAQSection />
-      <CTASection />
       <Footer />
     </div>
   )
