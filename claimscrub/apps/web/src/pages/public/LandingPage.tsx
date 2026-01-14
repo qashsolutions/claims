@@ -381,37 +381,37 @@ function FeaturesSection() {
     {
       icon: Brain,
       title: 'Smart Validation',
-      description: 'Analyzes CPT-ICD relationships, NCCI edits, and payer rules.',
+      description: 'Catch coding errors before submission. Fewer denials, faster payments.',
       color: 'bg-purple-500',
     },
     {
       icon: Shield,
       title: 'Denial Prevention',
-      description: 'Catch CO-11, CO-15, CO-16 codes before submission.',
+      description: 'Stop the top denial reasons before they cost you revenue.',
       color: 'bg-amber-500',
     },
     {
       icon: Zap,
       title: 'Real-Time Results',
-      description: 'Results in under 2 seconds. No batch processing.',
+      description: 'Instant feedback without disrupting your workflow.',
       color: 'bg-blue-500',
     },
     {
       icon: FileText,
       title: 'CMS Coverage Checks',
-      description: 'Automatic NCD/LCD lookup for payer coverage.',
+      description: 'Know coverage before you bill. Avoid medical necessity denials.',
       color: 'bg-green-500',
     },
     {
       icon: Users,
       title: 'Epic EHR Integration',
-      description: 'Launch from Epic and pull patient data seamlessly.',
+      description: 'No double entry. Validate without leaving Epic.',
       color: 'bg-indigo-500',
     },
     {
       icon: TrendingUp,
       title: 'Analytics Dashboard',
-      description: 'Track denial trends and measure improvement.',
+      description: 'See where you're losing money. Measure your ROI.',
       color: 'bg-rose-500',
     },
   ]
