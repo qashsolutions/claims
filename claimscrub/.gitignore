@@ -47,6 +47,30 @@ public/workbox-*.js
 # Storybook
 storybook-static
 
-# Misc
+# Secrets & Credentials
 *.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+credentials.json
+secrets.json
+service-account.json
+*-credentials.json
+*-secrets.json
+.secrets
+.credentials
+
+# Environment (additional patterns)
+.env.development
+.env.staging
+.env.production
+.env.test
+.npmrc
+
+# Vercel
 .vercel
+
+# Supabase
+supabase/.temp
