@@ -197,23 +197,5 @@ console.log('[Vercel API] ✓ Catch-all route added')
 console.log('[Vercel API] ===== MODULE INITIALIZATION COMPLETE =====')
 console.log('='.repeat(60))
 
-// Wrap the handler to add request-level logging
-const honoHandler = handle(app)
-
-export default async function handler(req: Request) {
-  console.log('[Vercel Handler] >>> INCOMING REQUEST <<<')
-  console.log('[Vercel Handler] URL:', req.url)
-  console.log('[Vercel Handler] Method:', req.method)
-  console.log('[Vercel Handler] Time:', new Date().toISOString())
-
-  try {
-    const response = await honoHandler(req)
-    console.log('[Vercel Handler] >>> RESPONSE READY <<<')
-    console.log('[Vercel Handler] Status:', response.status)
-    return response
-  } catch (error) {
-    console.error('[Vercel Handler] >>> ERROR <<<')
-    console.error('[Vercel Handler] Error:', error)
-    throw error
-  }
-}
+// Export Hono handler directly - don't wrap it, as that breaks request handling
+export default handle(app)
