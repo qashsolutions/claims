@@ -83,6 +83,32 @@ export const claimsRouter = router({
   create: protectedProcedure
     .input(createClaimSchema)
     .mutation(async ({ ctx, input }) => {
+      // Check trial claim limit (1 claim per day for trial users)
+      const subscription = await ctx.prisma.subscription.findFirst({
+        where: { practiceId: ctx.user.practiceId },
+      })
+
+      if (subscription?.status === 'TRIALING') {
+        // Get today's start (midnight)
+        const todayStart = new Date()
+        todayStart.setHours(0, 0, 0, 0)
+
+        // Count claims created today
+        const claimsToday = await ctx.prisma.claim.count({
+          where: {
+            practiceId: ctx.user.practiceId,
+            createdAt: { gte: todayStart },
+          },
+        })
+
+        if (claimsToday >= 1) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'Trial limit reached. You can create 1 claim per day during your free trial. Upgrade to continue.',
+          })
+        }
+      }
+
       // Calculate total charge
       const totalCharge = input.serviceLines.reduce(
         (sum, line) => sum + line.charge * line.units,

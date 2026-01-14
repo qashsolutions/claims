@@ -794,7 +794,7 @@ function FAQSection() {
     },
     {
       q: 'What\'s the free trial like?',
-      a: 'Our 7-day free trial gives you full access to validate 1 claim per day across all specialties. No credit card required. You can test drive the validation engine, see AI suggestions, and experience the full workflow.',
+      a: 'Our 3-day free trial gives you full access to validate 1 claim per day across all specialties. No credit card required. You can test drive the validation engine, see AI suggestions, and experience the full workflow.',
     },
     {
       q: 'How quickly will I see ROI?',
