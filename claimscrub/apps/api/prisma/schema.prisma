@@ -34,6 +34,7 @@ model User {
 
   claims        Claim[]
   auditLogs     AuditLog[]
+  usageRecords  UsageRecord[]
 
   @@index([email])
   @@index([practiceId])
@@ -184,12 +185,16 @@ model UsageRecord {
   subscriptionId  String
   subscription    Subscription @relation(fields: [subscriptionId], references: [id])
 
+  userId          String
+  user            User @relation(fields: [userId], references: [id])
+
   claimId         String
   sizeBytes       Int
 
   createdAt       DateTime  @default(now())
 
   @@index([subscriptionId])
+  @@index([userId])
   @@index([createdAt])
 }
 
