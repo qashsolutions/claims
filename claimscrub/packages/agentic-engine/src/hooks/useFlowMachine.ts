@@ -16,13 +16,13 @@ export function useFlowMachine(actors: FlowActors) {
   const [state, send, actorRef] = useMachine(
     claimFlowMachine.provide({
       actors: {
-        fetchPatient: async ({ input }) => {
+        fetchPatient: async ({ input }: { input: { patientId: string } }) => {
           return actors.fetchPatient(input.patientId)
         },
-        checkAuthorization: async ({ input }) => {
+        checkAuthorization: async ({ input }: { input: { procedure: Procedure | null; patient: Patient | null } }) => {
           return actors.checkAuthorization(input.procedure, input.patient)
         },
-        submitClaim: async ({ input }) => {
+        submitClaim: async ({ input }: { input: ClaimFlowContext }) => {
           return actors.submitClaim(input)
         },
       },

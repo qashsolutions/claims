@@ -15,6 +15,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@claimscrub/shared": "workspace:*",
     "@xstate/react": "^4.1.3",
     "xstate": "^5.18.2"
   },
