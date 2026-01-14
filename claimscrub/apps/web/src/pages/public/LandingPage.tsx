@@ -74,9 +74,6 @@ function Navigation() {
             <a href="#pricing" className="text-neutral-600 hover:text-neutral-900 transition-colors">
               Pricing
             </a>
-            <a href="#testimonials" className="text-neutral-600 hover:text-neutral-900 transition-colors">
-              Testimonials
-            </a>
             <a href="#faq" className="text-neutral-600 hover:text-neutral-900 transition-colors">
               FAQ
             </a>
@@ -113,7 +110,6 @@ function Navigation() {
             <div className="flex flex-col gap-4">
               <a href="#features" className="text-neutral-600 hover:text-neutral-900">Features</a>
               <a href="#pricing" className="text-neutral-600 hover:text-neutral-900">Pricing</a>
-              <a href="#testimonials" className="text-neutral-600 hover:text-neutral-900">Testimonials</a>
               <a href="#faq" className="text-neutral-600 hover:text-neutral-900">FAQ</a>
               <hr className="border-neutral-200" />
               <Link to="/login" className="text-neutral-700 font-medium">Log in</Link>
@@ -838,7 +834,7 @@ function FAQSection() {
   const faqs = [
     {
       q: 'How does Denali Health prevent denials?',
-      a: 'Denali Health validates claims against 15+ rules including CPT-ICD medical necessity matching, NCCI edits, NPI verification, prior authorization requirements, and payer-specific policies. We catch errors before you submit, preventing common denial codes like CO-11, CO-15, and CO-16.',
+      a: 'Denali Health validates claims against 7 rules including CPT-ICD medical necessity matching, NCCI edits, NPI verification, modifier checks, prior authorization requirements, data completeness, and timely filing. We catch errors before you submit, preventing common denial codes like CO-11, CO-15, and CO-16.',
     },
     {
       q: 'What specialties do you support?',
@@ -846,7 +842,7 @@ function FAQSection() {
     },
     {
       q: 'Is Denali Health HIPAA compliant?',
-      a: 'Yes, absolutely. We use enterprise-grade encryption, maintain BAA agreements, implement comprehensive audit logging, and host on HIPAA-compliant infrastructure. We never store PHI longer than necessary for processing.',
+      a: 'We are built for HIPAA compliance with enterprise-grade encryption, comprehensive audit logging, and HIPAA-compliant infrastructure. BAA with Anthropic (our AI provider) is pending. We never store PHI longer than necessary for processing.',
     },
     {
       q: 'Can I integrate with my EHR?',
@@ -858,7 +854,7 @@ function FAQSection() {
     },
     {
       q: 'How quickly will I see ROI?',
-      a: 'Most practices see positive ROI within the first month. With an average claim value of $500+ and denial prevention of 94%, even a handful of saved denials covers the subscription cost. Many customers report $10K+ monthly savings.',
+      a: 'ROI depends on your claim volume and denial rate. Even preventing a few denials can offset the subscription cost. Our analytics dashboard helps you track prevented denials and measure your actual savings over time.',
     },
   ]
 
@@ -965,11 +961,8 @@ function Footer() {
           </p>
           <div className="flex flex-col items-start gap-2">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-1 bg-green-900/50 text-green-400 text-xs font-medium rounded">
-                HIPAA Compliant
-              </span>
-              <span className="px-2 py-1 bg-blue-900/50 text-blue-400 text-xs font-medium rounded">
-                SOC 2 Type II
+              <span className="px-2 py-1 bg-amber-900/50 text-amber-400 text-xs font-medium rounded">
+                BAA Pending
               </span>
             </div>
             <p className="text-[10px] italic text-white">
