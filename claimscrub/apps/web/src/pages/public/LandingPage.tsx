@@ -139,9 +139,14 @@ function HeroSection() {
           {/* Left: Copy */}
           <div className="text-center lg:text-left">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-6">
-              <Zap className="h-4 w-4" />
-              AI-Powered Claims Validation
+            <div className="mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
+                <Zap className="h-4 w-4" />
+                Automated Claims Validation
+              </div>
+              <p className="mt-2 text-sm text-neutral-500">
+                Powered by Claude for Healthcare from Anthropic
+              </p>
             </div>
 
             {/* Headline */}
