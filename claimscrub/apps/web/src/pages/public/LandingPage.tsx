@@ -598,10 +598,9 @@ function PricingSection() {
       price: 0,
       period: 'for 3 days',
       description: 'Try Denali Health risk-free',
-      features: [
-        { text: '1 claim per day', included: true },
-      ],
+      features: [],
       cta: 'Start Free Trial',
+      belowCta: '1 claim per day',
       popular: false,
     },
     {
@@ -619,8 +618,8 @@ function PricingSection() {
       period: 'per month',
       description: annual ? 'Unlimited claims. Billed annually ($840/year)' : 'Unlimited claims. Best value for high volume.',
       features: [
-        { text: 'Analytics dashboard*', included: true },
         { text: 'Epic EHR integration', included: true },
+        { text: 'Analytics dashboard', included: true, footnote: 'In progress' },
       ],
       cta: 'Subscribe Now',
       popular: false,
@@ -665,12 +664,12 @@ function PricingSection() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
           {plans.map((plan, idx) => (
             <div
               key={idx}
               className={cn(
-                'relative p-8 rounded-2xl bg-white border-2 transition-all',
+                'relative p-8 rounded-2xl bg-white border-2 transition-all flex flex-col',
                 plan.popular
                   ? 'border-amber-400 shadow-xl scale-105'
                   : 'border-neutral-200 hover:border-amber-200 hover:shadow-lg'
@@ -696,32 +695,42 @@ function PricingSection() {
 
               <p className="mt-2 text-sm text-neutral-500">{plan.description}</p>
 
-              <ul className="mt-8 space-y-3">
+              <ul className="mt-8 space-y-3 flex-grow">
                 {plan.features.map((feature, fidx) => (
-                  <li key={fidx} className="flex items-center gap-3">
-                    {feature.included ? (
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                    ) : (
-                      <Minus className="h-5 w-5 text-neutral-300 flex-shrink-0" />
+                  <li key={fidx} className="flex flex-col">
+                    <div className="flex items-center gap-3">
+                      {feature.included ? (
+                        <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <Minus className="h-5 w-5 text-neutral-300 flex-shrink-0" />
+                      )}
+                      <span className={feature.included ? 'text-neutral-700' : 'text-neutral-400'}>
+                        {feature.text}
+                      </span>
+                    </div>
+                    {feature.footnote && (
+                      <span className="ml-8 text-[8px] italic text-neutral-400">{feature.footnote}</span>
                     )}
-                    <span className={feature.included ? 'text-neutral-700' : 'text-neutral-400'}>
-                      {feature.text}
-                    </span>
                   </li>
                 ))}
               </ul>
 
-              <Link
-                to="/register"
-                className={cn(
-                  'mt-8 block w-full py-3 px-6 text-center font-semibold rounded-xl transition-all',
-                  plan.popular
-                    ? 'bg-amber-600 text-white hover:bg-amber-700 shadow-lg shadow-amber-600/25'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+              <div className="mt-auto pt-8">
+                <Link
+                  to="/register"
+                  className={cn(
+                    'block w-full py-3 px-6 text-center font-semibold rounded-xl transition-all',
+                    plan.popular
+                      ? 'bg-amber-600 text-white hover:bg-amber-700 shadow-lg shadow-amber-600/25'
+                      : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                  )}
+                >
+                  {plan.cta}
+                </Link>
+                {plan.belowCta && (
+                  <p className="mt-2 text-center text-[10px] text-neutral-500">{plan.belowCta}</p>
                 )}
-              >
-                {plan.cta}
-              </Link>
+              </div>
             </div>
           ))}
         </div>
