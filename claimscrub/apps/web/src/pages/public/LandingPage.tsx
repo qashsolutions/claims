@@ -87,10 +87,9 @@ function Navigation() {
             </Link>
             <Link
               to="/register"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors shadow-sm"
+              className="inline-flex items-center px-5 py-2.5 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors shadow-sm"
             >
               Start Free Trial
-              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -167,10 +166,9 @@ function HeroSection() {
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-600 text-white font-semibold rounded-xl hover:bg-amber-700 transition-all shadow-lg shadow-amber-600/25 hover:shadow-xl hover:shadow-amber-600/30"
+                className="inline-flex items-center justify-center px-8 py-4 bg-amber-600 text-white font-semibold rounded-xl hover:bg-amber-700 transition-all shadow-lg shadow-amber-600/25 hover:shadow-xl hover:shadow-amber-600/30"
               >
                 Start Free Trial
-                <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
 
@@ -846,10 +844,9 @@ function CTASection() {
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/register"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-amber-700 font-semibold rounded-xl hover:bg-amber-50 transition-all shadow-lg"
+            className="inline-flex items-center justify-center px-8 py-4 bg-white text-amber-700 font-semibold rounded-xl hover:bg-amber-50 transition-all shadow-lg"
           >
             Start Free Trial
-            <ArrowRight className="h-5 w-5" />
           </Link>
           <a
             href="mailto:sales@claimscrub.com"
