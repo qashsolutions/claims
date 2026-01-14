@@ -598,9 +598,10 @@ function PricingSection() {
       price: 0,
       period: 'for 3 days',
       description: 'Try Denali Health risk-free',
-      features: [],
+      features: [
+        { text: '1 claim per day', included: true },
+      ],
       cta: 'Start Free Trial',
-      belowCta: '1 claim per day',
       popular: false,
     },
     {
@@ -727,22 +728,9 @@ function PricingSection() {
                 >
                   {plan.cta}
                 </Link>
-                {plan.belowCta && (
-                  <p className="mt-2 text-center text-[10px] text-neutral-500">{plan.belowCta}</p>
-                )}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Enterprise CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-neutral-600">
-            Need a custom plan for your health system?{' '}
-            <a href="mailto:sales@claimscrub.com" className="text-amber-600 font-semibold hover:underline">
-              Contact Sales
-            </a>
-          </p>
         </div>
       </div>
     </section>
