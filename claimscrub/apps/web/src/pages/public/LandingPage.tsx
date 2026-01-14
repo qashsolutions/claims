@@ -269,62 +269,81 @@ function HeroSection() {
 // PROBLEM SECTION
 // ============================================================================
 
-function ProblemSection() {
-  const problems = [
+function SpecialtiesSection() {
+  const specialties = [
     {
-      icon: XCircle,
-      stat: '$262B',
-      label: 'Lost annually to claim denials',
-      color: 'text-red-500',
-      bg: 'bg-red-50',
+      name: 'Oncology',
+      description: 'Complex drug regimens, prior auths, and step therapy requirements',
+      icon: '🎗️',
+      gradient: 'from-rose-500 to-pink-600',
     },
     {
-      icon: AlertTriangle,
-      stat: '20%',
-      label: 'Average denial rate in healthcare',
-      color: 'text-amber-500',
-      bg: 'bg-amber-50',
+      name: 'OB/GYN',
+      description: 'Global billing codes, bundled services, and modifier complexity',
+      icon: '👶',
+      gradient: 'from-purple-500 to-violet-600',
     },
     {
-      icon: Clock,
-      stat: '45 days',
-      label: 'Average time to resolve a denial',
-      color: 'text-blue-500',
-      bg: 'bg-blue-50',
+      name: 'Mental Health',
+      description: 'Time-based codes, medical necessity, and payer carve-outs',
+      icon: '🧠',
+      gradient: 'from-blue-500 to-cyan-600',
+    },
+    {
+      name: 'Endocrinology',
+      description: 'Chronic care management, DME, and specialty drug coverage',
+      icon: '⚕️',
+      gradient: 'from-amber-500 to-orange-600',
     },
   ]
 
   return (
-    <section className="py-20 bg-neutral-900">
+    <section className="py-24 bg-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white">
-            Claim denials are costing you more than you think
+          <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-4">
+            Specialized Expertise
+          </p>
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+            Built for complex specialties
           </h2>
-          <p className="mt-4 text-lg text-neutral-400 max-w-2xl mx-auto">
-            Every denied claim means lost revenue, wasted staff time, and delayed patient care.
+          <p className="mt-6 text-xl text-neutral-400 max-w-2xl mx-auto">
+            High-value claims. Complex prior auths. We specialize in the hard stuff.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {problems.map((problem, idx) => (
+        {/* Specialty Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {specialties.map((specialty) => (
             <div
-              key={idx}
-              className="relative p-8 rounded-2xl bg-neutral-800 border border-neutral-700"
+              key={specialty.name}
+              className="group relative p-8 rounded-2xl bg-neutral-800/50 border border-neutral-700/50 hover:border-neutral-600 transition-all duration-300 hover:transform hover:-translate-y-1"
             >
-              <div className={cn('w-14 h-14 rounded-xl flex items-center justify-center', problem.bg)}>
-                <problem.icon className={cn('h-7 w-7', problem.color)} />
-              </div>
-              <p className="mt-6 text-4xl font-bold text-white">{problem.stat}</p>
-              <p className="mt-2 text-neutral-400">{problem.label}</p>
+              {/* Gradient accent */}
+              <div className={cn(
+                'absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity',
+                specialty.gradient
+              )} />
+
+              {/* Icon */}
+              <div className="text-4xl mb-4">{specialty.icon}</div>
+
+              {/* Content */}
+              <h3 className="font-heading text-xl font-bold text-white mb-2">
+                {specialty.name}
+              </h3>
+              <p className="text-sm text-neutral-400 leading-relaxed">
+                {specialty.description}
+              </p>
             </div>
           ))}
         </div>
 
+        {/* Bottom tagline */}
         <div className="mt-16 text-center">
-          <p className="text-xl text-neutral-300">
-            <span className="text-amber-400 font-semibold">The good news?</span>{' '}
-            90% of denials are preventable with the right tools.
+          <p className="text-neutral-500 text-sm">
+            Each specialty has unique billing challenges. We understand them all.
           </p>
         </div>
       </div>
@@ -958,7 +977,7 @@ export function LandingPage() {
 
       <Navigation />
       <HeroSection />
-      <ProblemSection />
+      <SpecialtiesSection />
       <FeaturesSection />
       <HowItWorksSection />
       <PricingSection />
