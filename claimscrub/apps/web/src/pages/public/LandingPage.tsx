@@ -601,9 +601,6 @@ function PricingSection() {
       features: [
         { text: '1 claim per day', included: true },
         { text: 'All 4 specialties', included: true },
-        { text: 'Basic validation', included: true },
-        { text: 'Chat assistant', included: false },
-        { text: 'API access', included: false },
       ],
       cta: 'Start Free Trial',
       popular: false,
@@ -616,9 +613,6 @@ function PricingSection() {
       features: [
         { text: 'Unlimited claims', included: true },
         { text: 'All 4 specialties', included: true },
-        { text: 'Full validation suite', included: true },
-        { text: 'Chat assistant', included: false },
-        { text: 'API access', included: false },
       ],
       cta: 'Get Started',
       popular: false,
@@ -631,11 +625,8 @@ function PricingSection() {
       features: [
         { text: 'Unlimited claims', included: true },
         { text: 'All 4 specialties', included: true },
-        { text: 'Full validation suite', included: true },
         { text: 'Priority support', included: true },
-        { text: 'Chat assistant', included: true },
-        { text: 'API access', included: true },
-        { text: 'Analytics dashboard', included: true },
+        { text: 'Analytics dashboard*', included: true },
         { text: 'Epic EHR integration', included: true },
       ],
       cta: 'Subscribe Now',
