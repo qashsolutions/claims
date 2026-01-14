@@ -71,17 +71,4 @@ export interface ClaimSummary {
   serviceLineCount: number
 }
 
-export interface CreateClaimInput {
-  patientName: string
-  patientDob: Date
-  patientGender: 'M' | 'F' | 'O'
-  insuranceId: string
-  payerName: string
-  payerId?: string
-  providerNpi: string
-  providerName: string
-  dateOfService: Date
-  placeOfService: string
-  priorAuthNumber?: string
-  serviceLines: Omit<ServiceLine, 'id'>[]
-}
+// CreateClaimInput is exported from schemas/claim.schema.ts
