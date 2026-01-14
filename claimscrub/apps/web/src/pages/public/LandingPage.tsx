@@ -419,7 +419,7 @@ function FeaturesSection() {
             Everything you need to submit clean claims
           </h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-2xl mx-auto">
-            Comprehensive validation for oncology, mental health, OB/GYN, and endocrinology practices.
+            Oncology | Mental Health | OB/GYN | Endocrine
           </p>
         </div>
 
