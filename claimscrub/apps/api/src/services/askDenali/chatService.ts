@@ -101,10 +101,11 @@ export class AskDenaliChatService {
       ]
       console.log('[AskDenali ChatService] Messages count:', messages.length)
 
-      console.log('[AskDenali ChatService] Calling Claude API...')
+      console.log('[AskDenali ChatService] Calling Claude API with streaming...')
       console.log('[AskDenali ChatService] Model:', this.model)
 
-      const response = await this.client.messages.create({
+      // Use streaming to avoid timeout - collect chunks as they arrive
+      const stream = this.client.messages.stream({
         model: this.model,
         max_tokens: 512,
         temperature: 0.3,
@@ -112,21 +113,33 @@ export class AskDenaliChatService {
         messages,
       })
 
-      const duration = Date.now() - startTime
-      console.log('[AskDenali ChatService] Claude API response received in', duration, 'ms')
-      console.log('[AskDenali ChatService] Response stop reason:', response.stop_reason)
-      console.log('[AskDenali ChatService] Response content blocks:', response.content.length)
+      // Collect the full response from stream
+      let fullText = ''
+      let chunkCount = 0
 
-      // Extract text content from response
-      const textContent = response.content.find((block) => block.type === 'text')
-      if (!textContent || textContent.type !== 'text') {
-        console.error('[AskDenali ChatService] No text content in response')
+      for await (const event of stream) {
+        if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
+          fullText += event.delta.text
+          chunkCount++
+          // Log progress every 10 chunks
+          if (chunkCount % 10 === 0) {
+            console.log('[AskDenali ChatService] Received', chunkCount, 'chunks, total chars:', fullText.length)
+          }
+        }
+      }
+
+      const duration = Date.now() - startTime
+      console.log('[AskDenali ChatService] Stream complete in', duration, 'ms')
+      console.log('[AskDenali ChatService] Total chunks:', chunkCount)
+      console.log('[AskDenali ChatService] Response length:', fullText.length)
+
+      if (!fullText) {
+        console.error('[AskDenali ChatService] No text content in stream')
         throw new Error('No text response from Claude')
       }
 
-      console.log('[AskDenali ChatService] Response text length:', textContent.text.length)
       console.log('[AskDenali ChatService] SUCCESS - returning response')
-      return { message: textContent.text }
+      return { message: fullText }
     } catch (error) {
       const duration = Date.now() - startTime
       console.error('[AskDenali ChatService] ERROR after', duration, 'ms')
