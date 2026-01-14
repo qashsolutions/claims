@@ -173,7 +173,7 @@ function HeroSection() {
             </div>
 
             {/* Sign In Options */}
-            <p className="mt-8 text-sm text-neutral-500">
+            <p className="mt-3 text-[10px] text-neutral-500">
               Sign in with Epic EHR or NPI
             </p>
           </div>
