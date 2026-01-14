@@ -140,6 +140,8 @@ const PROFANITY_PATTERNS = [
  * Returns allowed: true if message passes all checks
  */
 export function checkGuardrails(input: string): GuardrailResult {
+  console.log('[AskDenali Guardrails] checkGuardrails() called with input length:', input.length)
+
   const trimmedInput = input.trim()
 
   // Empty input check
@@ -186,6 +188,7 @@ export function checkGuardrails(input: string): GuardrailResult {
 
   // 4. Check topic relevance
   if (!isRelevantTopic(trimmedInput)) {
+    console.log('[AskDenali Guardrails] Off-topic message detected')
     return {
       allowed: false,
       reason:
@@ -193,6 +196,7 @@ export function checkGuardrails(input: string): GuardrailResult {
     }
   }
 
+  console.log('[AskDenali Guardrails] All checks passed')
   return { allowed: true, sanitizedInput: trimmedInput }
 }
 

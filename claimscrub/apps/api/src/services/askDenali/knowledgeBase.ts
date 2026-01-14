@@ -9,7 +9,24 @@
  * - Payers from @claimscrub/shared/constants
  */
 
-import { SPECIALTIES, DENIAL_CODES, PAYERS } from '@claimscrub/shared/constants'
+console.log('[AskDenali KnowledgeBase] Loading module...')
+
+let SPECIALTIES: Record<string, { displayName: string; commonCptCodes: string[] }> = {}
+let DENIAL_CODES: Record<string, { code: string; name: string; description: string; preventionTips: string[] }> = {}
+let PAYERS: Record<string, { name: string; type: string; timelyFilingDays: number }> = {}
+
+try {
+  const constants = await import('@claimscrub/shared/constants')
+  SPECIALTIES = constants.SPECIALTIES || {}
+  DENIAL_CODES = constants.DENIAL_CODES || {}
+  PAYERS = constants.PAYERS || {}
+  console.log('[AskDenali KnowledgeBase] Constants loaded successfully')
+  console.log('[AskDenali KnowledgeBase] SPECIALTIES count:', Object.keys(SPECIALTIES).length)
+  console.log('[AskDenali KnowledgeBase] DENIAL_CODES count:', Object.keys(DENIAL_CODES).length)
+  console.log('[AskDenali KnowledgeBase] PAYERS count:', Object.keys(PAYERS).length)
+} catch (error) {
+  console.error('[AskDenali KnowledgeBase] Failed to load constants:', error)
+}
 
 // Validation rules (from packages/validators/src/rules/)
 const VALIDATION_RULES = {
@@ -82,17 +99,26 @@ const PRICING = {
  * Build the complete knowledge base as a formatted string
  */
 export function buildKnowledgeBase(): string {
-  const sections = [
-    buildAboutSection(),
-    buildValidationSection(),
-    buildPricingSection(),
-    buildSpecialtiesSection(),
-    buildDenialCodesSection(),
-    buildPayersSection(),
-    buildGettingStartedSection(),
-  ]
+  console.log('[AskDenali KnowledgeBase] buildKnowledgeBase() called')
 
-  return sections.join('\n\n')
+  try {
+    const sections = [
+      buildAboutSection(),
+      buildValidationSection(),
+      buildPricingSection(),
+      buildSpecialtiesSection(),
+      buildDenialCodesSection(),
+      buildPayersSection(),
+      buildGettingStartedSection(),
+    ]
+
+    const result = sections.join('\n\n')
+    console.log('[AskDenali KnowledgeBase] Knowledge base built successfully, length:', result.length)
+    return result
+  } catch (error) {
+    console.error('[AskDenali KnowledgeBase] Error building knowledge base:', error)
+    throw error
+  }
 }
 
 function buildAboutSection(): string {

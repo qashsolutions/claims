@@ -47,38 +47,52 @@ export const askDenaliRouter = router({
     .input(chatInputSchema)
     .output(chatResponseSchema)
     .mutation(async ({ input }) => {
-      const { message, history = [] } = input
+      console.log('[AskDenali] Chat endpoint called with input:', JSON.stringify(input))
 
-      // 1. Run guardrails check before calling Claude
-      const guardrailResult = checkGuardrails(message)
+      try {
+        const { message, history = [] } = input
 
-      if (!guardrailResult.allowed) {
-        // Return guardrail message as assistant response
+        // 1. Run guardrails check before calling Claude
+        console.log('[AskDenali] Running guardrails check...')
+        const guardrailResult = checkGuardrails(message)
+        console.log('[AskDenali] Guardrails result:', JSON.stringify(guardrailResult))
+
+        if (!guardrailResult.allowed) {
+          // Return guardrail message as assistant response
+          console.log('[AskDenali] Message blocked by guardrails')
+          return {
+            success: true,
+            message: guardrailResult.reason || 'Message blocked by guardrails.',
+            blocked: true,
+          }
+        }
+
+        // 2. Call Claude via chat service
+        console.log('[AskDenali] Calling chat service...')
+        const response = await askDenaliChatService.chat(
+          guardrailResult.sanitizedInput || message,
+          history
+        )
+        console.log('[AskDenali] Chat service response:', JSON.stringify(response))
+
+        // 3. Handle errors
+        if (response.error) {
+          console.error('[AskDenali] Chat service returned error:', response.error)
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: response.error,
+          })
+        }
+
+        console.log('[AskDenali] Returning successful response')
         return {
           success: true,
-          message: guardrailResult.reason || 'Message blocked by guardrails.',
-          blocked: true,
+          message: response.message,
+          blocked: false,
         }
-      }
-
-      // 2. Call Claude via chat service
-      const response = await askDenaliChatService.chat(
-        guardrailResult.sanitizedInput || message,
-        history
-      )
-
-      // 3. Handle errors
-      if (response.error) {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: response.error,
-        })
-      }
-
-      return {
-        success: true,
-        message: response.message,
-        blocked: false,
+      } catch (error) {
+        console.error('[AskDenali] Unhandled error in chat endpoint:', error)
+        throw error
       }
     }),
 })
