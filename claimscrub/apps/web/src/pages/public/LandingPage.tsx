@@ -508,6 +508,88 @@ function HowItWorksSection() {
             </div>
           ))}
         </div>
+
+        {/* Validation Preview - Shows actionable suggestions in action */}
+        <div className="mt-20">
+          <p className="text-center text-sm font-medium text-neutral-500 mb-8">
+            See how actionable suggestions work
+          </p>
+
+          <div className="grid lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* Step 1: Issue Detected */}
+            <div className="bg-white rounded-2xl border-2 border-rose-200 p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+                  <XCircle className="h-5 w-5 text-rose-600" />
+                </div>
+                <span className="text-sm font-semibold text-rose-700">Issue Detected</span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-neutral-600">CPT-ICD Match</span>
+                  <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-xs font-medium rounded">CO-11</span>
+                </div>
+                <p className="text-sm text-neutral-700">
+                  CPT 96372 (injection) requires diagnosis code supporting medical necessity.
+                </p>
+                <div className="pt-2 border-t border-neutral-100">
+                  <p className="text-xs text-neutral-500">Denial Risk: High</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2: Suggestion with Apply Button */}
+            <div className="bg-white rounded-2xl border-2 border-amber-200 p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                  <AlertTriangle className="h-5 w-5 text-amber-600" />
+                </div>
+                <span className="text-sm font-semibold text-amber-700">Suggested Fix</span>
+              </div>
+              <div className="space-y-3">
+                <p className="text-sm text-neutral-700">
+                  Add diagnosis code to support injection procedure:
+                </p>
+                <div className="bg-neutral-50 rounded-lg p-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-mono font-semibold text-neutral-900">E11.9</p>
+                      <p className="text-xs text-neutral-500">Type 2 Diabetes Mellitus</p>
+                    </div>
+                    <button className="px-3 py-1.5 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition-colors">
+                      Apply
+                    </button>
+                  </div>
+                </div>
+                <p className="text-xs text-neutral-400">92% confidence match</p>
+              </div>
+            </div>
+
+            {/* Step 3: Clean Claim */}
+            <div className="bg-white rounded-2xl border-2 border-green-200 p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle className="h-5 w-5 text-green-600" />
+                </div>
+                <span className="text-sm font-semibold text-green-700">Clean Claim</span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-neutral-600">CPT-ICD Match</span>
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">Pass</span>
+                </div>
+                <p className="text-sm text-neutral-700">
+                  Diagnosis E11.9 supports medical necessity for CPT 96372.
+                </p>
+                <div className="pt-2 border-t border-neutral-100">
+                  <button className="w-full px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-colors">
+                    Submit to Clearinghouse
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
