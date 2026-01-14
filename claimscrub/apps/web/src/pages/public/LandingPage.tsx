@@ -22,6 +22,7 @@ import {
   X,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { AskDenali } from '@/components/askDenali'
 
 /**
  * LandingPage - Denali Health flagship public landing page
@@ -1006,6 +1007,9 @@ export function LandingPage() {
       {/* <TestimonialsSection /> */}
       <FAQSection />
       <Footer />
+
+      {/* AskDenali floating chat assistant */}
+      <AskDenali variant="floating" />
     </div>
   )
 }
