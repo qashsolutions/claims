@@ -515,88 +515,108 @@ function HowItWorksSection() {
             See how actionable suggestions work
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto justify-items-center">
             {/* Step 1: Issue Detected */}
-            <div className="bg-white rounded-2xl border-2 border-rose-200 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-                  <XCircle className="h-5 w-5 text-rose-600" />
-                </div>
-                <span className="text-sm font-semibold text-rose-700">Issue Detected</span>
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center text-white font-heading text-lg font-bold shadow-lg shadow-amber-600/25 mb-4">
+                01
               </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-neutral-600">CPT-ICD Match</span>
-                  <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-xs font-medium rounded">CO-11</span>
+              <div className="bg-white rounded-2xl border-2 border-rose-200 p-6 shadow-sm w-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+                    <XCircle className="h-5 w-5 text-rose-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-rose-700">Issue Detected</span>
                 </div>
-                <p className="text-sm text-neutral-700">
-                  CPT 96372 requires diagnosis supporting medical necessity.
-                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-neutral-600">CPT-ICD Match</span>
+                    <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-xs font-medium rounded">CO-11</span>
+                  </div>
+                  <p className="text-sm text-neutral-700">
+                    CPT 96372 requires diagnosis supporting medical necessity.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Step 2: Suggestion with Apply Button */}
-            <div className="bg-white rounded-2xl border-2 border-amber-200 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
-                  <AlertTriangle className="h-5 w-5 text-amber-600" />
-                </div>
-                <span className="text-sm font-semibold text-amber-700">Suggested Fix</span>
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center text-white font-heading text-lg font-bold shadow-lg shadow-amber-600/25 mb-4">
+                02
               </div>
-              <div className="space-y-3">
-                <p className="text-sm text-neutral-700">
-                  Add diagnosis code:
-                </p>
-                <div className="bg-neutral-50 rounded-lg p-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-mono font-semibold text-neutral-900">E11.9</p>
-                      <p className="text-xs text-neutral-500">Type 2 Diabetes</p>
+              <div className="bg-white rounded-2xl border-2 border-amber-200 p-6 shadow-sm w-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                    <AlertTriangle className="h-5 w-5 text-amber-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-amber-700">Suggested Fix</span>
+                </div>
+                <div className="space-y-3">
+                  <p className="text-sm text-neutral-700">
+                    Add diagnosis code:
+                  </p>
+                  <div className="bg-neutral-50 rounded-lg p-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-mono font-semibold text-neutral-900">E11.9</p>
+                        <p className="text-xs text-neutral-500">Type 2 Diabetes</p>
+                      </div>
+                      <button className="px-3 py-1.5 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition-colors">
+                        Apply
+                      </button>
                     </div>
-                    <button className="px-3 py-1.5 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition-colors">
-                      Apply
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Step 3: Clean Claim */}
-            <div className="bg-white rounded-2xl border-2 border-green-200 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                </div>
-                <span className="text-sm font-semibold text-green-700">Clean Claim</span>
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center text-white font-heading text-lg font-bold shadow-lg shadow-amber-600/25 mb-4">
+                03
               </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-neutral-600">CPT-ICD Match</span>
-                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">Pass</span>
+              <div className="bg-white rounded-2xl border-2 border-green-200 p-6 shadow-sm w-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-green-700">Clean Claim</span>
                 </div>
-                <p className="text-sm text-neutral-700">
-                  E11.9 supports medical necessity for CPT 96372.
-                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-neutral-600">CPT-ICD Match</span>
+                    <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">Pass</span>
+                  </div>
+                  <p className="text-sm text-neutral-700">
+                    E11.9 supports medical necessity for CPT 96372.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Step 4: Appeal Support */}
-            <div className="bg-white rounded-2xl border-2 border-blue-200 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                  <FileText className="h-5 w-5 text-blue-600" />
-                </div>
-                <span className="text-sm font-semibold text-blue-700">Appeal Support</span>
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center text-white font-heading text-lg font-bold shadow-lg shadow-amber-600/25 mb-4">
+                04
               </div>
-              <div className="space-y-3">
-                <p className="text-sm text-neutral-700">
-                  If denied, we help you appeal:
-                </p>
-                <ul className="text-xs text-neutral-600 space-y-1">
-                  <li>• Appeal letter templates</li>
-                  <li>• Denial-specific guidance</li>
-                  <li>• Documentation checklist</li>
-                </ul>
+              <div className="bg-white rounded-2xl border-2 border-blue-200 p-6 shadow-sm w-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <FileText className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-blue-700">Appeal Support</span>
+                </div>
+                <div className="space-y-3">
+                  <p className="text-sm text-neutral-700">
+                    If denied, we help you appeal:
+                  </p>
+                  <ul className="text-xs text-neutral-600 space-y-1">
+                    <li>• Appeal letter templates</li>
+                    <li>• Denial-specific guidance</li>
+                    <li>• Documentation checklist</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
