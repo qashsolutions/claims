@@ -168,7 +168,7 @@ class ValidationService {
     // This is a simplified check
 
     // Check for common bundling issues
-    const bundledPairs = [
+    const bundledPairs: [string, string][] = [
       ['96413', '96415'], // Chemo admin + infusion
       ['99213', '99214'], // E/M code stacking
     ]

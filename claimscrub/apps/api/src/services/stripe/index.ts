@@ -158,7 +158,7 @@ export async function cancelSubscription(
  */
 export async function recordUsage(
   params: RecordUsageParams
-): Promise<Stripe.SubscriptionItem.UsageRecord> {
+) {
   const subscription = await stripe.subscriptions.retrieve(params.subscriptionId)
   const itemId = subscription.items.data[0]?.id
 
