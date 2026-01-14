@@ -121,13 +121,13 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
   const customerId = subscription.customer as string
   const priceId = subscription.items.data[0]?.price.id
 
-  const planType = mapPriceToPlan(priceId)
+  const plan = mapPriceToPlan(priceId)
 
   await prisma.subscription.updateMany({
     where: { stripeCustomerId: customerId },
     data: {
       stripeSubscriptionId: subscription.id,
-      planType,
+      plan,
       status: subscription.status === 'trialing' ? 'TRIALING' : 'ACTIVE',
     },
   })
@@ -137,12 +137,12 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const priceId = subscription.items.data[0]?.price.id
-  const planType = mapPriceToPlan(priceId)
+  const plan = mapPriceToPlan(priceId)
   const status = mapStripeStatus(subscription.status)
 
   await prisma.subscription.updateMany({
     where: { stripeSubscriptionId: subscription.id },
-    data: { planType, status },
+    data: { plan, status },
   })
 
   console.log(`Subscription updated: ${subscription.id}`)

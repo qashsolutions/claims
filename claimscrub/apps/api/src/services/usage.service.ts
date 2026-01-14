@@ -52,7 +52,7 @@ export async function checkUploadLimit(
   message?: string
 }> {
   const subscription = await prisma.subscription.findFirst({
-    where: { practiceId },
+    where: { practice: { id: practiceId } },
   })
 
   // No subscription = no access
@@ -67,7 +67,7 @@ export async function checkUploadLimit(
     }
   }
 
-  const planType = subscription.planType as PlanType
+  const planType = subscription.plan as PlanType
   const status = subscription.status as SubStatus
   const dailyLimit = getDailyBytesLimit(planType, status)
 
@@ -153,7 +153,7 @@ export async function getUsageStats(practiceId: string): Promise<{
   }
 }> {
   const subscription = await prisma.subscription.findFirst({
-    where: { practiceId },
+    where: { practice: { id: practiceId } },
   })
 
   const todayStart = new Date()
@@ -177,7 +177,7 @@ export async function getUsageStats(practiceId: string): Promise<{
       : { _sum: { sizeBytes: 0 } },
   ])
 
-  const planType = subscription?.planType as PlanType | null
+  const planType = subscription?.plan as PlanType | null
   const status = subscription?.status as SubStatus | null
   const isTrialing = status === 'TRIALING'
   const dailyLimit = subscription ? getDailyBytesLimit(planType!, status!) : null
