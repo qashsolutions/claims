@@ -18,7 +18,6 @@ import {
   ChevronUp,
   Check,
   Minus,
-  Play,
   Menu,
   X,
 } from 'lucide-react'
@@ -183,10 +182,6 @@ function HeroSection() {
                 Start Free Trial
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-neutral-700 font-semibold rounded-xl border-2 border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 transition-all">
-                <Play className="h-5 w-5" />
-                Watch Demo
-              </button>
             </div>
 
             {/* Trust Indicators */}
