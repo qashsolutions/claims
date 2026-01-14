@@ -1,3 +1,2 @@
 export * from './Dialog'
-export * from './Select'
-export * from './Tooltip'
+// Select and Tooltip are exported from components with wrapped versions
