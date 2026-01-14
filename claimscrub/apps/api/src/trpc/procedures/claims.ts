@@ -104,7 +104,7 @@ export const claimsRouter = router({
     .mutation(async ({ ctx, input }) => {
       // Check trial claim limit (1 claim per day for trial users)
       const subscription = await ctx.prisma.subscription.findFirst({
-        where: { practiceId: ctx.user.practiceId },
+        where: { practice: { id: ctx.user.practiceId } },
       })
 
       if (subscription?.status === 'TRIALING') {

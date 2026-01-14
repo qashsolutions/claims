@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { Prisma } from '@prisma/client'
 import { router, protectedProcedure } from '../index.js'
 import { TRPCError } from '@trpc/server'
 import { epicClient } from '../../services/epic/client.js'
@@ -18,7 +19,7 @@ export const epicRouter = router({
 
       const patient = await epicClient.getPatient(
         input.patientId,
-        ctx.user.epicTokens as EpicTokens
+        ctx.user.epicTokens as unknown as EpicTokens
       )
 
       // Audit log
@@ -54,7 +55,7 @@ export const epicRouter = router({
 
       const patients = await epicClient.searchPatients(
         input.query,
-        ctx.user.epicTokens as EpicTokens,
+        ctx.user.epicTokens as unknown as EpicTokens,
         input.limit
       )
 
@@ -74,7 +75,7 @@ export const epicRouter = router({
 
       const conditions = await epicClient.getConditions(
         input.patientId,
-        ctx.user.epicTokens as EpicTokens
+        ctx.user.epicTokens as unknown as EpicTokens
       )
 
       return conditions
@@ -93,7 +94,7 @@ export const epicRouter = router({
 
       const coverage = await epicClient.getCoverage(
         input.patientId,
-        ctx.user.epicTokens as EpicTokens
+        ctx.user.epicTokens as unknown as EpicTokens
       )
 
       return coverage
@@ -117,7 +118,7 @@ export const epicRouter = router({
 
       const auths = await epicClient.getAuthorizations(
         input.patientId,
-        ctx.user.epicTokens as EpicTokens,
+        ctx.user.epicTokens as unknown as EpicTokens,
         input.cptCode
       )
 
@@ -139,7 +140,7 @@ export const epicRouter = router({
       await ctx.prisma.user.update({
         where: { id: ctx.user.id },
         data: {
-          epicTokens: tokens,
+          epicTokens: tokens as unknown as Prisma.InputJsonValue,
           epicUserId: tokens.patientId,
         },
       })

@@ -201,7 +201,7 @@ class ValidationService {
     payerId: string
   ): Promise<ValidationResult> {
     const timelyDays =
-      TIMELY_FILING_DAYS[payerId.toUpperCase()] || TIMELY_FILING_DAYS.DEFAULT
+      TIMELY_FILING_DAYS[payerId.toUpperCase()] ?? TIMELY_FILING_DAYS.DEFAULT ?? 90
 
     if (!isWithinTimelyFiling(dateOfService, timelyDays)) {
       return {
