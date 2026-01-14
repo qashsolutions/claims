@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { Prisma } from '@prisma/client'
 import { router, protectedProcedure } from '../index.js'
 import { validationService } from '../../services/validation.service.js'
 
@@ -153,7 +154,7 @@ export const validationRouter = router({
           denialCode: v.denialCode,
           message: v.message,
           suggestion: v.suggestion,
-          metadata: v.metadata,
+          metadata: v.metadata as Prisma.InputJsonValue | undefined,
         })),
       })
 
