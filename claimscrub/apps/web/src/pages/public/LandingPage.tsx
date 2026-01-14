@@ -163,22 +163,6 @@ function HeroSection() {
               CMS Coverage | ICD-10 | NPI Registry | PubMed
             </p>
 
-            {/* Stats */}
-            <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-8">
-              <div>
-                <p className="text-3xl font-bold text-neutral-900">94%</p>
-                <p className="text-sm text-neutral-500">Denial Prevention</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-neutral-900">$127K</p>
-                <p className="text-sm text-neutral-500">Avg. Annual Savings</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-neutral-900">&lt;2min</p>
-                <p className="text-sm text-neutral-500">Per Claim</p>
-              </div>
-            </div>
-
             {/* CTAs */}
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
