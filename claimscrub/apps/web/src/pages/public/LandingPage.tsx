@@ -411,7 +411,7 @@ function FeaturesSection() {
     {
       icon: TrendingUp,
       title: 'Analytics Dashboard',
-      description: 'See where you're losing money. Measure your ROI.',
+      description: "See where you're losing money. Measure your ROI.",
       color: 'bg-rose-500',
     },
   ]
