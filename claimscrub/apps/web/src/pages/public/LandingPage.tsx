@@ -333,7 +333,7 @@ function SpecialtiesSection() {
             Built for complex specialties
           </h2>
           <p className="mt-6 text-xl text-neutral-400 max-w-2xl mx-auto">
-            High-value claims. Complex prior auths. We specialize in the hard stuff.
+            High-value claims. Complex prior auths.
           </p>
         </div>
 
@@ -373,7 +373,7 @@ function SpecialtiesSection() {
         {/* Bottom tagline */}
         <div className="mt-16 text-center">
           <p className="text-neutral-500 text-sm">
-            Each specialty has unique billing challenges. We understand them all.
+            We understand the unique billing challenges.
           </p>
         </div>
       </div>
