@@ -180,7 +180,7 @@ export class NpiConnector extends BaseConnector<NpiSearchResult, NpiDetails> {
     let alternate = false
 
     for (let i = fullNumber.length - 1; i >= 0; i--) {
-      let digit = parseInt(fullNumber[i], 10)
+      let digit = parseInt(fullNumber[i]!, 10)
 
       if (alternate) {
         digit *= 2

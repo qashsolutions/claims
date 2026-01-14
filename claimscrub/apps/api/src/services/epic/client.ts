@@ -47,7 +47,7 @@ class EpicClient {
   private baseUrl: string
 
   constructor() {
-    this.baseUrl = env.EPIC_FHIR_BASE_URL
+    this.baseUrl = env.EPIC_FHIR_BASE_URL || ''
   }
 
   private async fetch<T>(
@@ -241,9 +241,9 @@ class EpicClient {
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code,
-        redirect_uri: env.EPIC_REDIRECT_URI,
-        client_id: env.EPIC_CLIENT_ID,
-        client_secret: env.EPIC_CLIENT_SECRET,
+        redirect_uri: env.EPIC_REDIRECT_URI || '',
+        client_id: env.EPIC_CLIENT_ID || '',
+        client_secret: env.EPIC_CLIENT_SECRET || '',
       }),
     })
 
