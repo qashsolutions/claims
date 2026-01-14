@@ -600,7 +600,6 @@ function PricingSection() {
       description: 'Try Denali Health risk-free',
       features: [
         { text: '1 claim per day', included: true },
-        { text: 'All 4 specialties', included: true },
       ],
       cta: 'Start Free Trial',
       popular: false,
@@ -612,7 +611,6 @@ function PricingSection() {
       description: 'Pay only for what you use',
       features: [
         { text: 'Unlimited claims', included: true },
-        { text: 'All 4 specialties', included: true },
       ],
       cta: 'Get Started',
       popular: false,
@@ -624,13 +622,11 @@ function PricingSection() {
       description: annual ? 'Billed annually ($840/year)' : 'Best value for high volume',
       features: [
         { text: 'Unlimited claims', included: true },
-        { text: 'All 4 specialties', included: true },
-        { text: 'Priority support', included: true },
         { text: 'Analytics dashboard*', included: true },
         { text: 'Epic EHR integration', included: true },
       ],
       cta: 'Subscribe Now',
-      popular: true,
+      popular: false,
     },
   ]
 
