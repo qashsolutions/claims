@@ -12,7 +12,7 @@ type ValidationCheck =
   | 'TIMELY_FILING'
   | 'NCCI_EDITS'
 
-interface ValidationResult {
+export interface ValidationResult {
   checkType: ValidationCheck
   status: ValidationStatus
   denialCode?: string
@@ -21,7 +21,7 @@ interface ValidationResult {
   metadata?: Record<string, unknown>
 }
 
-interface AuthCheckResult {
+export interface AuthCheckResult {
   required: boolean
   authorization: {
     number: string

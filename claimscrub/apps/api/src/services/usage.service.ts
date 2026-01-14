@@ -228,7 +228,7 @@ export async function getUserUsageHistory(
     orderBy: { createdAt: 'desc' },
   })
 
-  const totalBytes = records.reduce((sum, r) => sum + r.sizeBytes, 0)
+  const totalBytes = records.reduce((sum: number, r: { sizeBytes: number }) => sum + r.sizeBytes, 0)
 
   return { records, totalBytes }
 }

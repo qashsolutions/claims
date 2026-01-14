@@ -1,7 +1,7 @@
 import { env } from '../../config/env.js'
 import type { EpicTokens } from '@claimscrub/shared/types'
 
-interface FhirPatient {
+export interface FhirPatient {
   id: string
   mrn: string
   firstName: string
@@ -19,14 +19,14 @@ interface FhirPatient {
   }
 }
 
-interface FhirCondition {
+export interface FhirCondition {
   code: string
   display: string
   status: 'active' | 'resolved' | 'inactive'
   onsetDate?: string
 }
 
-interface FhirCoverage {
+export interface FhirCoverage {
   payerId: string
   payerName: string
   memberId: string
@@ -35,7 +35,7 @@ interface FhirCoverage {
   status: 'active' | 'cancelled'
 }
 
-interface FhirAuthorization {
+export interface FhirAuthorization {
   number: string
   status: 'approved' | 'pending' | 'denied'
   validFrom: string
