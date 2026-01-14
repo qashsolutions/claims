@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 /**
  * PricingCards Component
  *
- * Displays pricing tiers for ClaimScrub subscriptions.
+ * Displays pricing tiers for Denali Health subscriptions.
  * Per design mockup: 06_pricing_plans.md
  *
  * Three plans:
@@ -31,7 +31,7 @@ const plans: PricingPlan[] = [
     name: 'Free Trial',
     price: 0,
     period: 'for 3 days',
-    description: 'Try ClaimScrub risk-free',
+    description: 'Try Denali Health risk-free',
     features: [
       { label: '1 claim per day', included: true },
       { label: 'Up to 10 MB each', included: true },

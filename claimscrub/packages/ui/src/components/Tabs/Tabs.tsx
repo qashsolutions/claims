@@ -6,7 +6,7 @@ import { cn } from '../../utils/cn'
  * Tabs Component
  *
  * Accessible tabs component built on Radix UI Tabs primitive.
- * Follows ClaimScrub design system tab navigation styles:
+ * Follows Denali Health design system tab navigation styles:
  * - Active: Amber-600 text, amber-600 bottom border
  * - Inactive: Slate-500 text, no border
  * - Hover: Slate-700 text

@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 /**
  * Stripe Services
  *
- * Handles all billing-related operations for ClaimScrub:
+ * Handles all billing-related operations for Denali Health:
  * - Subscription management (create, update, cancel)
  * - Usage-based billing for pay-per-claim
  * - Payment method management

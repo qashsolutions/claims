@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn'
  * Select Component
  *
  * Accessible select/dropdown component built on Radix UI Select primitive.
- * Follows ClaimScrub design system form input styles:
+ * Follows Denali Health design system form input styles:
  * - Default: white bg, slate-300 border, 6px radius
  * - Focus: amber-500 border, amber-100 ring
  * - Error: rose-500 border, rose-100 ring

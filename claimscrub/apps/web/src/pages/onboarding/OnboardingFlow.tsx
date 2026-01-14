@@ -98,7 +98,7 @@ export function OnboardingFlow() {
       {/* Logo */}
       <div className="mb-8">
         <h1 className="font-heading text-3xl font-bold text-primary-900">
-          ClaimScrub
+          Denali Health
         </h1>
       </div>
 

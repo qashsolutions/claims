@@ -1,4 +1,4 @@
-// ClaimScrub - Prisma Schema
+// Denali Health - Prisma Schema
 // HIPAA-compliant healthcare claims validation
 
 datasource db {

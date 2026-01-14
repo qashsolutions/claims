@@ -24,7 +24,7 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
   return (
     <div className="text-center">
       <h2 className="font-heading text-2xl font-bold text-neutral-900">
-        Welcome to ClaimScrub
+        Welcome to Denali Health
       </h2>
       <p className="mt-2 text-neutral-600">
         Let's get your account set up in 3 minutes.

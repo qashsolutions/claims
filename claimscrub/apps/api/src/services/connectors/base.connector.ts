@@ -2,7 +2,7 @@
  * Base Connector Abstract Class
  *
  * Defines the interface and common functionality for all
- * ClaimScrub health data connectors.
+ * Denali Health data connectors.
  *
  * CONNECTOR PATTERN:
  * All connectors implement a consistent interface for:

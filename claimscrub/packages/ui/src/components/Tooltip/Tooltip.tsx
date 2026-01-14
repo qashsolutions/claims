@@ -8,7 +8,7 @@ import { cn } from '../../utils/cn'
  * Accessible tooltip component built on Radix UI Tooltip primitive.
  * Used for providing contextual information without cluttering the UI.
  *
- * Follows ClaimScrub design system:
+ * Follows Denali Health design system:
  * - Slate-900 background with white text (dark tooltip)
  * - 6px border radius
  * - Arrow pointing to trigger

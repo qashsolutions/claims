@@ -24,7 +24,7 @@ import {
 import { cn } from '@/lib/utils'
 
 /**
- * LandingPage - ClaimScrub flagship public landing page
+ * LandingPage - Denali Health flagship public landing page
  *
  * Professional-grade marketing page featuring:
  * - Hero with animated demo preview
@@ -57,7 +57,7 @@ function Navigation() {
               <Shield className="h-5 w-5 text-white" />
             </div>
             <span className="font-heading text-xl font-bold text-neutral-900">
-              ClaimScrub
+              Denali Health
             </span>
           </Link>
 
@@ -142,7 +142,7 @@ function HeroSection() {
             <div className="mb-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
                 <Zap className="h-4 w-4" />
-                Automated Claims Validation
+                Denials Management for Providers
               </div>
               <p className="mt-2 text-sm text-neutral-500">
                 Powered by Claude for Healthcare from Anthropic
@@ -158,7 +158,7 @@ function HeroSection() {
 
             {/* Subheadline */}
             <p className="mt-6 text-lg sm:text-xl text-neutral-600 max-w-xl mx-auto lg:mx-0">
-              ClaimScrub validates your medical claims in real-time, preventing denials
+              Denali Health validates your medical claims in real-time, preventing denials
               and recovering revenue with AI-powered precision.
             </p>
 
@@ -515,7 +515,7 @@ function PricingSection() {
       name: 'Free Trial',
       price: 0,
       period: 'for 3 days',
-      description: 'Try ClaimScrub risk-free',
+      description: 'Try Denali Health risk-free',
       features: [
         { text: '1 claim per day', included: true },
         { text: 'All 4 specialties', included: true },
@@ -683,7 +683,7 @@ function PricingSection() {
 function TestimonialsSection() {
   const testimonials = [
     {
-      quote: "ClaimScrub reduced our denial rate from 18% to under 3%. The ROI was immediate.",
+      quote: "Denali Health reduced our denial rate from 18% to under 3%. The ROI was immediate.",
       author: 'Dr. Sarah Chen',
       role: 'Medical Director',
       company: 'Memorial Oncology Associates',
@@ -699,7 +699,7 @@ function TestimonialsSection() {
       rating: 5,
     },
     {
-      quote: "We process 500+ claims weekly. ClaimScrub catches errors our staff misses every single day.",
+      quote: "We process 500+ claims weekly. Denali Health catches errors our staff misses every single day.",
       author: 'Jennifer Walsh',
       role: 'Revenue Cycle Director',
       company: 'Women\'s Health Partners',
@@ -777,20 +777,20 @@ function FAQSection() {
 
   const faqs = [
     {
-      q: 'How does ClaimScrub prevent denials?',
-      a: 'ClaimScrub validates claims against 15+ rules including CPT-ICD medical necessity matching, NCCI edits, NPI verification, prior authorization requirements, and payer-specific policies. We catch errors before you submit, preventing common denial codes like CO-11, CO-15, and CO-16.',
+      q: 'How does Denali Health prevent denials?',
+      a: 'Denali Health validates claims against 15+ rules including CPT-ICD medical necessity matching, NCCI edits, NPI verification, prior authorization requirements, and payer-specific policies. We catch errors before you submit, preventing common denial codes like CO-11, CO-15, and CO-16.',
     },
     {
       q: 'What specialties do you support?',
       a: 'We currently support Oncology, Mental Health, OB/GYN, and Endocrinology with specialty-specific validation rules. Each specialty has custom CPT-ICD mappings, modifier requirements, and documentation checks tailored to their billing complexity.',
     },
     {
-      q: 'Is ClaimScrub HIPAA compliant?',
+      q: 'Is Denali Health HIPAA compliant?',
       a: 'Yes, absolutely. We use enterprise-grade encryption, maintain BAA agreements, implement comprehensive audit logging, and host on HIPAA-compliant infrastructure. We never store PHI longer than necessary for processing.',
     },
     {
       q: 'Can I integrate with my EHR?',
-      a: 'Yes! Our Unlimited plan includes Epic EHR integration via App Orchard. You can launch ClaimScrub directly from within Epic and pull patient data automatically. We\'re adding more EHR integrations soon.',
+      a: 'Yes! Our Unlimited plan includes Epic EHR integration via App Orchard. You can launch Denali Health directly from within Epic and pull patient data automatically. We\'re adding more EHR integrations soon.',
     },
     {
       q: 'What\'s the free trial like?',
@@ -856,7 +856,7 @@ function CTASection() {
           Ready to stop losing revenue to denials?
         </h2>
         <p className="mt-4 text-xl text-amber-100">
-          Join 500+ practices already saving thousands monthly with ClaimScrub.
+          Join 500+ practices already saving thousands monthly with Denali Health.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -897,7 +897,7 @@ function Footer() {
                 <Shield className="h-5 w-5 text-white" />
               </div>
               <span className="font-heading text-xl font-bold text-white">
-                ClaimScrub
+                Denali Health
               </span>
             </div>
             <p className="mt-4 text-sm">
@@ -941,7 +941,7 @@ function Footer() {
 
         <div className="mt-16 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm">
-            © {new Date().getFullYear()} ClaimScrub. All rights reserved.
+            © {new Date().getFullYear()} Denali Health. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             <span className="px-2 py-1 bg-green-900/50 text-green-400 text-xs font-medium rounded">

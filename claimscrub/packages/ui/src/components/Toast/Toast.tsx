@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn'
  * Toast Notification Component
  *
  * Accessible toast notifications built on Radix UI Toast primitive.
- * Follows ClaimScrub design system semantic colors:
+ * Follows Denali Health design system semantic colors:
  * - success: Sage (green) - #dcfce7 bg, #16a34a border
  * - error: Rose (red) - #fee2e2 bg, #dc2626 border
  * - warning: Amber (yellow) - #fef3c7 bg, #d97706 border

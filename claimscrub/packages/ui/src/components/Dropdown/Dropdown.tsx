@@ -9,7 +9,7 @@ import { cn } from '../../utils/cn'
  * Accessible dropdown menu built on Radix UI DropdownMenu primitive.
  * Used for contextual actions, navigation menus, and option selection.
  *
- * Follows ClaimScrub design system:
+ * Follows Denali Health design system:
  * - White background with slate-200 border
  * - 8px border radius
  * - Hover: slate-100 background

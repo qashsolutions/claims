@@ -7,7 +7,7 @@ import { cn } from '../../utils/cn'
  * Modal Component
  *
  * Accessible dialog component built on Radix UI Dialog primitive.
- * Follows ClaimScrub design system specifications:
+ * Follows Denali Health design system specifications:
  * - Motion: 300ms ease-in-out for modal transitions
  * - Overlay: Semi-transparent slate background
  * - Focus: Trapped within modal when open

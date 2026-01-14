@@ -6,7 +6,7 @@ import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
  * Table Component
  *
  * Accessible data table component for displaying claims, validations, etc.
- * Follows ClaimScrub design system card/container styles:
+ * Follows Denali Health design system card/container styles:
  * - White bg, slate-200 border, 8px radius
  * - Sortable columns with visual indicators
  * - Selectable rows for bulk actions

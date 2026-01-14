@@ -1,5 +1,5 @@
 // Core UI Components
-// Following ClaimScrub Design System specifications from design/mockups/00_design_system.md
+// Following Denali Health Design System specifications from design/mockups/00_design_system.md
 
 // Buttons
 export { Button, type ButtonProps } from './Button'

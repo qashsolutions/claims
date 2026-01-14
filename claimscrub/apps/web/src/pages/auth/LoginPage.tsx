@@ -31,7 +31,7 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <span className="ml-3 font-heading text-2xl font-bold text-neutral-900">ClaimScrub</span>
+          <span className="ml-3 font-heading text-2xl font-bold text-neutral-900">Denali Health</span>
         </div>
 
         <h1 className="mb-2 text-center font-heading text-2xl font-bold text-neutral-900">

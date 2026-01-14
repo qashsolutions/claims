@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'ClaimScrub',
-        short_name: 'ClaimScrub',
+        name: 'Denali Health',
+        short_name: 'Denali Health',
         description: 'Pre-Submission Claim Scrubber - Prevent denials before they happen',
         theme_color: '#d97706',
         background_color: '#f8fafc',

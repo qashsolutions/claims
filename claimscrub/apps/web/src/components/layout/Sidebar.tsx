@@ -60,7 +60,7 @@ export function Sidebar() {
           </svg>
         </div>
         {sidebarOpen && (
-          <span className="ml-3 font-heading text-lg font-bold text-neutral-900">ClaimScrub</span>
+          <span className="ml-3 font-heading text-lg font-bold text-neutral-900">Denali Health</span>
         )}
       </div>
 
