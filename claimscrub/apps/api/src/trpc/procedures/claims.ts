@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { router, protectedProcedure } from '../index.js'
 import { TRPCError } from '@trpc/server'
 import { createClaimSchema } from '@claimscrub/shared/schemas'
+import type { Validation } from '@prisma/client'
 import {
   TRIAL_CLAIMS_PER_DAY,
   TRIAL_MB_PER_DAY,
@@ -203,7 +204,7 @@ export const claimsRouter = router({
       }
 
       // Check all validations pass
-      const hasFailures = claim.validations.some((v) => v.status === 'FAIL')
+      const hasFailures = claim.validations.some((v: Validation) => v.status === 'FAIL')
       if (hasFailures) {
         throw new TRPCError({
           code: 'BAD_REQUEST',

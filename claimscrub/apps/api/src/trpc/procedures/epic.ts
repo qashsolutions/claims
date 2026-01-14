@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { router, protectedProcedure } from '../index.js'
 import { TRPCError } from '@trpc/server'
 import { epicClient } from '../../services/epic/client.js'
+import type { EpicTokens } from '@claimscrub/shared'
 
 export const epicRouter = router({
   // Get patient by ID from Epic FHIR
@@ -17,7 +18,7 @@ export const epicRouter = router({
 
       const patient = await epicClient.getPatient(
         input.patientId,
-        ctx.user.epicTokens as { accessToken: string }
+        ctx.user.epicTokens as EpicTokens
       )
 
       // Audit log
@@ -53,7 +54,7 @@ export const epicRouter = router({
 
       const patients = await epicClient.searchPatients(
         input.query,
-        ctx.user.epicTokens as { accessToken: string },
+        ctx.user.epicTokens as EpicTokens,
         input.limit
       )
 
@@ -73,7 +74,7 @@ export const epicRouter = router({
 
       const conditions = await epicClient.getConditions(
         input.patientId,
-        ctx.user.epicTokens as { accessToken: string }
+        ctx.user.epicTokens as EpicTokens
       )
 
       return conditions
@@ -92,7 +93,7 @@ export const epicRouter = router({
 
       const coverage = await epicClient.getCoverage(
         input.patientId,
-        ctx.user.epicTokens as { accessToken: string }
+        ctx.user.epicTokens as EpicTokens
       )
 
       return coverage
@@ -116,7 +117,7 @@ export const epicRouter = router({
 
       const auths = await epicClient.getAuthorizations(
         input.patientId,
-        ctx.user.epicTokens as { accessToken: string },
+        ctx.user.epicTokens as EpicTokens,
         input.cptCode
       )
 

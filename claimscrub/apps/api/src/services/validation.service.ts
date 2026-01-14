@@ -328,7 +328,7 @@ class ValidationService {
       )
 
       // NCCI edits
-      const allCpts = claim.serviceLines.map((l) => l.cptCode)
+      const allCpts = claim.serviceLines.map((l: ServiceLine) => l.cptCode)
       results.push(await this.checkNcciEdits(allCpts, line.modifiers))
 
       // Prior auth check
