@@ -19,6 +19,12 @@ const envSchema = z.object({
   ENCRYPTION_KEY: z.string().optional(),
   JWT_SECRET: z.string().optional(),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+  // Epic FHIR
+  EPIC_CLIENT_ID: z.string().optional(),
+  EPIC_CLIENT_SECRET: z.string().optional(),
+  EPIC_REDIRECT_URI: z.string().optional(),
+  EPIC_SANDBOX_URL: z.string().optional(),
+  EPIC_FHIR_BASE_URL: z.string().optional(),
 })
 
 const parsed = envSchema.safeParse(process.env)
