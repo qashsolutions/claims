@@ -380,38 +380,38 @@ function FeaturesSection() {
   const features = [
     {
       icon: Brain,
-      title: 'AI-Powered Validation',
-      description: 'Our AI analyzes CPT-ICD relationships, NCCI edits, and payer rules to catch errors before submission.',
+      title: 'Smart Validation',
+      description: 'Analyzes CPT-ICD relationships, NCCI edits, and payer rules.',
       color: 'bg-purple-500',
     },
     {
       icon: Shield,
       title: 'Denial Prevention',
-      description: 'Identify CO-11, CO-15, CO-16, and other common denial codes before they happen.',
+      description: 'Catch CO-11, CO-15, CO-16 codes before submission.',
       color: 'bg-amber-500',
     },
     {
       icon: Zap,
       title: 'Real-Time Results',
-      description: 'Get validation results in under 2 seconds. No waiting, no batch processing.',
+      description: 'Results in under 2 seconds. No batch processing.',
       color: 'bg-blue-500',
     },
     {
       icon: FileText,
       title: 'CMS Coverage Checks',
-      description: 'Automatic NCD/LCD lookup to ensure procedures are covered by payer policies.',
+      description: 'Automatic NCD/LCD lookup for payer coverage.',
       color: 'bg-green-500',
     },
     {
       icon: Users,
       title: 'Epic EHR Integration',
-      description: 'Launch directly from Epic, pull patient data, and streamline your workflow.',
+      description: 'Launch from Epic and pull patient data seamlessly.',
       color: 'bg-indigo-500',
     },
     {
       icon: TrendingUp,
       title: 'Analytics Dashboard',
-      description: 'Track denial trends, identify problem areas, and measure your improvement.',
+      description: 'Track denial trends and measure improvement.',
       color: 'bg-rose-500',
     },
   ]
@@ -420,9 +420,6 @@ function FeaturesSection() {
     <section id="features" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-4">
-            Features
-          </div>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-neutral-900">
             Everything you need to submit clean claims
           </h2>
