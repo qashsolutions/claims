@@ -151,9 +151,9 @@ function HeroSection() {
 
             {/* Headline */}
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight">
-              Catch claim errors{' '}
-              <span className="text-amber-600">before</span>{' '}
-              payers do
+              Denials{' '}
+              <span className="text-amber-600">Prevention</span>,{' '}
+              Not Denials Management
             </h1>
 
             {/* Subheadline */}
@@ -901,7 +901,7 @@ function Footer() {
               </span>
             </div>
             <p className="mt-4 text-sm">
-              Catch claim errors before payers do. AI-powered validation for healthcare practices.
+              Denials Prevention, Not Denials Management. AI-powered validation for healthcare practices.
             </p>
           </div>
 
