@@ -2,10 +2,16 @@ import { handle } from 'hono/vercel'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
+import { trpcServer } from '@hono/trpc-server'
+
+// Import from workspace packages
+import { appRouter } from '@claimscrub/api/trpc'
 
 export const config = {
   runtime: 'nodejs',
 }
+
+console.log('[Vercel API] Initializing serverless function')
 
 const app = new Hono().basePath('/api')
 
@@ -26,13 +32,25 @@ app.use('*', secureHeaders())
 // Health check
 app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
 
-// Placeholder for tRPC and other routes
-// These will be imported from apps/api once we resolve the build
+// tRPC
+app.use(
+  '/trpc/*',
+  trpcServer({
+    router: appRouter,
+    createContext: (_opts, c) => {
+      console.log('[Vercel API] Creating context for tRPC request')
+      return { c, user: null, prisma: undefined }
+    },
+  })
+)
+
+// Catch-all for other API routes
 app.all('/*', (c) => {
+  console.log('[Vercel API] Catch-all route hit:', c.req.path)
   return c.json({
     message: 'API is running',
     path: c.req.path,
-    method: c.req.method
+    method: c.req.method,
   })
 })
 
