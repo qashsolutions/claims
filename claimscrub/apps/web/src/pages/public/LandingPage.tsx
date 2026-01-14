@@ -326,9 +326,6 @@ function SpecialtiesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-4">
-            Specialized Expertise
-          </p>
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Built for complex specialties
           </h2>
@@ -370,12 +367,6 @@ function SpecialtiesSection() {
           ))}
         </div>
 
-        {/* Bottom tagline */}
-        <div className="mt-16 text-center">
-          <p className="text-neutral-500 text-sm">
-            We understand the unique billing challenges.
-          </p>
-        </div>
       </div>
     </section>
   )
