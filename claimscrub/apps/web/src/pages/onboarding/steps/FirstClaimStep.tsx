@@ -17,7 +17,7 @@ interface FirstClaimStepProps {
 }
 
 const FREE_TRIAL_BENEFITS = [
-  '7 days of access',
+  '3 days of access',
   '1 claim validation per day',
   'All 4 specialty validations',
   'CPT-ICD, NPI, and CMS coverage checks',

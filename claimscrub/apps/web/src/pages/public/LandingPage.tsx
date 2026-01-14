@@ -514,7 +514,7 @@ function PricingSection() {
     {
       name: 'Free Trial',
       price: 0,
-      period: 'for 7 days',
+      period: 'for 3 days',
       description: 'Try ClaimScrub risk-free',
       features: [
         { text: '1 claim per day', included: true },

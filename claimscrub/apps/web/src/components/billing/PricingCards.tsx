@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
  * Per design mockup: 06_pricing_plans.md
  *
  * Three plans:
- * - Free Trial: $0 for 7 days
+ * - Free Trial: $0 for 3 days
  * - Pay Per Claim: $10/claim
  * - Unlimited: $100/month (featured)
  */
@@ -30,7 +30,7 @@ const plans: PricingPlan[] = [
     id: 'free-trial',
     name: 'Free Trial',
     price: 0,
-    period: 'for 7 days',
+    period: 'for 3 days',
     description: 'Try ClaimScrub risk-free',
     features: [
       { label: '1 claim per day', included: true },
