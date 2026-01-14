@@ -598,10 +598,9 @@ function PricingSection() {
       price: 0,
       period: 'for 3 days',
       description: 'Try Denali Health risk-free',
-      features: [
-        { text: '1 claim per day', included: true },
-      ],
+      features: [],
       cta: 'Start Free Trial',
+      aboveCta: '1 claim per day',
       popular: false,
     },
     {
@@ -717,6 +716,9 @@ function PricingSection() {
               </ul>
 
               <div className="mt-auto pt-8">
+                {plan.aboveCta && (
+                  <p className="mb-2 text-center text-[8px] italic text-neutral-400">{plan.aboveCta}</p>
+                )}
                 <Link
                   to="/register"
                   className={cn(
