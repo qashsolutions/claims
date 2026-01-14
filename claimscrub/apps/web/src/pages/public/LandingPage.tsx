@@ -630,9 +630,6 @@ function PricingSection() {
     <section id="pricing" className="py-20 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-4">
-            Pricing
-          </div>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-neutral-900">
             Simple, transparent pricing
           </h2>
@@ -866,12 +863,9 @@ function FAQSection() {
   ]
 
   return (
-    <section id="faq" className="py-20 bg-neutral-50">
+    <section id="faq" className="py-20 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-4">
-            FAQ
-          </div>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-neutral-900">
             Frequently asked questions
           </h2>
