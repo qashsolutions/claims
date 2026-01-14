@@ -157,8 +157,10 @@ function HeroSection() {
 
             {/* Subheadline */}
             <p className="mt-6 text-lg sm:text-xl text-neutral-600 max-w-xl mx-auto lg:mx-0">
-              Denali Health validates your medical claims in real-time, preventing denials
-              and recovering revenue with AI-powered precision.
+              Proactively reduce claim rejections. Build robust appeals.
+            </p>
+            <p className="mt-3 text-sm text-neutral-400">
+              CMS Coverage | ICD-10 | NPI Registry | PubMed
             </p>
 
             {/* Stats */}
