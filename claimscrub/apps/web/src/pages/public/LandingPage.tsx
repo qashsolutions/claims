@@ -515,7 +515,7 @@ function HowItWorksSection() {
             See how actionable suggestions work
           </p>
 
-          <div className="grid lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {/* Step 1: Issue Detected */}
             <div className="bg-white rounded-2xl border-2 border-rose-200 p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
@@ -530,11 +530,8 @@ function HowItWorksSection() {
                   <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-xs font-medium rounded">CO-11</span>
                 </div>
                 <p className="text-sm text-neutral-700">
-                  CPT 96372 (injection) requires diagnosis code supporting medical necessity.
+                  CPT 96372 requires diagnosis supporting medical necessity.
                 </p>
-                <div className="pt-2 border-t border-neutral-100">
-                  <p className="text-xs text-neutral-500">Denial Risk: High</p>
-                </div>
               </div>
             </div>
 
@@ -548,20 +545,19 @@ function HowItWorksSection() {
               </div>
               <div className="space-y-3">
                 <p className="text-sm text-neutral-700">
-                  Add diagnosis code to support injection procedure:
+                  Add diagnosis code:
                 </p>
                 <div className="bg-neutral-50 rounded-lg p-3">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-mono font-semibold text-neutral-900">E11.9</p>
-                      <p className="text-xs text-neutral-500">Type 2 Diabetes Mellitus</p>
+                      <p className="text-xs text-neutral-500">Type 2 Diabetes</p>
                     </div>
                     <button className="px-3 py-1.5 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition-colors">
                       Apply
                     </button>
                   </div>
                 </div>
-                <p className="text-xs text-neutral-400">92% confidence match</p>
               </div>
             </div>
 
@@ -579,13 +575,28 @@ function HowItWorksSection() {
                   <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">Pass</span>
                 </div>
                 <p className="text-sm text-neutral-700">
-                  Diagnosis E11.9 supports medical necessity for CPT 96372.
+                  E11.9 supports medical necessity for CPT 96372.
                 </p>
-                <div className="pt-2 border-t border-neutral-100">
-                  <button className="w-full px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-colors">
-                    Submit to Clearinghouse
-                  </button>
+              </div>
+            </div>
+
+            {/* Step 4: Appeal Support */}
+            <div className="bg-white rounded-2xl border-2 border-blue-200 p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-blue-600" />
                 </div>
+                <span className="text-sm font-semibold text-blue-700">Appeal Support</span>
+              </div>
+              <div className="space-y-3">
+                <p className="text-sm text-neutral-700">
+                  If denied, we help you appeal:
+                </p>
+                <ul className="text-xs text-neutral-600 space-y-1">
+                  <li>• Appeal letter templates</li>
+                  <li>• Denial-specific guidance</li>
+                  <li>• Documentation checklist</li>
+                </ul>
               </div>
             </div>
           </div>
