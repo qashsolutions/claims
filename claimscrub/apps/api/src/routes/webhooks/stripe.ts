@@ -4,7 +4,7 @@ import { prisma } from '../../db/index.js'
 import { env } from '../../config/env.js'
 
 const stripe = new Stripe(env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-01-27.acacia',
+  apiVersion: '2025-02-24.acacia',
 })
 
 export const stripeWebhook = new Hono()
