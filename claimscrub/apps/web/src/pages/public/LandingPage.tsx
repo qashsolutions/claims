@@ -1052,7 +1052,7 @@ export function LandingPage() {
       <FeaturesSection />
       <HowItWorksSection />
       <PricingSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <FAQSection />
       <CTASection />
       <Footer />
