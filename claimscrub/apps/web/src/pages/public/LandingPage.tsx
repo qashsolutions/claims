@@ -901,7 +901,7 @@ function Footer() {
               </span>
             </div>
             <p className="mt-4 text-sm">
-              Denials Prevention, Not Denials Management. AI-powered validation for healthcare practices.
+              Denials Prevention, Not Denials Management.
             </p>
           </div>
 
