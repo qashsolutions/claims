@@ -153,7 +153,7 @@ function HeroSection() {
             <p className="mt-6 text-lg sm:text-xl text-neutral-600 max-w-xl mx-auto lg:mx-0">
               Proactively reduce claim rejections. Build robust appeals.
             </p>
-            <p className="mt-3 text-sm text-neutral-400">
+            <p className="mt-3 text-[10px] text-neutral-400">
               CMS Coverage | ICD-10 | NPI Registry | PubMed
             </p>
 
@@ -166,7 +166,7 @@ function HeroSection() {
                 >
                   Start Free Trial
                 </Link>
-                <p className="mt-2 text-sm text-neutral-400">
+                <p className="mt-2 text-[10px] text-neutral-400">
                   Sign in with Epic EHR or NPI
                 </p>
               </div>
