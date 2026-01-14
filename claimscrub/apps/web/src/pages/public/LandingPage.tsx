@@ -478,42 +478,13 @@ function HowItWorksSection() {
     <section className="py-20 bg-gradient-to-b from-amber-50/30 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-4">
-            How It Works
-          </div>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-neutral-900">
             Clean claims in four simple steps
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, idx) => (
-            <div key={idx} className="relative">
-              {/* Connector Line */}
-              {idx < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-amber-300 to-amber-100 -z-10" />
-              )}
-
-              <div className="relative">
-                <div className="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-heading text-2xl font-bold shadow-lg shadow-amber-600/25">
-                  {step.number}
-                </div>
-                <h3 className="mt-6 text-xl font-semibold text-neutral-900">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-neutral-600">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Validation Preview - Shows actionable suggestions in action */}
-        <div className="mt-20">
-          <p className="text-center text-sm font-medium text-neutral-500 mb-8">
-            See how actionable suggestions work
-          </p>
+        <div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto justify-items-center">
             {/* Step 1: Issue Detected */}
