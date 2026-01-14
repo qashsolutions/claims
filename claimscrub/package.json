@@ -2,6 +2,7 @@
   "name": "claimscrub",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "description": "Pre-Submission Claim Scrubber PWA - Prevent denials before they happen",
   "scripts": {
     "dev": "turbo dev",
