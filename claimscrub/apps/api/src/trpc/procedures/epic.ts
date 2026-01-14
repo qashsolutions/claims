@@ -139,7 +139,7 @@ export const epicRouter = router({
         where: { id: ctx.user.id },
         data: {
           epicTokens: tokens,
-          epicUserId: tokens.patient,
+          epicUserId: tokens.patientId,
         },
       })
 

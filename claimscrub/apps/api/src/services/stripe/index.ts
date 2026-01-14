@@ -10,8 +10,8 @@ import Stripe from 'stripe'
  * - Invoice and receipt generation
  * - Webhook handling for payment events
  *
- * PRICING TIERS (per design mockup 06_pricing_plans.md):
- * - Free Trial: $0 for 7 days (1 claim/day)
+ * PRICING TIERS:
+ * - Free Trial: $0 for 3 days (1 claim/day)
  * - Pay Per Claim: $10/claim
  * - Unlimited Monthly: $100/month
  * - Unlimited Annual: $840/year ($70/month)
@@ -96,13 +96,13 @@ export async function createSubscription(
  * Creates a free trial subscription.
  *
  * @param customerId - Stripe customer ID
- * @returns Subscription with 7-day trial
+ * @returns Subscription with 3-day trial
  */
 export async function createTrialSubscription(customerId: string): Promise<Stripe.Subscription> {
   return createSubscription({
     customerId,
     priceId: PRICES.PAY_PER_CLAIM, // Start with pay-per-claim, trial prevents charges
-    trialDays: 7,
+    trialDays: 3,
   })
 }
 

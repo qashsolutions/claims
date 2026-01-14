@@ -1,27 +1,27 @@
 import { z } from 'zod'
 import { router, protectedProcedure } from '../index.js'
 import { TRPCError } from '@trpc/server'
-
-const createClaimSchema = z.object({
-  patientId: z.string(),
-  dateOfService: z.date(),
-  placeOfService: z.string(),
-  priorAuthNumber: z.string().optional(),
-  serviceLines: z.array(
-    z.object({
-      lineNumber: z.number(),
-      cptCode: z.string(),
-      modifiers: z.array(z.string()),
-      icdCodes: z.array(z.string()),
-      drugCode: z.string().optional(),
-      drugUnits: z.number().optional(),
-      units: z.number().default(1),
-      charge: z.number(),
-    })
-  ),
-})
+import { createClaimSchema } from '@claimscrub/shared/schemas'
+import {
+  TRIAL_CLAIMS_PER_DAY,
+  TRIAL_MB_PER_DAY,
+  getUsageStats,
+  checkTrialUploadLimit,
+} from '../../services/usage.service.js'
 
 export const claimsRouter = router({
+  // Get usage stats for trial limits
+  usageStats: protectedProcedure.query(async ({ ctx }) => {
+    return getUsageStats(ctx.user.practiceId)
+  }),
+
+  // Check if file upload is allowed (for trial users)
+  checkUploadLimit: protectedProcedure
+    .input(z.object({ fileSizeBytes: z.number() }))
+    .query(async ({ ctx, input }) => {
+      return checkTrialUploadLimit(ctx.user.practiceId, input.fileSizeBytes)
+    }),
+
   // List claims for current practice
   list: protectedProcedure
     .input(
@@ -101,6 +101,32 @@ export const claimsRouter = router({
   create: protectedProcedure
     .input(createClaimSchema)
     .mutation(async ({ ctx, input }) => {
+      // Check trial claim limit (1 claim per day for trial users)
+      const subscription = await ctx.prisma.subscription.findFirst({
+        where: { practiceId: ctx.user.practiceId },
+      })
+
+      if (subscription?.status === 'TRIALING') {
+        // Get today's start (midnight)
+        const todayStart = new Date()
+        todayStart.setHours(0, 0, 0, 0)
+
+        // Count claims created today
+        const claimsToday = await ctx.prisma.claim.count({
+          where: {
+            practiceId: ctx.user.practiceId,
+            createdAt: { gte: todayStart },
+          },
+        })
+
+        if (claimsToday >= TRIAL_CLAIMS_PER_DAY) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: `Trial limit reached. You can create ${TRIAL_CLAIMS_PER_DAY} claim per day (up to ${TRIAL_MB_PER_DAY}MB) during your free trial. Upgrade to continue.`,
+          })
+        }
+      }
+
       // Calculate total charge
       const totalCharge = input.serviceLines.reduce(
         (sum, line) => sum + line.charge * line.units,
@@ -110,13 +136,14 @@ export const claimsRouter = router({
       // Create claim with service lines
       const claim = await ctx.prisma.claim.create({
         data: {
-          patientName: '', // Will be filled from Epic data
-          patientDob: new Date(), // Will be filled from Epic data
-          patientGender: '', // Will be filled from Epic data
-          insuranceId: '', // Will be filled from Epic data
-          payerName: '', // Will be filled from Epic data
-          providerNpi: '', // Will be filled from user's practice
-          providerName: '', // Will be filled from user's practice
+          patientName: input.patientName,
+          patientDob: input.patientDob,
+          patientGender: input.patientGender,
+          insuranceId: input.insuranceId,
+          payerName: input.payerName,
+          payerId: input.payerId,
+          providerNpi: input.providerNpi,
+          providerName: input.providerName,
           dateOfService: input.dateOfService,
           placeOfService: input.placeOfService,
           priorAuthNumber: input.priorAuthNumber,
