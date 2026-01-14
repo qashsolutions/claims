@@ -172,9 +172,9 @@ function HeroSection() {
               </Link>
             </div>
 
-            {/* Trust Indicators */}
+            {/* Sign In Options */}
             <p className="mt-8 text-sm text-neutral-500">
-              No credit card required · HIPAA compliant · Setup in 5 minutes
+              Sign in with Epic EHR or NPI
             </p>
           </div>
 
