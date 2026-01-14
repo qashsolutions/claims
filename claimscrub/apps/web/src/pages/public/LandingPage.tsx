@@ -56,9 +56,14 @@ function Navigation() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
               <Shield className="h-5 w-5 text-white" />
             </div>
-            <span className="font-heading text-xl font-bold text-neutral-900">
-              Denali Health
-            </span>
+            <div className="flex flex-col">
+              <span className="font-heading text-xl font-bold text-neutral-900">
+                Denali Health
+              </span>
+              <span className="text-[8px] text-neutral-500">
+                Denials Prevention for Providers
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -137,13 +142,6 @@ function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Copy */}
           <div className="text-center lg:text-left">
-            {/* Badge */}
-            <div className="mb-6">
-              <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
-                Denials Prevention for Providers
-              </div>
-            </div>
-
             {/* Headline */}
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight">
               Denials{' '}
