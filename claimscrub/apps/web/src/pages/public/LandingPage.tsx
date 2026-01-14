@@ -164,18 +164,18 @@ function HeroSection() {
 
             {/* CTAs */}
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link
-                to="/register"
-                className="inline-flex items-center justify-center px-8 py-4 bg-amber-600 text-white font-semibold rounded-xl hover:bg-amber-700 transition-all shadow-lg shadow-amber-600/25 hover:shadow-xl hover:shadow-amber-600/30"
-              >
-                Start Free Trial
-              </Link>
+              <div className="flex flex-col items-center">
+                <Link
+                  to="/register"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-amber-600 text-white font-semibold rounded-xl hover:bg-amber-700 transition-all shadow-lg shadow-amber-600/25 hover:shadow-xl hover:shadow-amber-600/30"
+                >
+                  Start Free Trial
+                </Link>
+                <p className="mt-2 text-[10px] text-neutral-500">
+                  Sign in with Epic EHR or NPI
+                </p>
+              </div>
             </div>
-
-            {/* Sign In Options */}
-            <p className="mt-3 text-[10px] text-neutral-500">
-              Sign in with Epic EHR or NPI
-            </p>
           </div>
 
           {/* Right: Demo Preview */}
