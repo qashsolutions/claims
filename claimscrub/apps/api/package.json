@@ -11,6 +11,10 @@
     "./trpc": {
       "types": "./src/trpc/router.ts",
       "import": "./src/trpc/router.ts"
+    },
+    "./trpc/context": {
+      "types": "./src/trpc/context.ts",
+      "import": "./src/trpc/context.ts"
     }
   },
   "scripts": {

@@ -6,6 +6,7 @@ import { trpcServer } from '@hono/trpc-server'
 
 // Import from workspace packages
 import { appRouter } from '@claimscrub/api/trpc'
+import { createContext } from '@claimscrub/api/trpc/context'
 
 export const config = {
   runtime: 'nodejs',
@@ -38,8 +39,8 @@ app.use(
   trpcServer({
     router: appRouter,
     createContext: (_opts, c) => {
-      console.log('[Vercel API] Creating context for tRPC request')
-      return { c, user: null, prisma: undefined }
+      console.log('[Vercel API] Creating context for tRPC request:', c.req.path)
+      return createContext({ c, user: null })
     },
   })
 )
