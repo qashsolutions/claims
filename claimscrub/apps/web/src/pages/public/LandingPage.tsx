@@ -189,11 +189,6 @@ function HeroSection() {
                   <div className="w-3 h-3 rounded-full bg-yellow-400" />
                   <div className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
-                <div className="flex-1 flex justify-center">
-                  <div className="px-4 py-1 bg-white rounded-md text-xs text-neutral-500">
-                    app.claimscrub.com
-                  </div>
-                </div>
               </div>
 
               {/* App Preview */}
