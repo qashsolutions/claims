@@ -142,9 +142,6 @@ function HeroSection() {
               <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
                 Denials Prevention for Providers
               </div>
-              <p className="mt-1.5 text-[10px] italic text-neutral-400">
-                Powered by Claude for Healthcare from Anthropic
-              </p>
             </div>
 
             {/* Headline */}
@@ -957,13 +954,18 @@ function Footer() {
           <p className="text-sm">
             © {new Date().getFullYear()} Denali Health. All rights reserved.
           </p>
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-1 bg-green-900/50 text-green-400 text-xs font-medium rounded">
-              HIPAA Compliant
-            </span>
-            <span className="px-2 py-1 bg-blue-900/50 text-blue-400 text-xs font-medium rounded">
-              SOC 2 Type II
-            </span>
+          <div className="flex flex-col items-start gap-2">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-1 bg-green-900/50 text-green-400 text-xs font-medium rounded">
+                HIPAA Compliant
+              </span>
+              <span className="px-2 py-1 bg-blue-900/50 text-blue-400 text-xs font-medium rounded">
+                SOC 2 Type II
+              </span>
+            </div>
+            <p className="text-[10px] italic text-white">
+              Powered by Claude for Healthcare from Anthropic
+            </p>
           </div>
         </div>
       </div>
