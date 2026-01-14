@@ -26,8 +26,11 @@ import type { Claim } from '@claimscrub/shared'
  * ```
  */
 
-interface CoveragePanelProps {
-  claim: Claim
+export interface CoveragePanelProps {
+  claim?: Claim
+  cptCode?: string
+  icdCode?: string
+  payerName?: string
   className?: string
 }
 
@@ -58,11 +61,14 @@ interface CoverageInfo {
   }
 }
 
-export function CoveragePanel({ claim, className }: CoveragePanelProps) {
+export function CoveragePanel({ claim, cptCode: cptCodeProp, icdCode, payerName: payerNameProp, className }: CoveragePanelProps) {
   // In production, this would be fetched from the API based on claim CPT codes
   // For now, we'll show a realistic example based on the claim
+  const cptCode = cptCodeProp || claim?.serviceLines?.[0]?.cptCode || '96413'
+  const payerName = payerNameProp || claim?.payerName || 'Unknown Payer'
+
   const coverageInfo: CoverageInfo = {
-    cptCode: claim.serviceLines?.[0]?.cptCode || '96413',
+    cptCode,
     coverageStatus: 'covered_with_conditions',
     ncds: [
       {
@@ -86,8 +92,8 @@ export function CoveragePanel({ claim, className }: CoveragePanelProps) {
       'Drug administration record with start/end times',
       'Prior authorization (if applicable)',
     ],
-    drugInfo: claim.serviceLines?.[0]?.drugCode ? {
-      code: claim.serviceLines[0].drugCode,
+    drugInfo: claim?.serviceLines?.[0]?.drugCode ? {
+      code: claim.serviceLines[0]!.drugCode!,
       name: 'Pembrolizumab (Keytruda)',
       indications: [
         'TNBC (triple-negative breast cancer) with PD-L1 >= 10%',

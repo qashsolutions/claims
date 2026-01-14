@@ -143,12 +143,7 @@ export function AuthCheck() {
 
     // Pass authorization data to the state machine
     // This data will be included in the claim submission
-    useAuth({
-      number: existingAuth.number,
-      status: existingAuth.status,
-      validFrom: existingAuth.validFrom,
-      validTo: existingAuth.validTo,
-    })
+    useAuth(existingAuth)
   }
 
   if (isLoading) {
@@ -200,7 +195,7 @@ export function AuthCheck() {
                 <div>
                   <p className="text-body-sm text-success-600">Auth Number</p>
                   <p className="code font-semibold text-success-800">
-                    {existingAuth.number}
+                    {existingAuth?.number}
                   </p>
                 </div>
                 <div>
@@ -213,13 +208,13 @@ export function AuthCheck() {
                 <div>
                   <p className="text-body-sm text-success-600">Valid From</p>
                   <p className="font-medium text-success-800">
-                    {new Date(existingAuth.validFrom).toLocaleDateString()}
+                    {existingAuth?.validFrom ? new Date(existingAuth.validFrom).toLocaleDateString() : '-'}
                   </p>
                 </div>
                 <div>
                   <p className="text-body-sm text-success-600">Valid To</p>
                   <p className="font-medium text-success-800">
-                    {new Date(existingAuth.validTo).toLocaleDateString()}
+                    {existingAuth?.validTo ? new Date(existingAuth.validTo).toLocaleDateString() : '-'}
                   </p>
                 </div>
               </div>

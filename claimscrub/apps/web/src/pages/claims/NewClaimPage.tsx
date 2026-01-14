@@ -1,5 +1,7 @@
 import { FlowProvider, FlowContainer, useFlow, SuggestionCard, ConfirmButton } from '@/components/agentic'
 import { Button, Card, Badge } from '@claimscrub/ui'
+import type { Diagnosis } from '@claimscrub/shared'
+import type { Procedure } from '@claimscrub/agentic-engine'
 
 function PatientStep() {
   const { patient, confirmPatient, patientLoading } = useFlow()
@@ -53,7 +55,7 @@ function PatientStep() {
           <div className="mt-4">
             <p className="text-body-sm text-neutral-500">Active Diagnoses</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              {patient.activeDiagnoses.map((dx) => (
+              {patient.activeDiagnoses.map((dx: Diagnosis) => (
                 <Badge key={dx.code} variant="default">
                   {dx.code} - {dx.description}
                 </Badge>
@@ -84,7 +86,7 @@ function ProcedureStep() {
 
       <div className="grid gap-4 md:grid-cols-3">
         {suggestedProcedures.length > 0 ? (
-          suggestedProcedures.map((proc) => (
+          suggestedProcedures.map((proc: Procedure) => (
             <SuggestionCard
               key={proc.cptCode}
               title={proc.cptCode}

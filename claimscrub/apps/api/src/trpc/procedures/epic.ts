@@ -65,7 +65,7 @@ export const epicRouter = router({
   // Get patient conditions (active diagnoses)
   getConditions: protectedProcedure
     .input(z.object({ patientId: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (!ctx.user.epicTokens) {
         throw new TRPCError({
           code: 'UNAUTHORIZED',
@@ -84,7 +84,7 @@ export const epicRouter = router({
   // Get patient coverage (insurance)
   getCoverage: protectedProcedure
     .input(z.object({ patientId: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (!ctx.user.epicTokens) {
         throw new TRPCError({
           code: 'UNAUTHORIZED',

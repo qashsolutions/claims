@@ -247,6 +247,7 @@ export const modifierRulesRule: ValidationRule = {
     // Check each service line
     for (let i = 0; i < claim.serviceLines.length; i++) {
       const line = claim.serviceLines[i]
+      if (!line) continue
       const modifiers = line.modifiers || []
       const lineNum = i + 1
 
@@ -301,11 +302,13 @@ export const modifierRulesRule: ValidationRule = {
     // Return results based on findings
     const errors = issues.filter((i) => i.type === 'error')
     const warnings = issues.filter((i) => i.type === 'warning')
+    const firstError = errors[0]
+    const firstWarning = warnings[0]
 
-    if (errors.length > 0) {
+    if (firstError) {
       return {
         status: 'FAIL',
-        message: errors[0].message,
+        message: firstError.message,
         suggestion: 'Review modifier usage and remove incompatible or inapplicable modifiers',
         denialCode: 'CO-4',
         metadata: {
@@ -315,10 +318,10 @@ export const modifierRulesRule: ValidationRule = {
       }
     }
 
-    if (warnings.length > 0) {
+    if (firstWarning) {
       return {
-        status: 'WARNING',
-        message: warnings[0].message,
+        status: 'WARN',
+        message: firstWarning.message,
         suggestion: 'Ensure documentation supports modifier usage',
         metadata: {
           warnings,

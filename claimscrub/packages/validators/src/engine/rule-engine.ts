@@ -62,17 +62,17 @@ export class RuleEngine {
         const result = await rule.validate(context)
         results.push({
           id: crypto.randomUUID(),
-          checkType: rule.checkType,
+          type: rule.checkType,
           status: result.status,
           message: result.message,
-          suggestion: result.suggestion,
+          recommendation: result.suggestion,
           denialCode: result.denialCode,
           metadata: result.metadata,
         })
       } catch (error) {
         results.push({
           id: crypto.randomUUID(),
-          checkType: rule.checkType,
+          type: rule.checkType,
           status: 'FAIL',
           message: `Rule ${rule.name} failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
         })
@@ -85,9 +85,9 @@ export class RuleEngine {
   calculateScore(results: ValidationResult[]): number {
     if (results.length === 0) return 100
 
-    const weights = {
+    const weights: Record<ValidationResult['status'], number> = {
       PASS: 1,
-      WARNING: 0.7,
+      WARN: 0.7,
       FAIL: 0,
     }
 

@@ -27,7 +27,7 @@ export const timelyFilingRule: ValidationRule = {
 
     if (daysRemaining <= 30) {
       return {
-        status: 'WARNING',
+        status: 'WARN',
         message: `Only ${daysRemaining} days remaining until timely filing deadline`,
         suggestion: 'Submit claim soon to avoid CO-29 denial',
         metadata: { daysRemaining, timelyFilingDays },

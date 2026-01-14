@@ -38,12 +38,13 @@ import type { Validation } from '@claimscrub/shared'
  * ```
  */
 
-interface ValidationCheckProps {
+export interface ValidationCheckProps {
   validation: Validation
   onApplySuggestion?: (suggestion: { code: string; type: 'icd' | 'cpt' | 'modifier' }) => void
+  onAction?: (action: string) => void
 }
 
-export function ValidationCheck({ validation, onApplySuggestion }: ValidationCheckProps) {
+export function ValidationCheck({ validation, onApplySuggestion, onAction }: ValidationCheckProps) {
   const [expanded, setExpanded] = useState(validation.status !== 'PASS')
 
   // Status-specific styles
@@ -180,7 +181,7 @@ export function ValidationCheck({ validation, onApplySuggestion }: ValidationChe
                   <SuggestedFix
                     key={idx}
                     code={suggestion.code}
-                    description={suggestion.description}
+                    description={suggestion.description ?? ''}
                     onApply={() => onApplySuggestion?.({
                       code: suggestion.code,
                       type: suggestion.type || 'icd',
@@ -192,16 +193,16 @@ export function ValidationCheck({ validation, onApplySuggestion }: ValidationChe
           )}
 
           {/* Action Buttons */}
-          {validation.status !== 'PASS' && (
+          {validation.status !== 'PASS' && validation.actionButtons && validation.actionButtons.length > 0 && (
             <div className="mt-4 flex items-center gap-2">
-              {validation.actionButtons?.map((action, idx) => (
+              {validation.actionButtons.map((actionBtn, idx) => (
                 <Button
                   key={idx}
-                  variant={idx === 0 ? 'primary' : 'secondary'}
+                  variant={actionBtn.variant ?? (idx === 0 ? 'primary' : 'secondary')}
                   size="sm"
-                  onClick={action.onClick}
+                  onClick={() => onAction?.(actionBtn.action)}
                 >
-                  {action.label}
+                  {actionBtn.label}
                 </Button>
               ))}
             </div>

@@ -1,25 +1,10 @@
 import { isValidNPI, isWithinTimelyFiling } from '@claimscrub/shared'
+import type { ValidationResult, ValidationCheck, ValidationStatus } from '@claimscrub/shared'
 import type { Claim, ServiceLine } from '@prisma/client'
 
-type Specialty = 'ONCOLOGY' | 'MENTAL_HEALTH' | 'OBGYN' | 'ENDOCRINOLOGY'
-type ValidationStatus = 'PASS' | 'WARNING' | 'FAIL'
-type ValidationCheck =
-  | 'CPT_ICD_MATCH'
-  | 'NPI_VERIFY'
-  | 'MODIFIER_CHECK'
-  | 'PRIOR_AUTH'
-  | 'DATA_COMPLETENESS'
-  | 'TIMELY_FILING'
-  | 'NCCI_EDITS'
+export type { ValidationResult }
 
-export interface ValidationResult {
-  checkType: ValidationCheck
-  status: ValidationStatus
-  denialCode?: string
-  message: string
-  suggestion?: string
-  metadata?: Record<string, unknown>
-}
+type Specialty = 'ONCOLOGY' | 'MENTAL_HEALTH' | 'OBGYN' | 'ENDOCRINOLOGY'
 
 export interface AuthCheckResult {
   required: boolean
@@ -28,6 +13,8 @@ export interface AuthCheckResult {
     status: string
     validFrom: string
     validTo: string
+    authorizedUnits?: number
+    remainingUnits?: number
   } | null
 }
 
@@ -75,11 +62,11 @@ class ValidationService {
 
     if (icdCodes.length === 0) {
       return {
-        checkType: 'CPT_ICD_MATCH',
+        type: 'CPT_ICD_MATCH',
         status: 'FAIL',
         denialCode: 'CO-11',
         message: 'No diagnosis codes provided',
-        suggestion: 'Add at least one ICD-10 code that supports medical necessity',
+        recommendation: 'Add at least one ICD-10 code that supports medical necessity',
       }
     }
 
@@ -88,11 +75,11 @@ class ValidationService {
       const hasCancerDx = icdCodes.some((code) => code.startsWith('C'))
       if (cptCode.startsWith('964') && !hasCancerDx) {
         return {
-          checkType: 'CPT_ICD_MATCH',
+          type: 'CPT_ICD_MATCH',
           status: 'FAIL',
           denialCode: 'CO-11',
           message: 'Chemotherapy CPT requires cancer diagnosis',
-          suggestion: 'Add primary cancer diagnosis (C-code) to support medical necessity',
+          recommendation: 'Add primary cancer diagnosis (C-code) to support medical necessity',
         }
       }
     }
@@ -102,17 +89,17 @@ class ValidationService {
       const hasMentalDx = icdCodes.some((code) => code.startsWith('F'))
       if (cptCode.startsWith('908') && !hasMentalDx) {
         return {
-          checkType: 'CPT_ICD_MATCH',
+          type: 'CPT_ICD_MATCH',
           status: 'FAIL',
           denialCode: 'CO-11',
           message: 'Psychotherapy CPT requires mental health diagnosis',
-          suggestion: 'Add F-code diagnosis to support medical necessity',
+          recommendation: 'Add F-code diagnosis to support medical necessity',
         }
       }
     }
 
     return {
-      checkType: 'CPT_ICD_MATCH',
+      type: 'CPT_ICD_MATCH',
       status: 'PASS',
       message: 'CPT-ICD match verified',
     }
@@ -143,17 +130,17 @@ class ValidationService {
   async verifyNpi(npi: string): Promise<ValidationResult> {
     if (!isValidNPI(npi)) {
       return {
-        checkType: 'NPI_VERIFY',
+        type: 'NPI_VERIFY',
         status: 'FAIL',
         denialCode: 'CO-16',
         message: 'Invalid NPI format',
-        suggestion: 'Check NPI number - must be 10 digits with valid check digit',
+        recommendation: 'Check NPI number - must be 10 digits with valid check digit',
       }
     }
 
     // In production, would call NPI Registry API
     return {
-      checkType: 'NPI_VERIFY',
+      type: 'NPI_VERIFY',
       status: 'PASS',
       message: 'NPI verified',
     }
@@ -178,18 +165,18 @@ class ValidationService {
         // Check if modifier 59 is present
         if (!modifiers.includes('59')) {
           return {
-            checkType: 'NCCI_EDITS',
-            status: 'WARNING',
+            type: 'NCCI_EDITS',
+            status: 'WARN',
             denialCode: 'CO-97',
             message: `CPT ${code1} and ${code2} may bundle`,
-            suggestion: 'Consider modifier 59 if services are distinct',
+            recommendation: 'Consider modifier 59 if services are distinct',
           }
         }
       }
     }
 
     return {
-      checkType: 'NCCI_EDITS',
+      type: 'NCCI_EDITS',
       status: 'PASS',
       message: 'No NCCI edit conflicts detected',
     }
@@ -205,11 +192,11 @@ class ValidationService {
 
     if (!isWithinTimelyFiling(dateOfService, timelyDays)) {
       return {
-        checkType: 'TIMELY_FILING',
+        type: 'TIMELY_FILING',
         status: 'FAIL',
         denialCode: 'CO-29',
         message: `Timely filing limit exceeded (${timelyDays} days)`,
-        suggestion: 'Submit immediately or document timely filing exception',
+        recommendation: 'Submit immediately or document timely filing exception',
       }
     }
 
@@ -219,16 +206,16 @@ class ValidationService {
 
     if (daysRemaining <= 14) {
       return {
-        checkType: 'TIMELY_FILING',
-        status: 'WARNING',
+        type: 'TIMELY_FILING',
+        status: 'WARN',
         message: `Only ${daysRemaining} days remaining for timely filing`,
-        suggestion: 'Submit claim soon to avoid timely filing denial',
+        recommendation: 'Submit claim soon to avoid timely filing denial',
         metadata: { daysRemaining },
       }
     }
 
     return {
-      checkType: 'TIMELY_FILING',
+      type: 'TIMELY_FILING',
       status: 'PASS',
       message: `${daysRemaining} days remaining for timely filing`,
       metadata: { daysRemaining },
@@ -298,15 +285,15 @@ class ValidationService {
     // Data completeness
     if (!claim.patientName || !claim.providerNpi || !claim.dateOfService) {
       results.push({
-        checkType: 'DATA_COMPLETENESS',
+        type: 'DATA_COMPLETENESS',
         status: 'FAIL',
         denialCode: 'CO-16',
         message: 'Missing required claim data',
-        suggestion: 'Complete all required fields before submission',
+        recommendation: 'Complete all required fields before submission',
       })
     } else {
       results.push({
-        checkType: 'DATA_COMPLETENESS',
+        type: 'DATA_COMPLETENESS',
         status: 'PASS',
         message: 'All required fields complete',
       })
@@ -340,15 +327,15 @@ class ValidationService {
 
       if (authCheck.required && !claim.priorAuthNumber) {
         results.push({
-          checkType: 'PRIOR_AUTH',
-          status: 'WARNING',
+          type: 'PRIOR_AUTH',
+          status: 'WARN',
           denialCode: 'CO-15',
           message: 'Prior authorization may be required',
-          suggestion: 'Verify prior auth requirements with payer',
+          recommendation: 'Verify prior auth requirements with payer',
         })
       } else {
         results.push({
-          checkType: 'PRIOR_AUTH',
+          type: 'PRIOR_AUTH',
           status: 'PASS',
           message: claim.priorAuthNumber
             ? `Prior auth: ${claim.priorAuthNumber}`
@@ -359,15 +346,15 @@ class ValidationService {
       // Modifier check
       if (line.drugCode && !line.modifiers.includes('JW')) {
         results.push({
-          checkType: 'MODIFIER_CHECK',
-          status: 'WARNING',
+          type: 'MODIFIER_CHECK',
+          status: 'WARN',
           denialCode: 'CO-4',
           message: 'Drug code without JW modifier',
-          suggestion: 'Add JW modifier to document any drug wastage',
+          recommendation: 'Add JW modifier to document any drug wastage',
         })
       } else {
         results.push({
-          checkType: 'MODIFIER_CHECK',
+          type: 'MODIFIER_CHECK',
           status: 'PASS',
           message: 'Modifiers verified',
         })

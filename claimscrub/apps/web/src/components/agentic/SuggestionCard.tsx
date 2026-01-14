@@ -1,7 +1,7 @@
 import { Card, Badge, cn } from '@claimscrub/ui'
 
 interface SuggestionCardProps {
-  title: string
+  title?: string
   description?: string
   badge?: string
   badgeVariant?: 'success' | 'warning' | 'primary'
@@ -9,6 +9,7 @@ interface SuggestionCardProps {
   disabled?: boolean
   onClick?: () => void
   children?: React.ReactNode
+  tabIndex?: number
 }
 
 export function SuggestionCard({
@@ -20,6 +21,7 @@ export function SuggestionCard({
   disabled,
   onClick,
   children,
+  tabIndex,
 }: SuggestionCardProps) {
   return (
     <Card
@@ -31,6 +33,7 @@ export function SuggestionCard({
         selected && 'ring-2 ring-success-500'
       )}
       onClick={disabled ? undefined : onClick}
+      tabIndex={tabIndex}
     >
       <div className="flex items-start justify-between">
         <div>

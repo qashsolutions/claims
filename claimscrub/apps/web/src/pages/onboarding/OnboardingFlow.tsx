@@ -50,7 +50,7 @@ export function OnboardingFlow() {
     mfaEnabled: false,
   })
 
-  const step = STEPS[currentStep]
+  const step = STEPS[currentStep]!
   const StepComponent = step.component
 
   const handleNext = (stepData?: Partial<OnboardingData>) => {

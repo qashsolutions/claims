@@ -190,8 +190,8 @@ export const cptIcdMatchRule: ValidationRule = {
     }
 
     // Return results based on findings
-    if (mismatches.length > 0) {
-      const firstMismatch = mismatches[0]
+    const firstMismatch = mismatches[0]
+    if (firstMismatch) {
       const currentIcds = allIcdCodes.join(', ')
 
       return {

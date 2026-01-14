@@ -312,15 +312,18 @@ export function ClaimDetailPage() {
               Validation Checks
             </h3>
             <div className="space-y-3">
-              {claim.validations.map((validation) => (
+              {claim.validations.map((v) => (
                 <ValidationCheck
-                  key={validation.id}
-                  checkType={validation.checkType}
-                  status={validation.status}
-                  message={validation.message}
-                  suggestion={validation.suggestion}
-                  denialCode={validation.denialCode}
-                  details={validation.details}
+                  key={v.id}
+                  validation={{
+                    id: v.id,
+                    type: v.checkType as 'CPT_ICD_MATCH' | 'NPI_VERIFY' | 'MODIFIER_CHECK' | 'PRIOR_AUTH' | 'DATA_COMPLETENESS' | 'TIMELY_FILING' | 'NCCI_EDITS',
+                    status: v.status === 'pass' ? 'PASS' : v.status === 'warning' ? 'WARN' : 'FAIL',
+                    message: v.message,
+                    recommendation: v.suggestion,
+                    denialCode: v.denialCode,
+                    metadata: v.details ? { details: v.details } : undefined,
+                  }}
                 />
               ))}
             </div>

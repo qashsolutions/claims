@@ -1,12 +1,14 @@
 import { cn } from '@claimscrub/ui'
 
 interface KeyboardHintProps {
-  keys: string[]
+  keys?: string[]
   label?: string
   className?: string
 }
 
-export function KeyboardHint({ keys, label, className }: KeyboardHintProps) {
+const DEFAULT_KEYS = ['Enter']
+
+export function KeyboardHint({ keys = DEFAULT_KEYS, label, className }: KeyboardHintProps) {
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <div className="flex items-center gap-1">

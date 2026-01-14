@@ -1,5 +1,5 @@
 import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
-import type { AppRouter } from '@claimscrub/api/src/trpc/router'
+import type { AppRouter } from '../../../api/src/trpc/router'
 import { getAuthToken } from './supabase'
 
 export const trpc = createTRPCReact<AppRouter>()

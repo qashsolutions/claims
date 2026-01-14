@@ -68,7 +68,7 @@ export function MFASetupStep({ onNext, onBack }: MFASetupStepProps) {
     const newCode = [...code]
 
     for (let i = 0; i < pastedData.length; i++) {
-      newCode[i] = pastedData[i]
+      newCode[i] = pastedData[i] ?? ''
     }
 
     setCode(newCode)
@@ -177,7 +177,7 @@ export function MFASetupStep({ onNext, onBack }: MFASetupStepProps) {
             {code.map((digit, idx) => (
               <input
                 key={idx}
-                ref={(el) => (inputRefs.current[idx] = el)}
+                ref={(el) => { inputRefs.current[idx] = el }}
                 type="text"
                 inputMode="numeric"
                 value={digit}

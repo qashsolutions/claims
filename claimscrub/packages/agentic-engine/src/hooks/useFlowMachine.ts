@@ -1,10 +1,11 @@
 import { useMachine } from '@xstate/react'
+import { fromPromise } from 'xstate'
 import { claimFlowMachine } from '../machines/claim-flow.machine'
 import type { ClaimFlowContext, Procedure, Authorization } from '../context/types'
 import type { Patient, Diagnosis } from '@claimscrub/shared'
 
 interface FlowActors {
-  fetchPatient: (patientId: string) => Promise<Patient>
+  fetchPatient: (patientId: string) => Promise<Patient | null>
   checkAuthorization: (
     procedure: Procedure | null,
     patient: Patient | null
@@ -16,15 +17,15 @@ export function useFlowMachine(actors: FlowActors) {
   const [state, send, actorRef] = useMachine(
     claimFlowMachine.provide({
       actors: {
-        fetchPatient: async ({ input }: { input: { patientId: string } }) => {
+        fetchPatient: fromPromise(async ({ input }: { input: { patientId: string } }) => {
           return actors.fetchPatient(input.patientId)
-        },
-        checkAuthorization: async ({ input }: { input: { procedure: Procedure | null; patient: Patient | null } }) => {
+        }),
+        checkAuthorization: fromPromise(async ({ input }: { input: { procedure: Procedure | null; patient: Patient | null } }) => {
           return actors.checkAuthorization(input.procedure, input.patient)
-        },
-        submitClaim: async ({ input }: { input: ClaimFlowContext }) => {
+        }),
+        submitClaim: fromPromise(async ({ input }: { input: ClaimFlowContext }) => {
           return actors.submitClaim(input)
-        },
+        }),
       },
     })
   )

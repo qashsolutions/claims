@@ -149,11 +149,11 @@ export const validationRouter = router({
       await ctx.prisma.validation.createMany({
         data: validations.map((v) => ({
           claimId: claim.id,
-          checkType: v.checkType,
-          status: v.status,
+          checkType: v.type,
+          status: v.status === 'WARN' ? 'WARNING' : v.status,
           denialCode: v.denialCode,
           message: v.message,
-          suggestion: v.suggestion,
+          suggestion: v.recommendation,
           metadata: v.metadata as Prisma.InputJsonValue | undefined,
         })),
       })

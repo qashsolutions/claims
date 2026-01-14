@@ -62,7 +62,7 @@ export const dataCompletenessRule: ValidationRule = {
       }
 
       return {
-        status: 'WARNING',
+        status: 'WARN',
         message: `Some optional fields are missing: ${missingFields.map((f) => f.label).join(', ')}`,
         suggestion: 'Consider completing these fields for faster processing',
         metadata: { missingFields },

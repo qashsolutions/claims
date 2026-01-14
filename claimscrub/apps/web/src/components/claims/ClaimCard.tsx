@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ChevronDown, ChevronUp, Eye, Edit, MoreVertical, Download, RefreshCw } from 'lucide-react'
 import { Badge, Card, Button, Dropdown, DropdownTrigger, DropdownContent, DropdownItem, DropdownSeparator } from '@claimscrub/ui'
 import { cn } from '@/lib/utils'
-import type { Claim } from '@claimscrub/shared'
+import type { Claim, ValidationResult } from '@claimscrub/shared'
 
 /**
  * ClaimCard Component
@@ -29,6 +29,7 @@ import type { Claim } from '@claimscrub/shared'
 
 interface ClaimCardProps {
   claim: Claim
+  validations?: ValidationResult[]
   selected?: boolean
   onSelect?: (id: string, selected: boolean) => void
   onView?: () => void
@@ -41,6 +42,7 @@ interface ClaimCardProps {
 
 export function ClaimCard({
   claim,
+  validations,
   selected = false,
   onSelect,
   onView,
@@ -88,7 +90,7 @@ export function ClaimCard({
   }
 
   // Get primary denial code if any
-  const denialCode = claim.validations?.find(v => v.status === 'FAIL' || v.status === 'WARN')?.denialCode
+  const denialCode = validations?.find((v: ValidationResult) => v.status === 'FAIL' || v.status === 'WARN')?.denialCode
 
   return (
     <div
@@ -295,10 +297,11 @@ export function ClaimCard({
  */
 interface ClaimCardMobileProps {
   claim: Claim
+  validations?: ValidationResult[]
   onView?: () => void
 }
 
-export function ClaimCardMobile({ claim, onView }: ClaimCardMobileProps) {
+export function ClaimCardMobile({ claim, validations, onView }: ClaimCardMobileProps) {
   const statusConfig = {
     VALIDATED: { variant: 'success' as const, text: 'PASS' },
     DENIED: { variant: 'error' as const, text: 'FAIL' },
@@ -306,7 +309,7 @@ export function ClaimCardMobile({ claim, onView }: ClaimCardMobileProps) {
   }
 
   const status = statusConfig[claim.status as keyof typeof statusConfig] || { variant: 'default' as const, text: claim.status }
-  const denialCode = claim.validations?.find(v => v.status === 'FAIL' || v.status === 'WARN')?.denialCode
+  const denialCode = validations?.find((v: ValidationResult) => v.status === 'FAIL' || v.status === 'WARN')?.denialCode
 
   return (
     <Card className="p-4" onClick={onView}>

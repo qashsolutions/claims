@@ -204,7 +204,7 @@ interface SuccessFeesPreviewProps {
 export function SuccessFeesPreview({ onJoinWaitlist, className }: SuccessFeesPreviewProps) {
   return (
     <Card className={cn('p-6', className)}>
-      <Badge variant="secondary" className="mb-4">Coming Q2 2026</Badge>
+      <Badge variant="outline" className="mb-4">Coming Q2 2026</Badge>
       <h4 className="font-heading text-lg font-semibold text-neutral-900">
         Denial Appeals - Success-Based Pricing
       </h4>

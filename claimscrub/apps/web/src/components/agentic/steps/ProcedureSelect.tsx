@@ -114,7 +114,7 @@ export function ProcedureSelect() {
 
     selectProcedure({
       cptCode: selected.cptCode,
-      cptDescription: selected.description,
+      description: selected.description,
       drugCode: selected.drugCode,
       drugUnits: selected.units,
       units: selected.units,

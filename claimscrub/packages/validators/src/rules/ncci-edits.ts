@@ -243,7 +243,7 @@ export const ncciEditsRule: ValidationRule = {
       const { column1Code, column2Code, modifierAllowed } = columnEdit.details
 
       return {
-        status: modifierAllowed ? 'WARNING' : 'FAIL',
+        status: modifierAllowed ? 'WARN' : 'FAIL',
         message: `NCCI edit: CPT ${column2Code} is bundled into CPT ${column1Code}`,
         suggestion: modifierAllowed
           ? `Add modifier 59 or XE/XP/XS/XU to ${column2Code} if services were distinct`
@@ -275,7 +275,7 @@ export const ncciEditsRule: ValidationRule = {
     const mueViolation = checkMueViolations(serviceLines)
     if (mueViolation.violation && mueViolation.details) {
       return {
-        status: 'WARNING',
+        status: 'WARN',
         message: `MUE exceeded: CPT ${mueViolation.details.code} billed with ${mueViolation.details.units} units (max: ${mueViolation.details.maxUnits})`,
         suggestion: `${mueViolation.details.rationale}. Reduce units to ${mueViolation.details.maxUnits} or document medical necessity for appeal`,
         denialCode: 'CO-97',

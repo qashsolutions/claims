@@ -1,4 +1,4 @@
-export { FlowProvider } from './FlowProvider'
+export { FlowProvider, useFlow } from './FlowProvider'
 export { FlowContainer } from './FlowContainer'
 export { ProgressSteps } from './ProgressSteps'
 export { KeyboardHint } from './KeyboardHint'
