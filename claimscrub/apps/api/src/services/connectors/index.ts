@@ -24,7 +24,7 @@
  * ```
  */
 
-export { BaseConnector, type ConnectorConfig, type SearchResult } from './base.connector'
-export { Icd10Connector, icd10Connector, type IcdCode, type IcdLookupResult } from './icd10.connector'
-export { CmsConnector, cmsConnector, type CoverageDocument, type CoverageDetermination, type CoverageStatus } from './cms.connector'
-export { NpiConnector, npiConnector, type NpiSearchResult, type NpiDetails, type ProviderType, type Address } from './npi.connector'
+export { BaseConnector, type ConnectorConfig, type SearchResult } from './base.connector.js'
+export { Icd10Connector, icd10Connector, type IcdCode, type IcdLookupResult } from './icd10.connector.js'
+export { CmsConnector, cmsConnector, type CoverageDocument, type CoverageDetermination, type CoverageStatus } from './cms.connector.js'
+export { NpiConnector, npiConnector, type NpiSearchResult, type NpiDetails, type ProviderType, type Address } from './npi.connector.js'

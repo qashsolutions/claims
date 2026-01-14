@@ -8,4 +8,4 @@
  * - Code relationship validation
  */
 
-export { ClaudeClient, claudeClient } from './client'
+export { ClaudeClient, claudeClient } from './client.js'

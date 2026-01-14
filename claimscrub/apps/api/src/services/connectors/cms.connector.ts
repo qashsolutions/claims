@@ -1,4 +1,4 @@
-import { BaseConnector, type SearchResult, type ConnectorConfig } from './base.connector'
+import { BaseConnector, type SearchResult, type ConnectorConfig } from './base.connector.js'
 
 /**
  * CMS Coverage Connector
