@@ -8,6 +8,7 @@ import { rateLimitMiddleware } from './middleware/rateLimit.js'
 import { auditMiddleware } from './middleware/audit.js'
 import { errorMiddleware } from './middleware/error.js'
 import { env } from './config/env.js'
+import { stripeWebhook } from './routes/webhooks/stripe.js'
 
 export const app = new Hono()
 
@@ -37,6 +38,9 @@ app.use('*', errorMiddleware)
 
 // Health check
 app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
+
+// Stripe webhook (before tRPC, needs raw body)
+app.route('/api/webhooks/stripe', stripeWebhook)
 
 // tRPC
 app.use(

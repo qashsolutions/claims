@@ -11,9 +11,13 @@ const envSchema = z.object({
   ANTHROPIC_API_KEY: z.string(),
   STRIPE_SECRET_KEY: z.string().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().optional(),
+  STRIPE_PRICE_PAY_PER_CLAIM: z.string().optional(),
+  STRIPE_PRICE_UNLIMITED_MONTHLY: z.string().optional(),
+  STRIPE_PRICE_UNLIMITED_ANNUAL: z.string().optional(),
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
   ENCRYPTION_KEY: z.string().optional(),
+  JWT_SECRET: z.string().optional(),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 })
 
