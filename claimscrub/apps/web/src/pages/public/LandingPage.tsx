@@ -608,10 +608,8 @@ function PricingSection() {
       name: 'Pay Per Claim',
       price: 10,
       period: 'per claim',
-      description: 'Pay only for what you use',
-      features: [
-        { text: 'Unlimited claims', included: true },
-      ],
+      description: 'Unlimited claims. Pay for what you use.',
+      features: [],
       cta: 'Get Started',
       popular: false,
     },
@@ -619,9 +617,8 @@ function PricingSection() {
       name: 'Unlimited',
       price: annual ? 70 : 100,
       period: 'per month',
-      description: annual ? 'Billed annually ($840/year)' : 'Best value for high volume',
+      description: annual ? 'Unlimited claims. Billed annually ($840/year)' : 'Unlimited claims. Best value for high volume.',
       features: [
-        { text: 'Unlimited claims', included: true },
         { text: 'Analytics dashboard*', included: true },
         { text: 'Epic EHR integration', included: true },
       ],
