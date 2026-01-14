@@ -3,24 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./trpc": {
-      "types": "./src/trpc/router.ts",
-      "import": "./src/trpc/router.ts"
+      "types": "./dist/trpc/router.d.ts",
+      "import": "./dist/trpc/router.js"
     },
     "./trpc/context": {
-      "types": "./src/trpc/context.ts",
-      "import": "./src/trpc/context.ts"
+      "types": "./dist/trpc/context.d.ts",
+      "import": "./dist/trpc/context.js"
     }
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "prisma generate && tsc",
+    "build": "prisma generate && tsup",
     "start": "node dist/index.js",
+    "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
     "lint": "biome check src",
     "db:generate": "prisma generate",
@@ -47,6 +50,7 @@
   "devDependencies": {
     "@types/node": "^22.10.2",
     "prisma": "^5.22.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.4.5"
   }

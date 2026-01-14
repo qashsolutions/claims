@@ -4,9 +4,9 @@ import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
 import { trpcServer } from '@hono/trpc-server'
 
-// Use relative imports for Vercel bundler compatibility
-import { appRouter } from '../apps/api/src/trpc/router.js'
-import { createContext } from '../apps/api/src/trpc/context.js'
+// Import from compiled workspace packages
+import { appRouter } from '@claimscrub/api/trpc'
+import { createContext } from '@claimscrub/api/trpc/context'
 
 export const config = {
   runtime: 'nodejs',
