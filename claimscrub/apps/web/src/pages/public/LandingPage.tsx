@@ -166,7 +166,7 @@ function HeroSection() {
                 >
                   Start Free Trial
                 </Link>
-                <p className="mt-2 text-[10px] text-neutral-500">
+                <p className="mt-2 text-sm text-neutral-400">
                   Sign in with Epic EHR or NPI
                 </p>
               </div>
