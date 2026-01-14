@@ -44,14 +44,15 @@ export interface ChatResponse {
 }
 
 export class AskDenaliChatService {
-  private client: Anthropic
+  private client: Anthropic | null = null
   private model: string
   private knowledgeBase: string
 
   constructor() {
-    this.client = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-    })
+    const apiKey = process.env.ANTHROPIC_API_KEY
+    if (apiKey) {
+      this.client = new Anthropic({ apiKey })
+    }
     this.model = 'claude-sonnet-4-20250514'
     this.knowledgeBase = buildKnowledgeBase()
   }
@@ -64,6 +65,14 @@ export class AskDenaliChatService {
    * @returns Response from Claude
    */
   async chat(userMessage: string, conversationHistory: ChatMessage[] = []): Promise<ChatResponse> {
+    // Check if API client is available
+    if (!this.client) {
+      return {
+        message: '',
+        error: 'Chat service is not configured. Please contact support.',
+      }
+    }
+
     try {
       const systemPrompt = SYSTEM_PROMPT.replace('{KNOWLEDGE_BASE}', this.knowledgeBase)
 
