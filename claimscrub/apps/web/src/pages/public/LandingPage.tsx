@@ -329,7 +329,7 @@ function SpecialtiesSection() {
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Built for complex specialties
           </h2>
-          <p className="mt-6 text-xl text-neutral-400 max-w-2xl mx-auto">
+          <p className="mt-2 text-xl text-neutral-400 max-w-2xl mx-auto">
             High-value claims. Complex prior auths.
           </p>
         </div>
