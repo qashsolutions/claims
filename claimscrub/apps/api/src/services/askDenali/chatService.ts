@@ -72,7 +72,8 @@ export class AskDenaliChatService {
    * @returns Response from Claude
    */
   async chat(userMessage: string, conversationHistory: ChatMessage[] = []): Promise<ChatResponse> {
-    console.log('[AskDenali ChatService] chat() called with message:', userMessage)
+    console.log('[AskDenali ChatService] chat() called')
+    console.log('[AskDenali ChatService] User message:', userMessage.substring(0, 100))
     console.log('[AskDenali ChatService] History length:', conversationHistory.length)
 
     // Check if API client is available
@@ -83,6 +84,8 @@ export class AskDenaliChatService {
         error: 'Chat service is not configured. Please contact support.',
       }
     }
+
+    const startTime = Date.now()
 
     try {
       const systemPrompt = SYSTEM_PROMPT.replace('{KNOWLEDGE_BASE}', this.knowledgeBase)
@@ -98,7 +101,9 @@ export class AskDenaliChatService {
       ]
       console.log('[AskDenali ChatService] Messages count:', messages.length)
 
-      console.log('[AskDenali ChatService] Calling Claude API with model:', this.model)
+      console.log('[AskDenali ChatService] Calling Claude API...')
+      console.log('[AskDenali ChatService] Model:', this.model)
+
       const response = await this.client.messages.create({
         model: this.model,
         max_tokens: 512,
@@ -106,7 +111,11 @@ export class AskDenaliChatService {
         system: systemPrompt,
         messages,
       })
-      console.log('[AskDenali ChatService] Claude API response received, content blocks:', response.content.length)
+
+      const duration = Date.now() - startTime
+      console.log('[AskDenali ChatService] Claude API response received in', duration, 'ms')
+      console.log('[AskDenali ChatService] Response stop reason:', response.stop_reason)
+      console.log('[AskDenali ChatService] Response content blocks:', response.content.length)
 
       // Extract text content from response
       const textContent = response.content.find((block) => block.type === 'text')
@@ -115,14 +124,17 @@ export class AskDenaliChatService {
         throw new Error('No text response from Claude')
       }
 
-      console.log('[AskDenali ChatService] Returning successful response, length:', textContent.text.length)
+      console.log('[AskDenali ChatService] Response text length:', textContent.text.length)
+      console.log('[AskDenali ChatService] SUCCESS - returning response')
       return { message: textContent.text }
     } catch (error) {
-      console.error('[AskDenali ChatService] Error in chat():', error)
-      console.error('[AskDenali ChatService] Error type:', error instanceof Error ? error.constructor.name : typeof error)
+      const duration = Date.now() - startTime
+      console.error('[AskDenali ChatService] ERROR after', duration, 'ms')
+      console.error('[AskDenali ChatService] Error:', error)
+
       if (error instanceof Error) {
+        console.error('[AskDenali ChatService] Error name:', error.name)
         console.error('[AskDenali ChatService] Error message:', error.message)
-        console.error('[AskDenali ChatService] Error stack:', error.stack)
       }
 
       // Return user-friendly error message
@@ -139,6 +151,15 @@ export class AskDenaliChatService {
             message: '',
             error: 'Service configuration error. Please contact support.',
           }
+        }
+      }
+
+      // Check for timeout/abort errors
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.error('[AskDenali ChatService] Request was aborted (timeout)')
+        return {
+          message: '',
+          error: 'Request timed out. Please try again.',
         }
       }
 

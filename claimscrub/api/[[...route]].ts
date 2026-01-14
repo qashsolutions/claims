@@ -118,6 +118,34 @@ console.log('[Vercel API] Creating Hono app...')
 const app = new Hono().basePath('/api')
 console.log('[Vercel API] ✓ Hono app created')
 
+// Request logging middleware - runs first on every request
+app.use('*', async (c, next) => {
+  const startTime = Date.now()
+  console.log('='.repeat(40))
+  console.log('[Vercel API] >>> REQUEST RECEIVED <<<')
+  console.log('[Vercel API] Method:', c.req.method)
+  console.log('[Vercel API] URL:', c.req.url)
+  console.log('[Vercel API] Path:', c.req.path)
+  console.log('[Vercel API] Time:', new Date().toISOString())
+
+  try {
+    await next()
+    const duration = Date.now() - startTime
+    console.log('[Vercel API] >>> RESPONSE SENT <<<')
+    console.log('[Vercel API] Status:', c.res.status)
+    console.log('[Vercel API] Duration:', duration, 'ms')
+    console.log('='.repeat(40))
+  } catch (error) {
+    const duration = Date.now() - startTime
+    console.error('[Vercel API] >>> REQUEST ERROR <<<')
+    console.error('[Vercel API] Error:', error)
+    console.error('[Vercel API] Duration:', duration, 'ms')
+    console.log('='.repeat(40))
+    throw error
+  }
+})
+console.log('[Vercel API] ✓ Request logging middleware added')
+
 // CORS
 app.use(
   '*',
