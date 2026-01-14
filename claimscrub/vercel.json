@@ -6,7 +6,9 @@
   "outputDirectory": "apps/web/dist",
   "functions": {
     "api/**/*.ts": {
-      "maxDuration": 30
+      "memory": 1024,
+      "maxDuration": 30,
+      "includeFiles": "apps/api/dist/**/*"
     }
   },
   "routes": [
