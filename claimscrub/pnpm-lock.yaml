@@ -81,6 +81,9 @@ importers:
       '@claimscrub/agentic-engine':
         specifier: workspace:*
         version: link:../../packages/agentic-engine
+      '@claimscrub/api':
+        specifier: workspace:*
+        version: link:../api
       '@claimscrub/shared':
         specifier: workspace:*
         version: link:../../packages/shared

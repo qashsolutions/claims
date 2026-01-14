@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@claimscrub/agentic-engine": "workspace:*",
+    "@claimscrub/api": "workspace:*",
     "@claimscrub/shared": "workspace:*",
     "@claimscrub/ui": "workspace:*",
     "@supabase/supabase-js": "^2.47.2",
