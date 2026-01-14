@@ -2,8 +2,26 @@ import { z } from 'zod'
 import { router, protectedProcedure } from '../index.js'
 import { TRPCError } from '@trpc/server'
 import { createClaimSchema } from '@claimscrub/shared/schemas'
+import {
+  TRIAL_CLAIMS_PER_DAY,
+  TRIAL_MB_PER_DAY,
+  getUsageStats,
+  checkTrialUploadLimit,
+} from '../../services/usage.service.js'
 
 export const claimsRouter = router({
+  // Get usage stats for trial limits
+  usageStats: protectedProcedure.query(async ({ ctx }) => {
+    return getUsageStats(ctx.user.practiceId)
+  }),
+
+  // Check if file upload is allowed (for trial users)
+  checkUploadLimit: protectedProcedure
+    .input(z.object({ fileSizeBytes: z.number() }))
+    .query(async ({ ctx, input }) => {
+      return checkTrialUploadLimit(ctx.user.practiceId, input.fileSizeBytes)
+    }),
+
   // List claims for current practice
   list: protectedProcedure
     .input(
@@ -101,10 +119,10 @@ export const claimsRouter = router({
           },
         })
 
-        if (claimsToday >= 1) {
+        if (claimsToday >= TRIAL_CLAIMS_PER_DAY) {
           throw new TRPCError({
             code: 'FORBIDDEN',
-            message: 'Trial limit reached. You can create 1 claim per day during your free trial. Upgrade to continue.',
+            message: `Trial limit reached. You can create ${TRIAL_CLAIMS_PER_DAY} claim per day (up to ${TRIAL_MB_PER_DAY}MB) during your free trial. Upgrade to continue.`,
           })
         }
       }
