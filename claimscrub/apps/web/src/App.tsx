@@ -7,6 +7,8 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 const LandingPage = lazy(() => import('@/pages/public/LandingPage').then(m => ({ default: m.LandingPage })))
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'))
 const RegisterPage = lazy(() => import('@/pages/auth/LoginPage')) // Uses same component with register mode
+const ForgotPasswordPage = lazy(() => import('@/pages/auth/ForgotPasswordPage'))
+const ResetPasswordPage = lazy(() => import('@/pages/auth/ResetPasswordPage'))
 const DashboardPage = lazy(() => import('@/pages/dashboard/DashboardPage'))
 const ClaimsListPage = lazy(() => import('@/pages/claims/ClaimsListPage'))
 const NewClaimPage = lazy(() => import('@/pages/claims/NewClaimPage'))
@@ -31,6 +33,8 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/onboarding" element={<OnboardingFlow />} />
 
         {/* Protected routes */}

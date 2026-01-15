@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Shield, Eye, EyeOff } from 'lucide-react'
 import { Button, Input, Card } from '@claimscrub/ui'
 import { useAuth } from '@/hooks/useAuth'
@@ -73,23 +73,28 @@ export default function LoginPage() {
             placeholder="you@practice.com"
             required
           />
-          <div className="relative">
-            <Input
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-[38px] text-neutral-400 hover:text-neutral-600 transition-colors"
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-            >
-              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-            </button>
+          <div>
+            <div className="relative">
+              <Input
+                label="Password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-[38px] text-neutral-400 hover:text-neutral-600 transition-colors"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            <p className="mt-1.5 text-xs text-neutral-500">
+              8+ characters, uppercase, lowercase, and special character
+            </p>
           </div>
 
           {error && (
@@ -102,9 +107,9 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="#" className="text-body-sm text-primary-600 hover:underline">
+          <Link to="/forgot-password" className="text-body-sm text-primary-600 hover:underline">
             Forgot your password?
-          </a>
+          </Link>
         </div>
       </Card>
     </div>
