@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Shield } from 'lucide-react'
 import { Button, Input, Card } from '@claimscrub/ui'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -26,10 +27,8 @@ export default function LoginPage() {
       <Card className="w-full max-w-md p-8">
         {/* Logo */}
         <div className="mb-8 flex items-center justify-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-600">
-            <svg className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600">
+            <Shield className="h-7 w-7 text-white" />
           </div>
           <span className="ml-3 font-heading text-2xl font-bold text-neutral-900">Denali Health</span>
         </div>

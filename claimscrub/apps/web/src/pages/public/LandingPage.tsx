@@ -851,12 +851,10 @@ function Footer() {
             <ul className="space-y-3 text-sm">
               <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
               <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
-              <li><Link to="/login" className="hover:text-white transition-colors">Log In</Link></li>
-              <li><Link to="/register" className="hover:text-white transition-colors">Sign Up</Link></li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company - commented out for now
           <div>
             <h4 className="font-semibold text-white mb-4">Company</h4>
             <ul className="space-y-3 text-sm">
@@ -866,6 +864,7 @@ function Footer() {
               <li><a href="mailto:hello@claimscrub.com" className="hover:text-white transition-colors">Contact</a></li>
             </ul>
           </div>
+          */}
 
           {/* Legal */}
           <div>
@@ -873,8 +872,6 @@ function Footer() {
             <ul className="space-y-3 text-sm">
               <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">BAA</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
             </ul>
           </div>
         </div>
