@@ -89,7 +89,7 @@ export function AskDenali({ variant = 'floating', className }: AskDenaliProps) {
         <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5 text-primary-600" />
-            <span className="font-heading font-semibold">AskDenali</span>
+            <span className="font-heading font-semibold">Nico</span>
           </div>
           {messages.length > 0 && (
             <Button variant="ghost" size="sm" onClick={handleClearHistory}>
@@ -142,7 +142,7 @@ export function AskDenali({ variant = 'floating', className }: AskDenaliProps) {
           className
         )}
         onClick={() => setIsOpen(true)}
-        aria-label="Open AskDenali assistant"
+        aria-label="Open Nico assistant"
       >
         <MessageCircle className="h-6 w-6" />
       </Button>

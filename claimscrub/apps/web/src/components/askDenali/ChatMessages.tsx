@@ -46,7 +46,7 @@ export function ChatMessages({
         <div className="w-14 h-14 rounded-full bg-primary-100 flex items-center justify-center mb-4">
           <Bot className="h-8 w-8 text-primary-600" />
         </div>
-        <h3 className="font-heading text-lg font-semibold text-neutral-900">Hi! I'm AskDenali</h3>
+        <h3 className="font-heading text-lg font-semibold text-neutral-900">Hi! I'm Nico</h3>
         <p className="text-neutral-500 mt-2 max-w-sm text-sm">
           I can help you learn about Denali Health's pricing, features, validation rules, and how to
           get started.
