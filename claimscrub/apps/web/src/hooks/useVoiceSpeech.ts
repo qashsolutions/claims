@@ -113,13 +113,11 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
     recognition.lang = language
 
     recognition.onstart = () => {
-      console.log('[VoiceSpeech] Recognition started')
       setIsListening(true)
       setError(null)
     }
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      console.log('[VoiceSpeech] onresult fired', event.results)
       let finalTranscript = ''
       let interim = ''
 
@@ -129,10 +127,8 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
 
         if (result.isFinal) {
           finalTranscript += result[0].transcript
-          console.log('[VoiceSpeech] Final transcript:', finalTranscript)
         } else {
           interim += result[0].transcript
-          console.log('[VoiceSpeech] Interim transcript:', interim)
         }
       }
 
@@ -144,7 +140,6 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
       if (finalTranscript) {
         setTranscript(finalTranscript)
         setInterimTranscript('')
-        console.log('[VoiceSpeech] Calling onResult with:', finalTranscript)
         onResultRef.current?.(finalTranscript)
       }
     }
@@ -178,7 +173,6 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
     }
 
     recognition.onend = () => {
-      console.log('[VoiceSpeech] Recognition ended')
       setIsListening(false)
     }
 
@@ -190,7 +184,6 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
   }, [isSupported, language]) // Removed callback dependencies - using refs instead
 
   const startListening = useCallback(() => {
-    console.log('[VoiceSpeech] startListening called, isSupported:', isSupported, 'recognition:', !!recognitionRef.current)
     if (!isSupported || !recognitionRef.current) {
       setError('Voice input is not supported in this browser')
       return
@@ -201,10 +194,8 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
     setError(null)
 
     try {
-      console.log('[VoiceSpeech] Calling recognition.start()')
       recognitionRef.current.start()
-    } catch (err) {
-      console.error('[VoiceSpeech] Error starting recognition:', err)
+    } catch {
       // Already started - ignore
     }
   }, [isSupported])
