@@ -4,6 +4,25 @@ import { Shield, Eye, EyeOff } from 'lucide-react'
 import { Button, Input, Card } from '@claimscrub/ui'
 import { useAuth } from '@/hooks/useAuth'
 
+// Password must be 8+ chars with uppercase, lowercase, and special character
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
+
+function validatePassword(password: string): string | null {
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters'
+  }
+  if (!/[a-z]/.test(password)) {
+    return 'Password must contain at least one lowercase letter'
+  }
+  if (!/[A-Z]/.test(password)) {
+    return 'Password must contain at least one uppercase letter'
+  }
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+    return 'Password must contain at least one special character'
+  }
+  return null
+}
+
 export default function LoginPage() {
   const navigate = useNavigate()
   const { login, isLoading } = useAuth()
@@ -15,9 +34,16 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Validate password format
+    const passwordError = validatePassword(password)
+    if (passwordError) {
+      setError(passwordError)
+      return
+    }
+
     try {
       await login(email, password)
-      navigate('/')
     } catch (err) {
       setError('Invalid email or password')
     }

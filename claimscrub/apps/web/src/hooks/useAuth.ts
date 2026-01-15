@@ -2,10 +2,12 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase, signInWithEmail, signOut } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/authStore'
+import { trpc } from '@/lib/trpc'
 
 export function useAuth() {
   const navigate = useNavigate()
   const { user, isAuthenticated, isLoading, setUser, setLoading, logout } = useAuthStore()
+  const auditMutation = trpc.audit.logEvent.useMutation()
 
   useEffect(() => {
     // Check for existing session
@@ -28,7 +30,18 @@ export function useAuth() {
     try {
       const { user } = await signInWithEmail(email, password)
       setUser(user)
-      navigate('/')
+
+      // Log login event
+      if (user?.id) {
+        auditMutation.mutate({
+          userId: user.id,
+          action: 'LOGIN',
+          metadata: { method: 'password' },
+          userAgent: navigator.userAgent,
+        })
+      }
+
+      navigate('/dashboard')
     } catch (error) {
       setLoading(false)
       throw error
@@ -36,6 +49,15 @@ export function useAuth() {
   }
 
   const handleLogout = async () => {
+    // Log logout event before signing out
+    if (user?.id) {
+      auditMutation.mutate({
+        userId: user.id,
+        action: 'LOGOUT',
+        userAgent: navigator.userAgent,
+      })
+    }
+
     await signOut()
     logout()
     navigate('/login')
