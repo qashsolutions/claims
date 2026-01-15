@@ -157,7 +157,7 @@ export function AskDenali({ variant = 'floating', className }: AskDenaliProps) {
                 <MessageCircle className="h-4 w-4 text-primary-600" />
               </div>
               <div>
-                <h3 className="font-heading font-semibold text-neutral-900">AskDenali</h3>
+                <h3 className="font-heading font-semibold text-neutral-900">Nico</h3>
                 <p className="text-xs text-neutral-500">Your AI assistant</p>
               </div>
             </div>
