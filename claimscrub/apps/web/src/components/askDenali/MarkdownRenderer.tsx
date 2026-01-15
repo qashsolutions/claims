@@ -45,9 +45,7 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
     }
   }
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-
+  for (const line of lines) {
     // Heading (### text)
     if (line.startsWith('### ')) {
       flushList()
@@ -60,7 +58,7 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
     }
 
     // Bullet point (- item or * item)
-    if (line.match(/^[-*]\s+/)) {
+    if (/^[-*]\s+/.test(line)) {
       const item = line.replace(/^[-*]\s+/, '')
       if (currentList?.type === 'ul') {
         currentList.items.push(item)
@@ -72,7 +70,7 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
     }
 
     // Numbered list (1. item)
-    if (line.match(/^\d+\.\s+/)) {
+    if (/^\d+\.\s+/.test(line)) {
       const item = line.replace(/^\d+\.\s+/, '')
       if (currentList?.type === 'ol') {
         currentList.items.push(item)

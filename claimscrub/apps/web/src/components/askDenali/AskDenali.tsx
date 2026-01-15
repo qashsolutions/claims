@@ -198,7 +198,7 @@ export function AskDenali({ variant = 'floating', className }: AskDenaliProps) {
               </div>
               <div>
                 <h3 className="font-heading font-semibold text-neutral-900">Nico</h3>
-                <p className="text-xs text-neutral-500">Your AI assistant</p>
+                <p className="text-xs text-neutral-500">Ask me anything about Denali Health</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
