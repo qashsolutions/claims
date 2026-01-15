@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { Suspense, lazy } from 'react'
 import { AppShell } from '@/components/layout/AppShell'
+import { PublicLayout } from '@/components/layout/PublicLayout'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 
 // Lazy load pages
@@ -29,13 +30,15 @@ export default function App() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/onboarding" element={<OnboardingFlow />} />
+        {/* Public routes - wrapped with PublicLayout (header, footer, chat) */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/onboarding" element={<OnboardingFlow />} />
+        </Route>
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
