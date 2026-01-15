@@ -75,9 +75,6 @@ function Navigation() {
             <a href="#pricing" className="text-neutral-600 hover:text-neutral-900 transition-colors">
               Pricing
             </a>
-            <a href="#faq" className="text-neutral-600 hover:text-neutral-900 transition-colors">
-              FAQ
-            </a>
           </div>
 
           {/* CTA Buttons */}
@@ -111,7 +108,6 @@ function Navigation() {
             <div className="flex flex-col gap-4">
               <a href="#features" className="text-neutral-600 hover:text-neutral-900">Features</a>
               <a href="#pricing" className="text-neutral-600 hover:text-neutral-900">Pricing</a>
-              <a href="#faq" className="text-neutral-600 hover:text-neutral-900">FAQ</a>
               <hr className="border-neutral-200" />
               <Link to="/login" className="text-neutral-700 font-medium">Log in</Link>
               <Link
@@ -826,79 +822,6 @@ function TestimonialsSection() {
 }
 
 // ============================================================================
-// FAQ SECTION
-// ============================================================================
-
-function FAQSection() {
-  const [openIdx, setOpenIdx] = useState<number | null>(0)
-
-  const faqs = [
-    {
-      q: 'How does Denali Health prevent denials?',
-      a: 'Denali Health validates claims against 7 rules including CPT-ICD medical necessity matching, NCCI edits, NPI verification, modifier checks, prior authorization requirements, data completeness, and timely filing. We catch errors before you submit, preventing common denial codes like CO-11, CO-15, and CO-16.',
-    },
-    {
-      q: 'What specialties do you support?',
-      a: 'We currently support Oncology, Mental Health, OB/GYN, and Endocrinology with specialty-specific validation rules. Each specialty has custom CPT-ICD mappings, modifier requirements, and documentation checks tailored to their billing complexity.',
-    },
-    {
-      q: 'Is Denali Health HIPAA compliant?',
-      a: 'We are built for HIPAA compliance with enterprise-grade encryption, comprehensive audit logging, and HIPAA-compliant infrastructure. BAA with Anthropic (our AI provider) is pending. We never store PHI longer than necessary for processing.',
-    },
-    {
-      q: 'Can I integrate with my EHR?',
-      a: 'Yes! Our Unlimited plan includes Epic EHR integration via App Orchard. You can launch Denali Health directly from within Epic and pull patient data automatically. We\'re adding more EHR integrations soon.',
-    },
-    {
-      q: 'What\'s the free trial like?',
-      a: 'Our 3-day free trial gives you full access to validate 1 claim per day across all specialties. No credit card required. You can test drive the validation engine, see AI suggestions, and experience the full workflow.',
-    },
-    {
-      q: 'How quickly will I see ROI?',
-      a: 'ROI depends on your claim volume and denial rate. Even preventing a few denials can offset the subscription cost. Our analytics dashboard helps you track prevented denials and measure your actual savings over time.',
-    },
-  ]
-
-  return (
-    <section id="faq" className="py-20 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-neutral-900">
-            Frequently asked questions
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          {faqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-xl border border-neutral-200 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-                className="w-full flex items-center justify-between p-6 text-left"
-              >
-                <span className="font-semibold text-neutral-900 pr-4">{faq.q}</span>
-                {openIdx === idx ? (
-                  <ChevronUp className="h-5 w-5 text-neutral-500 flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-neutral-500 flex-shrink-0" />
-                )}
-              </button>
-              {openIdx === idx && (
-                <div className="px-6 pb-6">
-                  <p className="text-neutral-600 leading-relaxed">{faq.a}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ============================================================================
 // FOOTER
 // ============================================================================
 
@@ -1005,7 +928,6 @@ export function LandingPage() {
       <HowItWorksSection />
       <PricingSection />
       {/* <TestimonialsSection /> */}
-      <FAQSection />
       <Footer />
 
       {/* AskDenali floating chat assistant */}
