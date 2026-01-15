@@ -13,7 +13,7 @@
  * - Loading states
  */
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { MessageCircle, X, Trash2 } from 'lucide-react'
 import { Button, Card } from '@claimscrub/ui'
 import { trpc } from '@/lib/trpc'
@@ -33,6 +33,32 @@ export function AskDenali({ variant = 'floating', className }: AskDenaliProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  // Show tooltip for first-time visitors
+  useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem('nico-tooltip-seen')
+    if (!hasSeenTooltip && !isOpen) {
+      // Delay tooltip appearance for better UX
+      const timer = setTimeout(() => {
+        setShowTooltip(true)
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          setShowTooltip(false)
+          localStorage.setItem('nico-tooltip-seen', 'true')
+        }, 5000)
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen])
+
+  // Hide tooltip when chat opens
+  useEffect(() => {
+    if (isOpen && showTooltip) {
+      setShowTooltip(false)
+      localStorage.setItem('nico-tooltip-seen', 'true')
+    }
+  }, [isOpen, showTooltip])
 
   // tRPC mutation for chat
   const chatMutation = trpc.askDenali.chat.useMutation({
@@ -132,20 +158,34 @@ export function AskDenali({ variant = 'floating', className }: AskDenaliProps) {
   // Floating variant (default)
   return (
     <>
-      {/* Floating trigger button */}
-      <Button
-        variant="primary"
-        size="lg"
-        className={cn(
-          'fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg z-50',
-          isOpen && 'hidden',
-          className
+      {/* Floating trigger button with tooltip */}
+      <div className={cn('fixed bottom-6 right-6 z-50', isOpen && 'hidden')}>
+        {/* Tooltip */}
+        {showTooltip && (
+          <div className="absolute bottom-full right-0 mb-3 animate-fade-in">
+            <div className="bg-neutral-900 text-white text-sm px-3 py-2 rounded-lg shadow-lg whitespace-nowrap">
+              Need help? Ask Nico!
+              <div className="absolute top-full right-6 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-neutral-900" />
+            </div>
+          </div>
         )}
-        onClick={() => setIsOpen(true)}
-        aria-label="Open Nico assistant"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
+
+        {/* Pulse ring animation */}
+        <div className="absolute inset-0 rounded-full bg-primary-500 animate-ping opacity-20" />
+
+        <Button
+          variant="primary"
+          size="lg"
+          className={cn(
+            'relative rounded-full h-16 w-16 shadow-lg',
+            className
+          )}
+          onClick={() => setIsOpen(true)}
+          aria-label="Open Nico assistant"
+        >
+          <MessageCircle className="h-7 w-7" />
+        </Button>
+      </div>
 
       {/* Chat panel */}
       {isOpen && (
