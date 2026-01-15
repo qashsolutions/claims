@@ -62,7 +62,7 @@ export function ChatInput({ onSend, isLoading, voiceState, className }: ChatInpu
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={
-            voiceState.isListening ? 'Listening...' : 'Ask about Denali Health...'
+            voiceState.isListening ? 'Listening...' : 'Ask Nico...'
           }
           disabled={isLoading || voiceState.isListening}
           className={cn(
