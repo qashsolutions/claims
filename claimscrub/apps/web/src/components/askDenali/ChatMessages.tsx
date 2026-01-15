@@ -8,6 +8,7 @@
 import { useRef, useEffect } from 'react'
 import { Bot, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { MarkdownRenderer } from './MarkdownRenderer'
 
 export interface ChatMessage {
   role: 'user' | 'assistant'
@@ -22,9 +23,9 @@ interface ChatMessagesProps {
 }
 
 const SUGGESTIONS = [
-  'What are the pricing plans?',
-  'How does validation work?',
-  'What specialties do you support?',
+  'How do I create a new claim?',
+  'What do the validation scores mean?',
+  'How do I filter my claims?',
 ]
 
 export function ChatMessages({
@@ -45,8 +46,8 @@ export function ChatMessages({
       <div className={cn('flex flex-col items-center justify-center py-8 text-center', className)}>
         <h3 className="font-heading text-lg font-semibold text-neutral-900">Hi! I'm Nico</h3>
         <p className="text-neutral-500 mt-2 max-w-sm text-sm">
-          I can help you learn about Denali Health's pricing, features, validation rules, and how to
-          get started.
+          I can help you with anything in Denali Health - creating claims, understanding validation
+          results, navigating settings, troubleshooting, and more.
         </p>
         {onSuggestionClick && (
           <div className="mt-4 flex flex-wrap gap-2 justify-center">
@@ -94,7 +95,11 @@ export function ChatMessages({
                 : 'bg-neutral-100 text-neutral-900 rounded-tl-sm'
             )}
           >
-            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+            {message.role === 'assistant' ? (
+              <MarkdownRenderer content={message.content} />
+            ) : (
+              <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+            )}
           </div>
         </div>
       ))}
