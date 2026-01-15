@@ -31,14 +31,21 @@ export function useAuth() {
       const { user } = await signInWithEmail(email, password)
       setUser(user)
 
-      // Log login event
+      // Log login event (fire-and-forget, don't block login)
       if (user?.id) {
-        auditMutation.mutate({
-          userId: user.id,
-          action: 'LOGIN',
-          metadata: { method: 'password' },
-          userAgent: navigator.userAgent,
-        })
+        auditMutation.mutate(
+          {
+            userId: user.id,
+            action: 'LOGIN',
+            metadata: { method: 'password' },
+            userAgent: navigator.userAgent,
+          },
+          {
+            onError: (err) => {
+              console.warn('[Audit] Failed to log login event:', err)
+            },
+          }
+        )
       }
 
       navigate('/dashboard')
@@ -49,13 +56,20 @@ export function useAuth() {
   }
 
   const handleLogout = async () => {
-    // Log logout event before signing out
+    // Log logout event (fire-and-forget, don't block logout)
     if (user?.id) {
-      auditMutation.mutate({
-        userId: user.id,
-        action: 'LOGOUT',
-        userAgent: navigator.userAgent,
-      })
+      auditMutation.mutate(
+        {
+          userId: user.id,
+          action: 'LOGOUT',
+          userAgent: navigator.userAgent,
+        },
+        {
+          onError: (err) => {
+            console.warn('[Audit] Failed to log logout event:', err)
+          },
+        }
+      )
     }
 
     await signOut()

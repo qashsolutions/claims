@@ -20,30 +20,35 @@ export const auditRouter = router({
     .mutation(async ({ input }) => {
       const { userId, action, metadata, ipAddress, userAgent } = input
 
-      // Verify user exists in our User table
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-      })
+      try {
+        // Verify user exists in our User table
+        const user = await prisma.user.findUnique({
+          where: { id: userId },
+        })
 
-      if (!user) {
-        // User doesn't exist in our system yet, skip audit logging
-        console.warn(`[Audit] User ${userId} not found, skipping ${action} log`)
-        return { success: false, reason: 'user_not_found' }
+        if (!user) {
+          // User doesn't exist in our system yet, skip audit logging
+          console.warn(`[Audit] User ${userId} not found, skipping ${action} log`)
+          return { success: false, reason: 'user_not_found' }
+        }
+
+        // Create audit log entry
+        const auditLog = await prisma.auditLog.create({
+          data: {
+            userId,
+            action,
+            resource: 'session',
+            resourceId: `sess_${Date.now()}`,
+            metadata: metadata ?? {},
+            ipAddress: ipAddress ?? 'unknown',
+            userAgent: userAgent ?? null,
+          },
+        })
+
+        return { success: true, id: auditLog.id }
+      } catch (error) {
+        console.error(`[Audit] Failed to log ${action} event for user ${userId}:`, error)
+        return { success: false, reason: 'internal_error' }
       }
-
-      // Create audit log entry
-      const auditLog = await prisma.auditLog.create({
-        data: {
-          userId,
-          action,
-          resource: 'session',
-          resourceId: `sess_${Date.now()}`,
-          metadata: metadata ?? {},
-          ipAddress: ipAddress ?? 'unknown',
-          userAgent: userAgent ?? null,
-        },
-      })
-
-      return { success: true, id: auditLog.id }
     }),
 })
