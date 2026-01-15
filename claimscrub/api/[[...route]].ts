@@ -53,6 +53,7 @@ app.get('/api/health', (c) => {
 app.use(
   '/api/trpc/*',
   trpcServer({
+    endpoint: '/api/trpc',
     router: appRouter,
     createContext: (_opts, c) => {
       console.log('[API] tRPC:', c.req.method, c.req.path)
