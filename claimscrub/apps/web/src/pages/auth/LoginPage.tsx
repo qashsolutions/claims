@@ -33,12 +33,9 @@ export default function LoginPage() {
           <span className="ml-3 font-heading text-2xl font-bold text-neutral-900">Denali Health</span>
         </div>
 
-        <h1 className="mb-2 text-center font-heading text-2xl font-bold text-neutral-900">
+        <h1 className="mb-6 text-center font-heading text-2xl font-bold text-neutral-900">
           Welcome back
         </h1>
-        <p className="mb-6 text-center text-body-sm text-neutral-500">
-          Sign in to access your claim scrubber
-        </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
