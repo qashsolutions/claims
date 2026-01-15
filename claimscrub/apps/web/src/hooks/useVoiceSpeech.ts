@@ -85,6 +85,18 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
 
   const recognitionRef = useRef<SpeechRecognition | null>(null)
 
+  // Use refs for callbacks to avoid recreating recognition on every render
+  const onResultRef = useRef(onResult)
+  const onInterimRef = useRef(onInterim)
+  const onErrorRef = useRef(onError)
+
+  // Keep refs updated
+  useEffect(() => {
+    onResultRef.current = onResult
+    onInterimRef.current = onInterim
+    onErrorRef.current = onError
+  }, [onResult, onInterim, onError])
+
   // Check browser support
   const isSupported =
     typeof window !== 'undefined' &&
@@ -101,11 +113,13 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
     recognition.lang = language
 
     recognition.onstart = () => {
+      console.log('[VoiceSpeech] Recognition started')
       setIsListening(true)
       setError(null)
     }
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
+      console.log('[VoiceSpeech] onresult fired', event.results)
       let finalTranscript = ''
       let interim = ''
 
@@ -115,24 +129,28 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
 
         if (result.isFinal) {
           finalTranscript += result[0].transcript
+          console.log('[VoiceSpeech] Final transcript:', finalTranscript)
         } else {
           interim += result[0].transcript
+          console.log('[VoiceSpeech] Interim transcript:', interim)
         }
       }
 
       if (interim) {
         setInterimTranscript(interim)
-        onInterim?.(interim)
+        onInterimRef.current?.(interim)
       }
 
       if (finalTranscript) {
         setTranscript(finalTranscript)
         setInterimTranscript('')
-        onResult?.(finalTranscript)
+        console.log('[VoiceSpeech] Calling onResult with:', finalTranscript)
+        onResultRef.current?.(finalTranscript)
       }
     }
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      console.error('[VoiceSpeech] Error:', event.error)
       let errorMessage = 'Voice recognition error'
 
       switch (event.error) {
@@ -156,10 +174,11 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
 
       setError(errorMessage)
       setIsListening(false)
-      onError?.(errorMessage)
+      onErrorRef.current?.(errorMessage)
     }
 
     recognition.onend = () => {
+      console.log('[VoiceSpeech] Recognition ended')
       setIsListening(false)
     }
 
@@ -168,9 +187,10 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
     return () => {
       recognition.abort()
     }
-  }, [isSupported, language, onResult, onInterim, onError])
+  }, [isSupported, language]) // Removed callback dependencies - using refs instead
 
   const startListening = useCallback(() => {
+    console.log('[VoiceSpeech] startListening called, isSupported:', isSupported, 'recognition:', !!recognitionRef.current)
     if (!isSupported || !recognitionRef.current) {
       setError('Voice input is not supported in this browser')
       return
@@ -181,8 +201,10 @@ export function useVoiceSpeech(options: UseVoiceSpeechOptions = {}): UseVoiceSpe
     setError(null)
 
     try {
+      console.log('[VoiceSpeech] Calling recognition.start()')
       recognitionRef.current.start()
-    } catch {
+    } catch (err) {
+      console.error('[VoiceSpeech] Error starting recognition:', err)
       // Already started - ignore
     }
   }, [isSupported])
