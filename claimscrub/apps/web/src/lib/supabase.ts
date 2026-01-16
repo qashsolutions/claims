@@ -41,8 +41,8 @@ export async function getCurrentUser() {
 }
 
 export async function resetPasswordForEmail(email: string) {
-  // Use environment variable or fallback to production URL
-  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://denali.health'
+  // Use environment variable or fallback to production URL (www is the primary domain)
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://www.denali.health'
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${siteUrl}/reset-password`,
   })
